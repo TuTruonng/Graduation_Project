@@ -1,0 +1,73 @@
+﻿@model ShareModel.RealEstateModel
+@*@{
+        var rate = (ShareModel.RateResponse)ViewBag.rating;
+    }*@
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Style.css" />
+}
+
+@using Microsoft.AspNetCore.Http
+<div class="p-5 border rounded">
+    <div class="form-group row ">
+        <div class="col-6" style="text-align: center;">
+            <img src="@Model.Image" alt="New york" style="width:450px;">
+        </div>
+        <div class="col-6">
+            <div class="product-name" style=" text-shadow: black 2px 3px 4px; color: #FFCC66;">
+                <h1>@Model.Title</h1>
+            </div>
+            <hr />
+            <p>
+                <span class="item-title">Description: @Model.Description</span>
+            </p>
+            <p>
+                <span class="item-title">Category Name: @Model.CategoryName</span>
+            </p>
+            <div class="price-box">
+                <h3>@Model.Price.ToString().Insert(3, ".") VNĐ</h3>
+            </div>
+            <div>
+
+
+                @*@for (int i = 0; i < .value; i++)
+                    {
+                        <span class="glyphicon glyphicon-star"></span>
+                    }
+                    @for (int i = rate.value; i < 5; i++)
+                    {
+                        <span class="glyphicon glyphicon-star-empty"></span>
+                    }
+                    @rate.value stars*@
+
+            </div>
+        </div>
+
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            @using (Html.BeginForm("Voting", "Rate"))
+            {
+                @Html.HiddenFor(x => x.RealEstateID)
+                <span class="rate-area">
+                    <input type="hidden" name="ProductID" value="@Model.RealEstateID" />
+                    <h5 class="rate">Rate Product</h5>
+                    <input type="submit" id="5-star" name="Rating" value="5" />
+                    <label for="5-star" title="Amazing">5 stars</label>
+
+                    <input type="submit" id="4-star" name="Rating" value="4" />
+                    <label for="4-star" title="Good">4 stars</label>
+
+                    <input type="submit" id="3-star" name="Rating" value="3" />
+                    <label for="3-star" title="Average">3 stars</label>
+
+                    <input type="submit" id="2-star" name="Rating" value="2" />
+                    <label for="2-star" title="Not Good">2 stars</label>
+
+                    <input type="submit" id="1-star" name="Rating" value="1" />
+                    <label for="1-star" title="Bad">1 star</label>
+                </span>
+            }
+        }
+    </div>
+</div>
