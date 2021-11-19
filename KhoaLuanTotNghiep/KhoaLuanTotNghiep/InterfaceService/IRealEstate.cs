@@ -3,13 +3,17 @@ using ShareModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace KhoaLuanTotNghiep_BackEnd.InterfaceService
 {
     public interface IRealEstate
     {
+        //Task<PagedResponseDto<RealEstateModel>> GetAllAsync(RealEstateCriteriaDto realEstateCriteriaDto,
+        //    CancellationToken cancellationToken);
         Task<ICollection<RealEstateModel>> GetAllAsync();
+
 
         Task<RealEstateCreateRequest> CreateRealEstatesAsync(RealEstateCreateRequest realEstateModel);
 

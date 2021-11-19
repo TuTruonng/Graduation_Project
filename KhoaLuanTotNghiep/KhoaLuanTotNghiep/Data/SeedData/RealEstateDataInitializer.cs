@@ -15,7 +15,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Data.SeedData
                 new RealEstate
                 {
                     RealEstateID = "1",
-                    UserID = "9ccb5f39-7b81-47fa-a1cd-2e18d1ad7a8b",
+                    UserID = "4b200c0b-b637-4ff9-9f6a-8c98231bf12f",
                     CategoryID = "1",
                     Title = "RA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐTRA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐT",
                     Price = "19 tỷ",
@@ -32,7 +32,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Data.SeedData
                 new RealEstate
                 {
                     RealEstateID = "2",
-                    UserID = "9ccb5f39-7b81-47fa-a1cd-2e18d1ad7a8b",
+                    UserID = "4b200c0b-b637-4ff9-9f6a-8c98231bf12f",
                     CategoryID = "1",
                     Title = "RA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐTRA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐT",
                     Price = "19 tỷ",
@@ -49,7 +49,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Data.SeedData
                 new RealEstate
                 {
                     RealEstateID = "3",
-                    UserID = "9ccb5f39-7b81-47fa-a1cd-2e18d1ad7a8b",
+                    UserID = "4b200c0b-b637-4ff9-9f6a-8c98231bf12f",
                     CategoryID = "2",
                     Title = "RA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐTRA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐT",
                     Price = "19 tỷ",
@@ -66,7 +66,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Data.SeedData
                 new RealEstate
                 {
                     RealEstateID = "4",
-                    UserID = "9ccb5f39-7b81-47fa-a1cd-2e18d1ad7a8b",
+                    UserID = "4b200c0b-b637-4ff9-9f6a-8c98231bf12f",
                     CategoryID = "2",
                     Title = "RA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐTRA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐT",
                     Price = "19 tỷ",
@@ -83,7 +83,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Data.SeedData
                 new RealEstate
                 {
                     RealEstateID = "5",
-                    UserID = "9ccb5f39-7b81-47fa-a1cd-2e18d1ad7a8b",
+                    UserID = "4b200c0b-b637-4ff9-9f6a-8c98231bf12f",
                     CategoryID = "3",
                     Title = "RA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐTRA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐT",
                     Price = "19 tỷ",
@@ -100,7 +100,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Data.SeedData
                 new RealEstate
                 {
                     RealEstateID = "6",
-                    UserID = "9ccb5f39-7b81-47fa-a1cd-2e18d1ad7a8b",
+                    UserID = "4b200c0b-b637-4ff9-9f6a-8c98231bf12f",
                     CategoryID = "3",
                     Title = "RA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐTRA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐT",
                     Price = "19 tỷ",

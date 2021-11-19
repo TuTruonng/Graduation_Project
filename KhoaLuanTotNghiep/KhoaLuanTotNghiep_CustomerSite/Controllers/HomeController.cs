@@ -2,10 +2,8 @@
 using KhoaLuanTotNghiep_CustomerSite.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
+using ShareModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace KhoaLuanTotNghiep_CustomerSite.Controllers

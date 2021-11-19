@@ -1,8 +1,5 @@
-﻿using KhoaLuanTotNghiep_CustomerSite.Extentions;
-using Microsoft.AspNetCore.Authentication;
+﻿
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Newtonsoft.Json;
 using ShareModel;
 using ShareModel.Constant;
@@ -25,12 +22,12 @@ namespace KhoaLuanTotNghiep_CustomerSite.Service
             _httpContextAccessor = httpContextAccessor;
             //_configuration = configuration;
         }
-        public async Task<IEnumerable<RealEstateModel>> GetProducts()
+        public async Task<ICollection<RealEstateModel>> GetProducts()
         {
             var client = _httpClientFactory.CreateClient(ServiceConstants.BACK_END_NAMED_CLIENT);
             var response = await client.GetAsync(EndpointConstants.GET_REALESTATES);
             response.EnsureSuccessStatusCode();
-            var list = await response.Content.ReadAsAsync<IEnumerable<RealEstateModel>>();
+            var list = await response.Content.ReadAsAsync<ICollection<RealEstateModel>>();
             return list;
         }
 

@@ -145,7 +145,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                             Acgreage = "95",
                             Approve = 1,
                             CategoryID = "1",
-                            CreateTime = new DateTime(2021, 11, 10, 17, 49, 34, 742, DateTimeKind.Local).AddTicks(162),
+                            CreateTime = new DateTime(2021, 11, 18, 12, 22, 36, 334, DateTimeKind.Local).AddTicks(6604),
                             Description = "Bảng giá các căn giá tốt nhất thị trường của dự án The Manor Central Park: Mua trực tiếp chủ đầu tư Bitexco Group.Bảng hàng shophouse các căn vị trí đẹp của giai đoạn 1 và giai đoạn 2 của dự án The Manor Central Park",
                             Image = "https://res.cloudinary.com/dusq8k6rj/image/upload/v1634380024/leduyen/rv7lrwnztkzvnzrqltha.png",
                             Location = "50 Lê Lợi",
@@ -153,8 +153,8 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                             Slug = "https://www.google.com/maps/place/20%C2%B058'31.1%22N+105%C2%B048'51.7%22E/@20.975292,105.814369,15z/data=!4m5!3m4!1s0x0:0x0!8m2!3d20.9752922!4d105.8143692?hl=en-US",
                             Status = "Đang Bán",
                             Title = "RA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐTRA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐT",
-                            UpdateTime = new DateTime(2021, 11, 10, 17, 49, 34, 743, DateTimeKind.Local).AddTicks(529),
-                            UserID = "9ccb5f39-7b81-47fa-a1cd-2e18d1ad7a8b"
+                            UpdateTime = new DateTime(2021, 11, 18, 12, 22, 36, 335, DateTimeKind.Local).AddTicks(8626),
+                            UserID = "4b200c0b-b637-4ff9-9f6a-8c98231bf12f"
                         },
                         new
                         {
@@ -162,7 +162,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                             Acgreage = "95",
                             Approve = 1,
                             CategoryID = "1",
-                            CreateTime = new DateTime(2021, 11, 10, 17, 49, 34, 743, DateTimeKind.Local).AddTicks(1945),
+                            CreateTime = new DateTime(2021, 11, 18, 12, 22, 36, 335, DateTimeKind.Local).AddTicks(9420),
                             Description = "Bảng giá các căn giá tốt nhất thị trường của dự án The Manor Central Park: Mua trực tiếp chủ đầu tư Bitexco Group.Bảng hàng shophouse các căn vị trí đẹp của giai đoạn 1 và giai đoạn 2 của dự án The Manor Central Park",
                             Image = "https://res.cloudinary.com/dusq8k6rj/image/upload/v1634380024/leduyen/rv7lrwnztkzvnzrqltha.png",
                             Location = "50 Lê Lợi",
@@ -170,8 +170,8 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                             Slug = "https://www.google.com/maps/place/20%C2%B058'31.1%22N+105%C2%B048'51.7%22E/@20.975292,105.814369,15z/data=!4m5!3m4!1s0x0:0x0!8m2!3d20.9752922!4d105.8143692?hl=en-US",
                             Status = "Đang Bán",
                             Title = "RA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐTRA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐT",
-                            UpdateTime = new DateTime(2021, 11, 10, 17, 49, 34, 743, DateTimeKind.Local).AddTicks(1968),
-                            UserID = "9ccb5f39-7b81-47fa-a1cd-2e18d1ad7a8b"
+                            UpdateTime = new DateTime(2021, 11, 18, 12, 22, 36, 335, DateTimeKind.Local).AddTicks(9429),
+                            UserID = "4b200c0b-b637-4ff9-9f6a-8c98231bf12f"
                         },
                         new
                         {
@@ -179,7 +179,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                             Acgreage = "95",
                             Approve = 1,
                             CategoryID = "2",
-                            CreateTime = new DateTime(2021, 11, 10, 17, 49, 34, 743, DateTimeKind.Local).AddTicks(1974),
+                            CreateTime = new DateTime(2021, 11, 18, 12, 22, 36, 335, DateTimeKind.Local).AddTicks(9436),
                             Description = "Bảng giá các căn giá tốt nhất thị trường của dự án The Manor Central Park: Mua trực tiếp chủ đầu tư Bitexco Group.Bảng hàng shophouse các căn vị trí đẹp của giai đoạn 1 và giai đoạn 2 của dự án The Manor Central Park",
                             Image = "https://res.cloudinary.com/dusq8k6rj/image/upload/v1634379964/leduyen/p9zypdbshv8spvwl0m0o.png",
                             Location = "50 Lê Lợi",
@@ -187,8 +187,8 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                             Slug = "https://www.google.com/maps/place/20%C2%B058'31.1%22N+105%C2%B048'51.7%22E/@20.975292,105.814369,15z/data=!4m5!3m4!1s0x0:0x0!8m2!3d20.9752922!4d105.8143692?hl=en-US",
                             Status = "Đang Bán",
                             Title = "RA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐTRA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐT",
-                            UpdateTime = new DateTime(2021, 11, 10, 17, 49, 34, 743, DateTimeKind.Local).AddTicks(1976),
-                            UserID = "9ccb5f39-7b81-47fa-a1cd-2e18d1ad7a8b"
+                            UpdateTime = new DateTime(2021, 11, 18, 12, 22, 36, 335, DateTimeKind.Local).AddTicks(9438),
+                            UserID = "4b200c0b-b637-4ff9-9f6a-8c98231bf12f"
                         },
                         new
                         {
@@ -196,7 +196,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                             Acgreage = "95",
                             Approve = 1,
                             CategoryID = "2",
-                            CreateTime = new DateTime(2021, 11, 10, 17, 49, 34, 743, DateTimeKind.Local).AddTicks(1980),
+                            CreateTime = new DateTime(2021, 11, 18, 12, 22, 36, 335, DateTimeKind.Local).AddTicks(9443),
                             Description = "Bảng giá các căn giá tốt nhất thị trường của dự án The Manor Central Park: Mua trực tiếp chủ đầu tư Bitexco Group.Bảng hàng shophouse các căn vị trí đẹp của giai đoạn 1 và giai đoạn 2 của dự án The Manor Central Park",
                             Image = "https://res.cloudinary.com/dusq8k6rj/image/upload/v1634379964/leduyen/p9zypdbshv8spvwl0m0o.png",
                             Location = "50 Lê Lợi",
@@ -204,8 +204,8 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                             Slug = "https://www.google.com/maps/place/20%C2%B058'31.1%22N+105%C2%B048'51.7%22E/@20.975292,105.814369,15z/data=!4m5!3m4!1s0x0:0x0!8m2!3d20.9752922!4d105.8143692?hl=en-US",
                             Status = "Đang Bán",
                             Title = "RA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐTRA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐT",
-                            UpdateTime = new DateTime(2021, 11, 10, 17, 49, 34, 743, DateTimeKind.Local).AddTicks(1982),
-                            UserID = "9ccb5f39-7b81-47fa-a1cd-2e18d1ad7a8b"
+                            UpdateTime = new DateTime(2021, 11, 18, 12, 22, 36, 335, DateTimeKind.Local).AddTicks(9445),
+                            UserID = "4b200c0b-b637-4ff9-9f6a-8c98231bf12f"
                         },
                         new
                         {
@@ -213,7 +213,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                             Acgreage = "95",
                             Approve = 1,
                             CategoryID = "3",
-                            CreateTime = new DateTime(2021, 11, 10, 17, 49, 34, 743, DateTimeKind.Local).AddTicks(1986),
+                            CreateTime = new DateTime(2021, 11, 18, 12, 22, 36, 335, DateTimeKind.Local).AddTicks(9450),
                             Description = "Bảng giá các căn giá tốt nhất thị trường của dự án The Manor Central Park: Mua trực tiếp chủ đầu tư Bitexco Group.Bảng hàng shophouse các căn vị trí đẹp của giai đoạn 1 và giai đoạn 2 của dự án The Manor Central Park",
                             Image = "https://res.cloudinary.com/dusq8k6rj/image/upload/v1634379264/leduyen/mmgcl8rhah6i2nzfuef3.jpg",
                             Location = "50 Lê Lợi",
@@ -221,8 +221,8 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                             Slug = "https://www.google.com/maps/place/20%C2%B058'31.1%22N+105%C2%B048'51.7%22E/@20.975292,105.814369,15z/data=!4m5!3m4!1s0x0:0x0!8m2!3d20.9752922!4d105.8143692?hl=en-US",
                             Status = "Đang Bán",
                             Title = "RA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐTRA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐT",
-                            UpdateTime = new DateTime(2021, 11, 10, 17, 49, 34, 743, DateTimeKind.Local).AddTicks(1988),
-                            UserID = "9ccb5f39-7b81-47fa-a1cd-2e18d1ad7a8b"
+                            UpdateTime = new DateTime(2021, 11, 18, 12, 22, 36, 335, DateTimeKind.Local).AddTicks(9452),
+                            UserID = "4b200c0b-b637-4ff9-9f6a-8c98231bf12f"
                         },
                         new
                         {
@@ -230,7 +230,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                             Acgreage = "95",
                             Approve = 1,
                             CategoryID = "3",
-                            CreateTime = new DateTime(2021, 11, 10, 17, 49, 34, 743, DateTimeKind.Local).AddTicks(1991),
+                            CreateTime = new DateTime(2021, 11, 18, 12, 22, 36, 335, DateTimeKind.Local).AddTicks(9457),
                             Description = "Bảng giá các căn giá tốt nhất thị trường của dự án The Manor Central Park: Mua trực tiếp chủ đầu tư Bitexco Group.Bảng hàng shophouse các căn vị trí đẹp của giai đoạn 1 và giai đoạn 2 của dự án The Manor Central Park",
                             Image = "https://res.cloudinary.com/dusq8k6rj/image/upload/v1634379264/leduyen/mmgcl8rhah6i2nzfuef3.jpg",
                             Location = "50 Lê Lợi",
@@ -238,8 +238,8 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                             Slug = "https://www.google.com/maps/place/20%C2%B058'31.1%22N+105%C2%B048'51.7%22E/@20.975292,105.814369,15z/data=!4m5!3m4!1s0x0:0x0!8m2!3d20.9752922!4d105.8143692?hl=en-US",
                             Status = "Đang Bán",
                             Title = "RA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐTRA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐT",
-                            UpdateTime = new DateTime(2021, 11, 10, 17, 49, 34, 743, DateTimeKind.Local).AddTicks(1993),
-                            UserID = "9ccb5f39-7b81-47fa-a1cd-2e18d1ad7a8b"
+                            UpdateTime = new DateTime(2021, 11, 18, 12, 22, 36, 335, DateTimeKind.Local).AddTicks(9459),
+                            UserID = "4b200c0b-b637-4ff9-9f6a-8c98231bf12f"
                         });
                 });
 

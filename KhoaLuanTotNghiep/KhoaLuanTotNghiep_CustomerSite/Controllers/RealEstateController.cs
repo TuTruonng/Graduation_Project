@@ -1,5 +1,6 @@
 ﻿using KhoaLuanTotNghiep_CustomerSite.Service;
 using Microsoft.AspNetCore.Mvc;
+using ShareModel;
 using System.Threading.Tasks;
 
 namespace KhoaLuanTotNghiep_CustomerSite.Controllers
@@ -27,7 +28,7 @@ namespace KhoaLuanTotNghiep_CustomerSite.Controllers
             return View(result);
         }
 
-        [Route("/RealEstate/{id}")] 
+        [Route("/RealEstate/{id}")]
         public async Task<IActionResult> Details(string id)
         {
             if (!ModelState.IsValid && string.IsNullOrEmpty(id))

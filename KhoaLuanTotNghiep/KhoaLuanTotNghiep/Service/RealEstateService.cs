@@ -1,5 +1,7 @@
-﻿using KhoaLuanTotNghiep.Data;
+﻿using AutoMapper;
+using KhoaLuanTotNghiep.Data;
 using KhoaLuanTotNghiep_BackEnd.Enum;
+using KhoaLuanTotNghiep_BackEnd.Extension;
 using KhoaLuanTotNghiep_BackEnd.InterfaceService;
 using KhoaLuanTotNghiep_BackEnd.Models;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +9,7 @@ using ShareModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace KhoaLuanTotNghiep_BackEnd.Service
@@ -14,16 +17,19 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
     public class RealEstateService : IRealEstate
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public RealEstateService(ApplicationDbContext dbContext)
+        public RealEstateService(ApplicationDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task<ICollection<RealEstateModel>> GetAllAsync()
         {
-            var queryable = _dbContext.realEstates.Include(p => p.category).Include(p => p.user).AsQueryable();
-            var product = await queryable.Select(p => new RealEstateModel
+            var queryable = _dbContext.realEstates.Include(x => x.category).Include(x => x.user).AsQueryable();
+            queryable = queryable.Where(x => x.Approve == 1);
+            var list = await queryable.Select(p => new RealEstateModel
             {
                 RealEstateID = p.RealEstateID,
                 CategoryID = p.category.CategoryID,
@@ -43,9 +49,60 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
                 UpdateTime = p.UpdateTime,
                 Location = p.Location,
             }).ToListAsync();
-            return product;
+            return list;
 
         }
+
+        //public async Task<PagedResponseDto<RealEstateModel>> GetAllAsync(
+        //    RealEstateCriteriaDto realEstateCriteriaDto,
+        //    CancellationToken cancellationToken)
+        //{
+        //    var queryable = _dbContext
+        //                        .realEstates
+        //                        .Include(x => x.category)
+        //                        .Where(x => x.Approve == 1)
+        //                        .AsQueryable();
+
+        //    queryable = RealEstateFilter(queryable, realEstateCriteriaDto);
+
+        //    var pagedBrands = await queryable
+        //                      .AsNoTracking()
+        //                      .PaginateAsync(realEstateCriteriaDto, cancellationToken);
+
+        //    var realEstateDto = _mapper.Map<IEnumerable<RealEstateModel>>(pagedBrands.Items);
+        //    return new PagedResponseDto<RealEstateModel>
+        //    {
+        //        CurrentPage = pagedBrands.CurrentPage,
+        //        TotalPages = pagedBrands.TotalPages,
+        //        TotalItems = pagedBrands.TotalItems,
+        //        Search = realEstateCriteriaDto.Search,
+        //        SortColumn = realEstateCriteriaDto.SortColumn,
+        //        SortOrder = realEstateCriteriaDto.SortOrder,
+        //        Limit = realEstateCriteriaDto.Limit,
+        //        Items = realEstateDto
+        //    };
+        //    //var list = await queryable.Select(p => new RealEstateModel
+        //    //{
+        //    //    RealEstateID = p.RealEstateID,
+        //    //    CategoryID = p.category.CategoryID,
+        //    //    UserID = p.user.Id,
+        //    //    CategoryName = p.category.CategoryName,
+        //    //    ReportID = p.ReportID,
+        //    //    Title = p.Title,
+        //    //    Price = p.Price,
+        //    //    Image = p.Image,
+        //    //    Description = p.Description,
+        //    //    acreage = p.Acgreage,
+        //    //    Slug = p.Slug,
+        //    //    Approve = p.Approve,
+        //    //    Status = p.Status,
+        //    //    PhoneNumber = Int32.Parse(p.user.PhoneNumber),
+        //    //    CreateTime = p.CreateTime,
+        //    //    UpdateTime = p.UpdateTime,
+        //    //    Location = p.Location,
+        //    //}).ToListAsync();
+        //    //return list;
+        //}
 
         public async Task<RealEstateCreateRequest> CreateRealEstatesAsync(RealEstateCreateRequest realEstateModel)
         {
@@ -170,5 +227,28 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             }
             throw new Exception("Delete fail");
         }
+
+        #region Private Method
+        private IQueryable<RealEstate> RealEstateFilter(
+            IQueryable<RealEstate> realEstateQuery,
+            RealEstateCriteriaDto realEstateCriteriaDto)
+        {
+            if (!String.IsNullOrEmpty(realEstateCriteriaDto.Search))
+            {
+                realEstateQuery = realEstateQuery.Where(b =>
+                    b.Title.Contains(realEstateCriteriaDto.Search));
+            }
+
+            if (realEstateCriteriaDto.Types != null &&
+                realEstateCriteriaDto.Types.Count() > 0 &&
+               !realEstateCriteriaDto.Types.Any(x => x == 0))
+            {
+                realEstateQuery = realEstateQuery.Where(x =>
+                    realEstateCriteriaDto.Types.Any(t => t == Int32.Parse(x.CategoryID)));
+            }
+
+            return realEstateQuery;
+        }
+        #endregion
     }
 }

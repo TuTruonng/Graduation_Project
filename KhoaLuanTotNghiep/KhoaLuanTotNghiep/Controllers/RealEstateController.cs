@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using ShareModel;
 using ShareModel.Constant;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace KhoaLuanTotNghiep_BackEnd.Controllers
@@ -22,9 +23,25 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
             _realStateService = realStatrService;
         }
 
+        //[HttpGet]
+        //[AllowAnonymous]
+        //public async Task<ActionResult<PagedResponseDto<RealEstateModel>>> Get([FromQuery] RealEstateCriteriaDto realEstateCriteriaDto,
+        //    CancellationToken cancellationToken)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    var result = await _realStateService.GetAllAsync(realEstateCriteriaDto, cancellationToken);
+        //    if (result == null)
+        //        return NotFound();
+        //    return Ok(result);
+        //}
+
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<RealEstateModel>> Get()
+        public async Task<ActionResult<PagedResponseDto<RealEstateModel>>> Get()
         {
             if (!ModelState.IsValid)
             {

@@ -1,10 +1,17 @@
-﻿@model IList<ShareModel.RealEstateModel>
+﻿@page
+@model KhoaLuanTotNghiep_CustomerSite.Views.Home.IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@*@{
+        ViewData["Title"] = "Home Page";
+    }
+
+    <h2>Home Page</h2>*@
+
 
 @section Styles {
     <link rel="stylesheet" href="~/css/style.css" />
 }
-
-@{ ViewData["Title"] = "Home Page"; }
 
 <div class="container-fluid" style="padding: 0; margin: 0">
     <div class="col height d-flex justify-content-center" id="main">
@@ -72,22 +79,22 @@
     </div>
 
     <div class="card-deck" id="card-RealEstate">
-        @for (int i = 0; i < Model.Count(); i += 3)
+        @for (int i = 0; i < Model.realEstates.Items.Count(); i += 3)
         {
             <div class="row">
                 @{
                     int j = 0;
-                    for (; j <= 2 && i + j < Model.Count(); j++)
+                    for (; j <= 2 && i + j < Model.realEstates.Items.Count(); j++)
                     {
                         <div class="col-md-4">
-                            <a class="card" asp-action="Details" asp-controller="RealEstate" asp-route-id="@Model[i].RealEstateID">
-                                <img class="card-img-top" src="@Model[i].Image" alt="Card image cap">
+                            <a class="card" asp-action="Details" asp-controller="RealEstate" asp-route-id="@Model.realEstates.Items.ElementAt(i).RealEstateID">
+                                <img class="card-img-top" src="@Model.realEstates.Items.ElementAt(i).Image" alt="Card image cap">
                                 <div class="card-body">
-                                    <p class="card-title">@Model[i].Title</p>
-                                    <p class="card-text">@Model[i].Price  -  @Model[i].acreage  <br /><br />    @Model[i].Location</p>
+                                    <p class="card-title">@Model.realEstates.Items.ElementAt(i).Title</p>
+                                    <p class="card-text">@Model.realEstates.Items.ElementAt(i).Price  -  @Model.realEstates.Items.ElementAt(i).acreage  <br /><br />    @Model.realEstates.Items.ElementAt(i).Location</p>
                                 </div>
                                 <div class="card-footer">
-                                    <small class="text-muted">@Model[i].CreateTime</small>
+                                    <small class="text-muted">@Model.realEstates.Items.ElementAt(i).CreateTime</small>
                                 </div>
                             </a>
                         </div>
@@ -96,10 +103,24 @@
             </div>
         }
     </div>
-
-    @*@{
-            var prevDisabled = !Model.Brands.HasPreviousPage ? "disabled" : "";
-            var nextDisabled = !Model.Brands.HasNextPage ? "disabled" : "";
-        }*@
-
 </div>
+
+@{
+    var prevDisabled = !Model.realEstates.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.realEstates.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.realEstates.SortOrder"
+   asp-route-pageIndex="@(Model.realEstates.Page - 1)"
+   asp-route-currentFilter="@Model.realEstates.Search"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.realEstates.SortOrder"
+   asp-route-pageIndex="@(Model.realEstates.Page + 1)"
+   asp-route-currentFilter="@Model.realEstates.Search"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>

@@ -8,7 +8,8 @@ namespace KhoaLuanTotNghiep_CustomerSite.Service
 {
     public interface IRealEstateApiClient
     {
-        Task<IEnumerable<RealEstateModel>> GetProducts();
+        //Task<PagedResponseDto<RealEstateModel>> GetProducts(RealEstateCriteriaDto realEstateCriteriaDto);
+        Task<ICollection<RealEstateModel>> GetProducts();
 
         Task<RealEstateModel> GetProductById(string id);
 

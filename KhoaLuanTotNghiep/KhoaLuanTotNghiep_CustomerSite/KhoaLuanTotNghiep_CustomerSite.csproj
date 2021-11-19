@@ -30,6 +30,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\KhoaLuanTotNghiep\KhoaLuanTotNghiep_BackEnd.csproj" />
 		<ProjectReference Include="..\ShareModel\ShareModel.csproj" />
 	</ItemGroup>
 
