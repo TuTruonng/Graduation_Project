@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Newtonsoft.Json;
+using share.Constant;
 using ShareModel;
 using ShareModel.Constant;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -25,6 +27,22 @@ namespace KhoaLuanTotNghiep_CustomerSite.Service
             _httpContextAccessor = httpContextAccessor;
             //_configuration = configuration;
         }
+
+        //public async Task<PageResponse<RealEstateModel>> GetProductAsync(RealEstateCriteria realCriteria)
+        //{
+        //    var client = _httpClientFactory.CreateClient(ServiceConstants.BACK_END_NAMED_CLIENT);
+
+        //    var Search = realCriteria.Search;
+
+
+        //    var queryString = $"Search={Search}";
+        //    var response = await client
+        //        .GetAsync($"{EndpointConstants.GET_REALESTATES}");
+
+        //    response.EnsureSuccessStatusCode();
+        //    var pagedProducts = await response.Content.ReadAsAsync<PageResponse<RealEstateModel>>();
+        //    return pagedProducts;
+        //}
         public async Task<IEnumerable<RealEstateModel>> GetProducts()
         {
             var client = _httpClientFactory.CreateClient(ServiceConstants.BACK_END_NAMED_CLIENT);
@@ -50,6 +68,35 @@ namespace KhoaLuanTotNghiep_CustomerSite.Service
             response.EnsureSuccessStatusCode();
             var real_category = await response.Content.ReadAsAsync<IEnumerable<RealEstatefromCategory>>();
             return real_category;
+        }
+
+        public async Task<bool> CreateRealEstates(RealEstateCreateRequest realEstateModel)
+        {
+            var realRequest = new RealEstateCreateRequest
+            {
+                UserID = "cb5033df-419d-4268-89cf-a719c05e3b26",
+                CategoryID = realEstateModel.CategoryID,
+                Title = realEstateModel.Title,
+                Price = realEstateModel.Price,
+                Image = realEstateModel.Image,
+                Description = realEstateModel.Description,
+                Acgreage = realEstateModel.Acgreage,
+                Approve = 0,
+                Status = realEstateModel.Status,
+                CreateTime = DateTime.Now,
+                UpdateTime = DateTime.Now,
+                Location = realEstateModel.Location,
+            };
+
+            var json = JsonConvert.SerializeObject(realRequest);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var client = _httpClientFactory.CreateClient(ServiceConstants.BACK_END_NAMED_CLIENT);
+            var response = await client.PostAsync(EndpointConstants.GET_REALESTATES, data);
+
+            response.EnsureSuccessStatusCode();
+
+            return await Task.FromResult(true);
         }
 
         public async Task<IList<RateResponse>> GetListRatings()

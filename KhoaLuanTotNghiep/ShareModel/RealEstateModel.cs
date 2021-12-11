@@ -25,9 +25,7 @@ namespace ShareModel
 
         public string Description { get; set; }
 
-        public string acreage { get; set; }
-
-        public string Slug { get; set; }
+        public string Acgreage { get; set; }
 
         public int Approve { get; set; }
 
@@ -35,8 +33,9 @@ namespace ShareModel
 
         public DateTime UpdateTime { get; set; }
 
-        public List<RateResponse> Rates { get; set; }
-        public string Status { get; set; }
+        public int Status { get; set; }
+
+        public UserModel users { get; set; }
 
         public int PhoneNumber { get; set; }
 

@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace KhoaLuanTotNghiep_BackEnd.Service
 {
-    public class UserService:IUser
+    public class UserService : IUser
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public UserService (ApplicationDbContext dbContext)
+        public UserService(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -23,5 +23,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             var user = await _dbContext.Users.ToListAsync();
             return user;
         }
+
+        //public async
     }
 }

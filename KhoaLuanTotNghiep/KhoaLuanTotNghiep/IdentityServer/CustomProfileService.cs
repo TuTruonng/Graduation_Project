@@ -50,6 +50,13 @@ namespace KhoaLuanTotNghiep_BackEnd.IdentityServer
                 };
 
                 var userRoles = await _userManager.GetRolesAsync(user);
+
+                //if (!result.Succeeded)
+                //{
+                //    ViewBag.Error = "Invalid Username or Password";
+                //    return View("Login", loginVm);
+                //}
+
                 foreach (var userRole in userRoles)
                 {
                     claims.Add(new Claim(JwtClaimTypes.Role, userRole));

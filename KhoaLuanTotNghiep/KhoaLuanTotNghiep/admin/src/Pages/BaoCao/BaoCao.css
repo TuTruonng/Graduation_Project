@@ -1,0 +1,43 @@
+.form {   
+    text-align: center;
+    background-color: #e9d8f4;
+    height: 500px;
+  }
+  .input-form{
+    width: 900px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+  }
+  .content-wrapper{
+    width: 1500px;
+    
+  }
+  .input-form {
+   
+      width: 900px;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+    
+  }
+
+  #h3{
+    border-style: solid LightGray;
+    border-radius: 10px;
+    color: black;
+    height: 60px;
+    text-align: center;
+    font-size: 34px;
+    width: 1300px;
+    margin-left: 100px;
+  }
+  .button-excel{
+    background-color: #B22222;
+    font-size: 16px;
+    color: #FFFAFA;
+    width: 130px;
+    height: 44px;
+    margin-left: 83%;
+
+  }

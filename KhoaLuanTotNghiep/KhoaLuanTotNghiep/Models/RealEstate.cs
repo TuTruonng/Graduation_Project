@@ -20,11 +20,9 @@ namespace KhoaLuanTotNghiep_BackEnd.Models
 
         public string Acgreage { get; set; }
 
-        public string Slug { get; set; }
-
         public int Approve { get; set; }
 
-        public string Status { get; set; }
+        public int Status { get; set; }
 
         public string Location { get; set; }
 

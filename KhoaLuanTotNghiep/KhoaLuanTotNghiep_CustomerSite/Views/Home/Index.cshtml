@@ -1,7 +1,9 @@
-﻿@model IList<ShareModel.RealEstateModel>
+﻿@*@model KhoaLuanTotNghiep_CustomerSite.ViewModel.searchModel*@
+@model IList<ShareModel.RealEstateModel>
+
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="~/css/app.css" />
 }
 
 @{ ViewData["Title"] = "Home Page"; }
@@ -40,21 +42,21 @@
         <div id="frm-main" asp-controller="Movies" asp-action="Index" method="get" ">
             <div class="col height d-flex justify-content-center align-items-center" style="width: 100%; height: 100%">
                 <div class="dropdown" id="drop-category">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Loại Nhà Dất
-                    </button>
-                    <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Căn hộ, chung cứ</a>
-                        <a class="dropdown-item" href="#">Nhà riêng</a>
-                        <a class="dropdown-item" href="#">Nhà mặt phố</a>
-                        <a class="dropdown-item" href="#">Nhà trọ</a>
-                        <a class="dropdown-item" href="#">Văn phòng</a>
-                        <a class="dropdown-item" href="#">Cửa hàng</a>
-                    </span>
+                    <select name="cate" style="text-align:center">
+                        @await Component.InvokeAsync("Dropdown")
+                        @*<option value="0">Tất Cả Nhà Đất</option>
+                            <option value="1">Nhà Đất Bán</option>
+                            <option value="2">Nhà Cho Thuê</option>
+                            <option value="3">Dự Án</option>*@
+                    </select>
+                    @*<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Loại Nhà Dất
+                        </button>*@
+
                 </div>
                 <div class="search">
                     <i class="fa fa-search"></i>
-                    <input type="text" class="form-control" placeholder="Have a question? Ask Now">
+                    <input class="form-control" type="search" name="searchString" value="a" placeholder="Search..." aria-label="Search">
                     <button class="btn btn-primary d-flex justify-content-center align-items-center">Tìm kiếm</button>
                 </div>
             </div>
@@ -79,12 +81,12 @@
                     int j = 0;
                     for (; j <= 2 && i + j < Model.Count(); j++)
                     {
-                        <div class="col-md-4">
+                        <div class="col-md-4" id="row-item">
                             <a class="card" asp-action="Details" asp-controller="RealEstate" asp-route-id="@Model[i].RealEstateID">
                                 <img class="card-img-top" src="@Model[i].Image" alt="Card image cap">
                                 <div class="card-body">
                                     <p class="card-title">@Model[i].Title</p>
-                                    <p class="card-text">@Model[i].Price  -  @Model[i].acreage  <br /><br />    @Model[i].Location</p>
+                                    <p class="card-text">@Model[i].Price  -  @Model[i].Acgreage  <br /><br />    @Model[i].Location</p>
                                 </div>
                                 <div class="card-footer">
                                     <small class="text-muted">@Model[i].CreateTime</small>
@@ -94,6 +96,31 @@
                     }
                 }
             </div>
+            <br />
         }
+
+        @*@for (int i = 0; i < Model.Products.Items.Count(); i += 3)
+            {
+                <div class="row">
+                    @{
+                        int j = 0;
+                        for (; j <= 2 && i + j < Model.Products.Items.Count(); j++)
+                        {
+                            <div class="col-md-4">
+                                <a class="card" asp-action="Details" asp-controller="RealEstate" asp-route-id="@Model.Products.Items.ElementAt(i).RealEstateID">
+                                    <img class="card-img-top" src="@Model.Products.Items.ElementAt(i).Image" alt="Card image cap">
+                                    <div class="card-body">
+                                        <p class="card-title">@Model.Products.Items.ElementAt(i).Title</p>
+                                        <p class="card-text">@Model.Products.Items.ElementAt(i).Price  -  @Model.Products.Items.ElementAt(i).Acgreage  <br /><br />    @Model.Products.Items.ElementAt(i).Location</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="text-muted">@Model.Products.Items.ElementAt(i).CreateTime</small>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    }
+                </div>
+            }*@
     </div>
 </div>

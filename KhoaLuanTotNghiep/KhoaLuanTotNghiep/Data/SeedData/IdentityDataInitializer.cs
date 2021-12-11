@@ -10,53 +10,70 @@ namespace KhoaLuanTotNghiep_BackEnd.Data.SeedData
 {
     public static class IdentityDataInitializer
     {
-        public static void SeedRoles(RoleManager<IdentityRole> roleManager)
+        public static async Task SeedAsync(UserManager<User> userManager)
         {
-            if (!roleManager.RoleExistsAsync(SecurityConstants.USER_ROLE).Result)
+            if (!userManager.Users.Any())
             {
-                IdentityRole role = new IdentityRole();
-                role.Name = SecurityConstants.USER_ROLE;
-                IdentityResult roleResult = roleManager.CreateAsync(role).Result;
+                var adminHCM = new User
+                {
+                    UserName = "adminhcm",
+                    Status = true
+                };
+
+                await userManager.CreateAsync(adminHCM, "123456");
             }
 
-            if (!roleManager.RoleExistsAsync(SecurityConstants.ADMINISTRATION_ROLE).Result)
+            if (!userManager.Users.Any())
             {
-                IdentityRole role = new IdentityRole();
-                role.Name = SecurityConstants.ADMINISTRATION_ROLE;
-                IdentityResult roleResult = roleManager.CreateAsync(role).Result;
+                var admin1 = new User
+                {
+                    UserName = "admin1",
+                    Email = "admin1@gmail.com",
+                    FullName = "Admin 1",
+                    Status = true,
+                    ChangePassword = false
+                };
+                await userManager.CreateAsync(admin1, "123456");
             }
+            if (!userManager.Users.Any())
+            {
+                var admin2 = new User
+                {
+                    UserName = "admin2",
+                    Email = "admin1@gmail.com",
+                    FullName = "Admin 2",
+                    Status = true,
+                    ChangePassword = false
+                };
+                await userManager.CreateAsync(admin2, "123456");
+            }
+
         }
 
-        public static void SeedUsers(UserManager<User> userManager)
+        public static async Task SeedUsersAsync(UserManager<User> userManager)
         {
-            if (userManager.FindByNameAsync("user").Result == null)
+            if (userManager.FindByNameAsync("staff").Result == null)
             {
                 User user = new User();
-                user.UserName = "user";
+                user.UserName = "staff";
                 user.Email = "user@gmail.com";
+                user.Status = false;
 
-                IdentityResult result = userManager.CreateAsync(user, "User@123").Result;
-
-                if (result.Succeeded)
-                {
-                    userManager.AddToRoleAsync(user, SecurityConstants.USER_ROLE).Wait();
-                }
+                await userManager.CreateAsync(user, "123456");
             }
 
 
-            if (userManager.FindByNameAsync("admin").Result == null)
+            if (userManager.FindByNameAsync("adminhn").Result == null)
             {
                 User user = new User();
-                user.UserName = "admin";
-                user.Email = "admin@gmail.com";
+                user.UserName = "adminhn";
+                user.Email = "adminhn@gmail.com";
+                user.Status = true;
 
-                IdentityResult result = userManager.CreateAsync(user, "Admin@123").Result;
-
-                if (result.Succeeded)
-                {
-                    userManager.AddToRoleAsync(user, SecurityConstants.ADMINISTRATION_ROLE).Wait();
-                }
+                await userManager.CreateAsync(user, "123456");
             }
+
+
         }
     }
 }

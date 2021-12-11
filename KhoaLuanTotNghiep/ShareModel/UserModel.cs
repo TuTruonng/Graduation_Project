@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ShareModel
 {
-    
-   public class UserModel
+
+    public class UserModel
     {
         public string UserId { get; set; }
 
@@ -15,11 +15,8 @@ namespace ShareModel
 
         public string UserName { get; set; }
 
-        public DateTime? JoinedDate { get; set; }
+        public int PhoneNumber { get; set; }
 
         public string RoleName { get; set; }
-
-
-        public bool Status { get; set; }
     }
 }

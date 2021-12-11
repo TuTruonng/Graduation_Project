@@ -1,12 +1,15 @@
-﻿using KhoaLuanTotNghiep.Data;
+﻿using AutoMapper;
+using KhoaLuanTotNghiep.Data;
 using KhoaLuanTotNghiep_BackEnd.Enum;
 using KhoaLuanTotNghiep_BackEnd.InterfaceService;
 using KhoaLuanTotNghiep_BackEnd.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShareModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace KhoaLuanTotNghiep_BackEnd.Service
@@ -14,10 +17,12 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
     public class RealEstateService : IRealEstate
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public RealEstateService(ApplicationDbContext dbContext)
+        public RealEstateService(ApplicationDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task<ICollection<RealEstateModel>> GetAllAsync()
@@ -34,8 +39,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
                 Price = p.Price,
                 Image = p.Image,
                 Description = p.Description,
-                acreage = p.Acgreage,
-                Slug = p.Slug,
+                Acgreage = p.Acgreage,
                 Approve = p.Approve,
                 Status = p.Status,
                 PhoneNumber = Int32.Parse(p.user.PhoneNumber),
@@ -44,30 +48,80 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
                 Location = p.Location,
             }).ToListAsync();
             return product;
-
         }
+
+        //  public async Task<ActionResult<PageResponse<RealEstateModel>>> Getproduct(
+        //[FromQuery] RealEstateCriteria productCriteriaDto,
+        //CancellationToken cancellationToken)
+        //  {
+        //      var productQuery = _dbContext
+        //                              .realEstates
+        //                              .Include(p => p.category)
+        //                              .Include(p => p.user)
+        //                              .AsQueryable();
+
+        //      productQuery = ProductFilter(productQuery, productCriteriaDto);
+
+        //      var pageProducts = await productQuery
+        //                                  .AsNoTracking()
+        //                                  .PaginateAsync(productCriteriaDto, cancellationToken);
+
+        //      var productDto = _mapper.Map<IEnumerable<RealEstateModel>>(pageProducts.Items);
+        //      return new PageResponse<RealEstateModel>
+        //      {
+        //          TotalPages = pageProducts.TotalPages,
+        //          TotalItems = pageProducts.TotalItems,
+        //          Search = productCriteriaDto.Search,
+        //          Items = productDto
+        //      };
+        //  }
+
+        //  #region Private Method
+        //  private IQueryable<RealEstate> ProductFilter(
+        //      IQueryable<RealEstate> productQuery,
+        //      RealEstateCriteria productCriteriaDto)
+        //  {
+        //      if (!String.IsNullOrEmpty(productCriteriaDto.Search))
+        //      {
+        //          productQuery = productQuery.Where(b =>
+        //              b.Title.Contains(productCriteriaDto.Search));
+        //      }
+
+        //      //if (productCriteriaDto.Types != null)
+        //      //{
+        //      //    for (int i = 0; i < productCriteriaDto.Types.Length; i++)
+        //      //    {
+        //      //        if (productCriteriaDto.Types[i] != "0")
+        //      //        {
+        //      //            productQuery = productQuery.Where(x =>
+        //      //            productCriteriaDto.Types.Any(t => t == x.CategoryId));
+        //      //        }
+        //      //    }
+        //      //}
+
+        //      return productQuery;
+        //  }
+        //  #endregion
 
         public async Task<RealEstateCreateRequest> CreateRealEstatesAsync(RealEstateCreateRequest realEstateModel)
         {
-            var realEstate = await _dbContext.categories.FirstOrDefaultAsync(p => p.CategoryID == realEstateModel.CategoryID);
-            if (realEstate == null)
-            {
-                throw new Exception("Have not Category");
-            }
-            realEstateModel.RealEstateID = Guid.NewGuid().ToString();
+            //var realEstate = await _dbContext.categories.FirstOrDefaultAsync(p => p.CategoryID == realEstateModel.CategoryID);
+            //if (realEstate == null)
+            //{
+            //    throw new Exception("Have not Category");
+            //}
+
             var Model = new RealEstate
             {
-                RealEstateID = realEstateModel.RealEstateID,
+                RealEstateID = Guid.NewGuid().ToString(),
                 CategoryID = realEstateModel.CategoryID,
                 UserID = realEstateModel.UserID,
-                ReportID = realEstateModel.ReportID,
                 Title = realEstateModel.Title,
                 Price = realEstateModel.Price,
                 Image = realEstateModel.Image,
                 Description = realEstateModel.Description,
-                Acgreage = realEstateModel.acreage,
-                Slug = realEstateModel.Slug,
-                Approve = (int)StateApprove.FALSE,
+                Acgreage = realEstateModel.Acgreage,
+                Approve = realEstateModel.Approve,
                 Status = realEstateModel.Status,
                 CreateTime = realEstateModel.CreateTime,
                 UpdateTime = realEstateModel.UpdateTime,
@@ -97,8 +151,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
                 Price = p.Price,
                 Image = p.Image,
                 Description = p.Description,
-                acreage = p.Acgreage,
-                Slug = p.Slug,
+                Acgreage = p.Acgreage,
                 Approve = p.Approve,
                 Status = p.Status,
                 PhoneNumber = Int32.Parse(p.user.PhoneNumber),

@@ -19,8 +19,16 @@ namespace KhoaLuanTotNghiep_BackEnd.Models
         [PersonalData]
         public string FullName { get; set; }
 
+        [PersonalData]
+        public bool Status { get; set; }
+
+        [PersonalData]
+        public bool ChangePassword { get; set; }
+
+        [PersonalData]
         public decimal Salary { get; set; }
 
+        [PersonalData]
         public int Point { get; set; }
 
         public ICollection<News> news { get; set; }

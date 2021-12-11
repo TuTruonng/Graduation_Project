@@ -1,0 +1,137 @@
+﻿@page
+@model KhoaLuanTotNghiep_CustomerSite.Pages.RealEstates.CreateModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/dropzone.css" />
+    <link rel="stylesheet" href="~/css/app.css" />
+}
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<hr />
+<div class="row">
+    <div class="container">
+        <form enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <select name="cate" style="text-align:center">
+                <option value="1">Nhà Đất Bán</option>
+                <option value="2">Nhà Cho Thuê</option>
+                <option value="3">Dự Án</option>
+            </select>
+            <div class="title-create">
+                <h1>ĐĂNG TIN RAO BÁN, CHO THUÊ NHÀ ĐẤT</h1>
+                <p>(Quý vị nhập thông tin nhà đất cần bán hoặc cho thuê vào các mục dưới đây)</p>
+            </div>
+            <br />
+            <div class="mb-3">
+                <label asp-for="realEstate.Title">Tiêu Đề</label>
+                <input asp-for="realEstate.Title" class="form-control" />
+                <span asp-validation-for="realEstate.Title" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="mb-3">
+                <label asp-for="realEstate.Price">Giá</label>
+                <input asp-for="realEstate.Price" class="form-control" />
+                <span asp-validation-for="realEstate.Price" class="text-danger"></span>
+            </div>
+            <br />
+
+            @*<div class="field-info">
+                    <div class="title-info">
+                        <h4 style="color: white">Hình Ảnh</h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input name="image" type="file" class="form-control" accept="image/*" />
+                            </div>
+                            <input type="submit" value="Upload" class="btn btn-default" />0
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3>Recent Upload</h3>
+
+                        <div>
+                            <img id="recentImage" class="img-responsive img-thumbnail" style="width: 500px; height: 500px" />
+                        </div>
+                    </div>w
+                </div>*@
+            <br />
+            <div class="field-info">
+                <div class="title-info">
+                    <h4 style="color: white">Thông Tin Mô Tả</h4>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="realEstate.Description"></label>
+                    <input asp-for="realEstate.Description" class="form-control" />
+                    <span asp-validation-for="realEstate.Description" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="field-info">
+                <div class="title-info">
+                    <h4 style="color: white">Diện Tích</h4>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="realEstate.Acgreage"></label>
+                    <input asp-for="realEstate.Acgreage" class="form-control" />
+                    <span asp-validation-for="realEstate.Acgreage" class="text-danger"></span>
+                </div>
+                <br />
+            </div>
+            <br />
+            <div class="field-info">
+                <div class="title-info">
+                    <h4 style="color: white">Vị Trí</h4>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="realEstate.Location">Vị Trí</label>
+                    <input asp-for="realEstate.Location" class="form-control" />
+                    <span asp-validation-for="realEstate.Location" class="text-danger"></span>
+                </div>
+                <br />
+            </div>
+            <br />
+            <div class="field-info">
+                <div class="title-info">
+                    <h4 style="color: white">Hinh Ảnh</h4>
+                </div>
+                <div id="backend_upload">
+                    <input id="fileupload" type="file" name="images" multiple accept="image/gif, image/jpeg, image/png">
+                </div>
+                <br />
+            </div>
+
+            <div class="mb-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+@section Scripts {
+    <script src="~/lib/dropzone.js"></script>
+    <script>
+        $("#imageUploadForm").dropzone({
+            url: "/imageupload",
+            paramName: "image",
+            acceptedFiles: "image/*",
+            success: function (file) {
+                $("#recentImage").attr('src', `./uploads/${file.name}`);
+            }
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

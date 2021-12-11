@@ -8,6 +8,6 @@ namespace ShareModel.Constant
 {
     public static class AuhthorityConstants
     {
-        public static string AUTHORITY = "https://localhost:44375";
+        public static string AUTHORITY = "https://localhost:5001";
     }
 }

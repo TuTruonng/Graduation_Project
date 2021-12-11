@@ -1,5 +1,7 @@
-﻿using KhoaLuanTotNghiep_CustomerSite.Service;
+﻿using AutoMapper;
+using KhoaLuanTotNghiep_CustomerSite.Service;
 using Microsoft.AspNetCore.Mvc;
+using ShareModel;
 using System.Threading.Tasks;
 
 namespace KhoaLuanTotNghiep_CustomerSite.Controllers
@@ -8,9 +10,11 @@ namespace KhoaLuanTotNghiep_CustomerSite.Controllers
     {
         private readonly IRealEstateApiClient _realestateApiClient;
 
+
         public RealEstateController(IRealEstateApiClient productApiClient)
         {
             _realestateApiClient = productApiClient;
+
         }
 
         [Route("/RealEstate")]
@@ -27,7 +31,21 @@ namespace KhoaLuanTotNghiep_CustomerSite.Controllers
             return View(result);
         }
 
-        [Route("/RealEstate/{id}")] 
+        [Route("/RealEstate/Create")]
+        public async Task<IActionResult> Create([FromForm] RealEstateCreateRequest realEstateModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(realEstateModel);
+            }
+
+            var result = await _realestateApiClient.CreateRealEstates(realEstateModel);
+            if (result == false)
+                return NotFound();
+            return View(result);
+        }
+
+        [Route("/RealEstate/{id}")]
         public async Task<IActionResult> Details(string id)
         {
             if (!ModelState.IsValid && string.IsNullOrEmpty(id))

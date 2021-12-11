@@ -5,12 +5,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Threading.Tasks;
 
 namespace KhoaLuanTotNghiep_BackEnd
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
 
@@ -18,21 +19,13 @@ namespace KhoaLuanTotNghiep_BackEnd
             {
                 var serviceProvider = scope.ServiceProvider;
 
-                try
-                {
-                    var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
-                    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+                //var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-                    IdentityDataInitializer.SeedRoles(roleManager);
-                    IdentityDataInitializer.SeedUsers(userManager);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
+                await IdentityDataInitializer.SeedUsersAsync(userManager);
+                //await IdentityDataInitializer.SeedAsync(userManager);
             }
-
-            host.Run();
+            await host.RunAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

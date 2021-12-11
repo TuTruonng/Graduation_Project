@@ -1,0 +1,9 @@
+﻿
+@model IList<ShareModel.CategoryModel>
+
+@foreach (var category in Model)
+{
+    <option>
+        <p class="nav-link text-dark" asp-controller="RealEstate" asp-action="CategoryById" asp-route-categoryName="@category.CategoryName">@category.CategoryName</p>
+    </option>
+}

@@ -1,19 +1,19 @@
+using CloudinaryDotNet;
+using KhoaLuanTotNghiep_CustomerSite.Datas;
 using KhoaLuanTotNghiep_CustomerSite.Extensions.ServiceCollection;
 using KhoaLuanTotNghiep_CustomerSite.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using ShareModel.Constant;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace KhoaLuanTotNghiep_CustomerSite
 {
@@ -58,9 +58,26 @@ namespace KhoaLuanTotNghiep_CustomerSite
                     };
                 });
 
+            var cloudName = Configuration.GetValue<string>("AccountSettings:CloudName");
+            var apiKey = Configuration.GetValue<string>("AccountSettings:ApiKey");
+            var apiSecret = Configuration.GetValue<string>("AccountSettings:ApiSecret");
+
+            if (new[] { cloudName, apiKey, apiSecret }.Any(string.IsNullOrWhiteSpace))
+            {
+                throw new ArgumentException("Please specify Cloudinary account details!");
+            }
+
+            services.AddSingleton(new Cloudinary(new Account(cloudName, apiKey, apiSecret)));
+
+
+            var dbFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\Cloudinary\\samples";
+            System.IO.Directory.CreateDirectory(dbFolder);
+            services.AddDbContext<PhotosDbContext>(options => options.UseSqlite($"Data Source ={dbFolder}\\PhotosCoreDb.sqlite"));
+
             services.AddHttpContextAccessor();
             services.AddCustomHttpClient(Configuration);
             services.AddRazorPages();
+            services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Latest);
             services.AddHttpClient();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllersWithViews();
@@ -104,6 +121,11 @@ namespace KhoaLuanTotNghiep_CustomerSite
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapRazorPages();
             });
         }
     }

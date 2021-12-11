@@ -1,9 +1,9 @@
-﻿using KhoaLuanTotNghiep_BackEnd.InterfaceService;
+﻿using AutoMapper;
+using KhoaLuanTotNghiep.Data;
+using KhoaLuanTotNghiep_BackEnd.InterfaceService;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using ShareModel;
-using ShareModel.Constant;
 using System.Threading.Tasks;
 
 namespace KhoaLuanTotNghiep_BackEnd.Controllers
@@ -15,15 +15,18 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
 
     public class RealEstateController : ControllerBase
     {
+        private readonly ApplicationDbContext _dbContext;
         public readonly IRealEstate _realStateService;
+        private readonly IMapper _mapper;
 
-        public RealEstateController(IRealEstate realStatrService)
+        public RealEstateController(ApplicationDbContext dbContext, IRealEstate realStatrService, IMapper mapper)
         {
+            _dbContext = dbContext;
             _realStateService = realStatrService;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<ActionResult<RealEstateModel>> Get()
         {
             if (!ModelState.IsValid)
@@ -70,10 +73,9 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
         }
 
         [HttpPost]
-
         [AllowAnonymous]
         //[Authorize(Policy = SecurityConstants.ADMIN_ROLE_POLICY)]
-        public async Task<ActionResult<RealEstateCreateRequest>> CreateAsync([FromForm] RealEstateCreateRequest productShare)
+        public async Task<ActionResult> CreateAsync([FromBody] RealEstateCreateRequest productShare)
         {
             if (!ModelState.IsValid)
             {

@@ -1,0 +1,89 @@
+.form {   
+    text-align: center;
+    background-color: #e9d8f4;
+    height: 500px;
+  }
+  
+  .submit {
+    background-color: #58257b;
+    color: white;
+    width: 90px;
+    height: 40px; 
+    border: 2px solid #555555;
+    border-radius: 10px;
+   
+      
+  }
+  .cancel {
+    background-color:aliceblue;
+    color: black;
+    width: 90px;
+    margin: 100px;
+    height: 40px;
+    border: 2px solid #555555;
+    border-radius: 10px;
+    margin-left: 50px;
+  }
+
+  .create{
+    width: 100px;
+    background-color: #e9d8f4;
+    color: #58257b;
+    font-weight: bold;
+  }
+  .create:hover{
+    background-color: #58257b;
+    color: aliceblue;
+    font-weight: bold;
+  }
+  
+  .text{
+      font-size: 18px;  
+      margin-right: 750px; 
+      color: #58257b
+  
+  }
+  .input-form{
+    width: 900px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+  }
+  .content-wrapper{
+    width: 1500px;
+    
+  }
+  .td-ID{
+      width: 12%;
+  }
+  .td-Descrip{
+    width: 28%;
+  }
+  .td-Name{
+    width:15%;
+  }
+  #h4{
+    border-style:3px solid LightGray;
+    border-radius: 10px;
+    color: black;
+    height: 60px;
+    text-align: center;
+    font-size: 34px;
+    width: 1400px;
+    margin-left: 50px;
+  }
+  #h3{
+    border-style: solid LightGray;
+    border-radius: 10px;
+    color: black;
+    height: 60px;
+    text-align: center;
+    font-size: 34px;
+    width: 1300px;
+    margin-left: 100px;
+  }
+  span{
+    color: red;
+    
+  }
+  
