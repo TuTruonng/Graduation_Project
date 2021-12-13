@@ -6,41 +6,45 @@ import {
     LOGIN,
     UNAUTHORIZE,
     NOTFOUND,
+    REALESTATEMANAGER,
+    EDIT_REALESTATE,
     USERMANAGER,
     CREATEUSER,
-    EDIT_USER,
-    ASSETMANAGER,
-    CREATEASSET,
-    EDIT_ASSET
+    EDIT_USER
 } from '../constants/pages';
 import InLineLoader from '../components/InlineLoader';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import LayoutRoute from './LayoutRoute';
 import LayoutRouteHome from './LayoutRouteHome';
 import PrivateRoute from './PrivateRoute';
+import ListLoaiBDS from '../Pages/LoaiBatDongSan/ListLoaiBDS.js';
+import LoaiBDSForm from '../Pages/LoaiBatDongSan/LoaiBDSForm';
+import ListNhanVien from '../Pages/NhanVien/ListNhanVien';
+import { LIST_CATEGORY, LIST_USER, CREATE_CATEGORY, UPDATE_CATEGORY, UPDATE_NEWS, CREATE_NEWS, 
+  UPDATE_USER, CREATE_USER,LIST_NEWS, LIST_BDS, LIST_REPORT,UPDATE_BDS, CREATE_BDS } from '../Helpers/Router';
+import ListTinTuc from '../Pages/TinTuc/ListTinTuc';
+import TinTucForm from '../Pages/TinTuc/TinTucForm';
+import BDSForm from '../Pages/BatDongSan/BDSForm';
+import ListBaoCao from '../Pages/BaoCao/ListBaoCao';
+import NhanVienForm from'../Pages/NhanVien/NhanVienForm';
+import { AUTH } from "../Constant/pages";
+import { me } from 'src/containers/Authorize/reducer';
 
-
+const ListBDS = lazy(() => import('../Pages/RealEstateList/TableFunction/List'));
+const EditBDS = lazy(() => import('../Pages/RealEstateList/TableFunction/Update'));
 const Home = lazy(() => import('../containers/Home'));
 const Login = lazy(() => import('../containers/Authorize'));
 const ChangePassword = lazy(() => import('../containers/ChangePassword'));
 const NotFound = lazy(() => import('../containers/NotFound'));
 const UnAuthorization = lazy(() => import('../containers/UnAuthorization'));
-// const UserManager = lazy(() => import('../containers/UserManager'));
-// const CreateUser = lazy(
-//     () => import('../containers/UsersList/TableFunctions/Create')
-// );
-// const EditUser = lazy(
-//     () => import('../containers/UsersList/TableFunctions/Update')
-// );
+const UserManager = lazy(() => import('../Pages/UsersList/UserManager'));
+const CreateUser = lazy(
+    () => import('../Pages/UsersList/TableFunctions/Create')
+);
+const EditUser = lazy(
+    () => import('../Pages/UsersList/TableFunctions/Update')
+);
 
-// const CreateAsset = lazy(
-//     () => import('../containers/AssetsList/TableFunctions/Create')
-// );
-// const EditAsset = lazy(
-//     () => import('../containers/AssetsList/TableFunctions/Update')
-// );
-
-// const AssetManager = lazy(() => import('../containers/AssetsList/index'));
 
 const SusspenseLoading = ({ children }) => (
     <Suspense fallback={<InLineLoader />}>{children}</Suspense>
@@ -51,9 +55,9 @@ const Routes = () => {
     const { isAuth, account } = useAppSelector((state) => state.authReducer);
     const dispatch = useAppDispatch();
 
-    // useEffect(() => {
-    //     dispatch(me());
-    // }, []);
+    useEffect(() => {
+        dispatch(me());
+    }, []);
 
     return (
         <SusspenseLoading>
@@ -71,7 +75,13 @@ const Routes = () => {
                 <LayoutRoute exact path={NOTFOUND}>
                     <NotFound />
                 </LayoutRoute>
-                {/* <PrivateRoute exact path={USERMANAGER}>
+                <PrivateRoute exact path={REALESTATEMANAGER}>
+                    <ListBDS />
+                </PrivateRoute>
+                <PrivateRoute exact path={EDIT_REALESTATE}>
+                    <EditBDS />
+                </PrivateRoute>
+                <PrivateRoute exact path={USERMANAGER}>
                     <UserManager />
                 </PrivateRoute>
                 <PrivateRoute exact path={CREATEUSER}>
@@ -80,18 +90,6 @@ const Routes = () => {
                 <PrivateRoute exact path={EDIT_USER}>
                     <EditUser />
                 </PrivateRoute>
-                <PrivateRoute exact path={ASSETMANAGER}>
-                    <AssetManager />
-                </PrivateRoute>
-                <PrivateRoute exact path={CREATEASSET}>
-                    <CreateAsset />
-                </PrivateRoute>
-                <PrivateRoute exact path={EDIT_ASSET}>
-                    <EditAsset />
-                </PrivateRoute> */}
-                {/* <PrivateRoute exact path={CHANGEPASSWORD}>
-                      <ChangePassword />
-                    </PrivateRoute> */}
             </Switch>
         </SusspenseLoading>
     );

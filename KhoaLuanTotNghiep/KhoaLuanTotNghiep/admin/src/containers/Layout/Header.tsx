@@ -93,8 +93,9 @@ const Header = () => {
     };
 
     const handleConfirmedLogout = () => {
-        history.push(HOME);
+        history.push(HOME);  
         dispatch(logout());
+        window.location.reload();
     };
 
     const handleShowErrorMessage = (message) => {

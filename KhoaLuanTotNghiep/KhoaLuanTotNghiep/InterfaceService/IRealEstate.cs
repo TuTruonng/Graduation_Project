@@ -13,6 +13,8 @@ namespace KhoaLuanTotNghiep_BackEnd.InterfaceService
     {
         Task<ICollection<RealEstateModel>> GetAllAsync();
 
+        Task<ICollection<RealEstateModel>> GetByUserNameAsync(string userName);
+
         //Task<ActionResult<PageResponse<RealEstateModel>>> Getproduct(
         // [FromQuery] RealEstateCriteria productCriteriaDto,
         // CancellationToken cancellationToken);

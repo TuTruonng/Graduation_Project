@@ -33,15 +33,11 @@ const AuthSlice = createSlice({
         setAccount: (state: AuthState, action: PayloadAction<IAccount>): AuthState => {
             const account = action.payload;
             if (account?.token) {
-                console.log('aaccdscdskj');
                 setLocalStorage('token', account.token);
                 setLocalStorage('role', account.role);
                 // account.role = getLocalStorage('role');
                 // localStorage.setItem('token', account.token);
                 request.setAuthentication(account.token);
-
-                // getUsersRequest().then;
-                // account.changePassword
             }
 
             return {

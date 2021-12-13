@@ -1,11 +1,20 @@
+.tblRealEstate{
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: auto;
+}
+
+.body{
+  width: 100%;
+}
+
 .form {   
-    text-align: center;
-    background-color: #e9d8f4;
-    margin-left: 250px;
-    width: 100%;
+    text-align: left;
+    background-color: blue;
+    margin-left: 50px;
     height: auto;
   }
-
   
   .submit {
     background-color: #58257b;
@@ -27,17 +36,8 @@
     margin-left: 50px;
   }
 
-  .table{
-    width: 2000px;
-  }
-
   .table thead th{
     font-size: 80%;
-  }
-
-  .table .td .id{
-    font-size: 80%;
-    width: 100%;
   }
 
   .text{
@@ -53,7 +53,7 @@
     box-sizing: border-box;
   }
   .content-wrapper{
-    width: 2000px;
+    width: 100%;
   }
   .input-form {
   
@@ -64,17 +64,15 @@
     
   }
 
-  .table td title{
-    color: aqua;
-  }
-
   .img{
-    width: 100px;
+    width: 100%;
+    height: auto;
   }
 
   .title-table{
-    background-color: #58257b;
-    color:white
+    background-color: #dc3545;
+    color:white;
+    width: 100%;
   }
   .title{
     width: 15%;

@@ -12,6 +12,7 @@ import "nprogress/nprogress.css";
 import "react-notifications/lib/notifications.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "./styles/App.scss";
+import AppIndex from "./AppIndex";
 
 library.add(faEyeSlash, faEye, faCalendar)
 NProgress.configure({ minimum: 1 });

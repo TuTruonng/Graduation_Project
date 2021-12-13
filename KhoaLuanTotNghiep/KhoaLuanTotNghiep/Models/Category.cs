@@ -14,7 +14,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Models
 
         public string Description { get; set; }
 
-        public ICollection<RealEstate> realEstates { get; set; }
+        public virtual List<RealEstate> RealEstates { get; set; }
     }
 
 }

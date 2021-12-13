@@ -1,7 +1,9 @@
 ﻿using KhoaLuanTotNghiep.Data;
 using KhoaLuanTotNghiep_BackEnd.Interface;
 using KhoaLuanTotNghiep_BackEnd.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ShareModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +14,170 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
     public class UserService : IUser
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly UserManager<User> _userManager;
 
-        public UserService(ApplicationDbContext dbContext)
+        public UserService(ApplicationDbContext dbContext, UserManager<User> userManager)
         {
             _dbContext = dbContext;
+            _userManager = userManager;
         }
 
-        public async Task<IEnumerable<User>> GetAllUserAsync()
+        public async Task<IEnumerable<UserModel>> GetAdminAsync()
         {
-            var user = await _dbContext.Users.ToListAsync();
-            return user;
+            var adminIdList = (await _userManager.GetUsersInRoleAsync(Roles.Admin)).Select(u => u.Id);
+            var staffIdList = (await _userManager.GetUsersInRoleAsync(Roles.Staff)).Select(u => u.Id);
+
+            var queryable = _dbContext.Users.AsQueryable();
+            queryable = queryable.Where(u => adminIdList.Contains(u.Id) || staffIdList.Contains(u.Id));
+            var users = await queryable.Select(u => new UserModel
+            {
+                UserId = u.Id,
+                FullName = u.FullName,
+                Username = u.UserName,
+                PhoneNumber = u.PhoneNumber,
+                JoinedDate = u.JoinedDate,
+                Email = u.Email,
+                Type = (adminIdList.Contains(u.Id) && staffIdList.Contains(u.Id))
+                    ? string.Join(",", new string[] { Roles.Admin, Roles.Staff }) // Have both 'Admin' and 'Staff' roles
+                    : (adminIdList.Contains(u.Id))
+                        ? Roles.Admin // Have only 'Admin' role
+                        : (staffIdList.Contains(u.Id))
+                            ? Roles.Staff // Have only 'Staff' role
+                            : string.Empty, // Have neither 'Admin' nor 'Staff' role
+                CreateDate = u.CreateDate,
+            }).ToListAsync();
+            return users;
         }
 
-        //public async
+        public async Task<IEnumerable<UserModel>> GetUserAsync()
+        {
+            var userIdList = (await _userManager.GetUsersInRoleAsync(Roles.User)).Select(u => u.Id);
+
+            var queryable = _dbContext.Users.AsQueryable();
+            queryable = queryable.Where(u => userIdList.Contains(u.Id));
+            var users = await queryable.Select(u => new UserModel
+            {
+                UserId = u.Id,
+                FullName = u.FullName,
+                Username = u.UserName,
+                PhoneNumber = u.PhoneNumber,
+                JoinedDate = u.JoinedDate,
+                Email = u.Email,
+                Type = Roles.User,
+                CreateDate = u.CreateDate,
+            }).ToListAsync();
+            return users;
+        }
+
+        public async Task<UserModel> AddAsync(CreateUserModel createUser)
+        {
+            var userCreate = new User
+            {
+                Id = Guid.NewGuid().ToString(),
+                FullName = createUser.FullName,
+                UserName = createUser.Username,
+                PhoneNumber = createUser.PhoneNumber,
+                Email = createUser.Email,
+                JoinedDate = createUser.JoinedDate,
+                CreateDate = createUser.CreateDate,
+                ChangePassword = false,
+                Status = true,
+            };
+            string password = "123456";
+
+            var result1 = await _userManager.CreateAsync(userCreate, password);
+            if (result1.Succeeded)
+            {
+                userCreate = await _userManager.FindByNameAsync(userCreate.UserName);
+                var result2 = await _userManager.AddToRoleAsync(userCreate,
+                    (createUser.Type == Roles.Admin)
+                    ? Roles.Admin
+                    : (createUser.Type == Roles.Staff)
+                    ? Roles.Staff
+                    : Roles.User);
+
+                UserModel userDto = new UserModel();
+                if (result2.Succeeded)
+                {
+                    userDto.UserId = userCreate.Id;
+                    userDto.FullName = userCreate.FullName;
+                    userDto.Username = userCreate.UserName;
+                    userDto.PhoneNumber = userCreate.PhoneNumber;
+                    userDto.Email = userCreate.Email;
+                    userDto.JoinedDate = userCreate.JoinedDate;
+                    userDto.CreateDate = userCreate.CreateDate;
+                    userDto.Type = (createUser.Type == Roles.Admin)
+                        ? Roles.Admin
+                        : (createUser.Type == Roles.Staff)
+                        ? Roles.Staff
+                        : Roles.User;
+                    return userDto;
+                }
+            }
+            return null;
+        }
+
+        public async Task<UserModel> UpdateAsync(string id, EditUserModel editUserDto)
+        {
+            User user = await _userManager.FindByIdAsync(id);
+            {
+                user.FullName = editUserDto.FullName; ;
+                user.Email = editUserDto.Email;
+                user.PhoneNumber = editUserDto.PhoneNumber;
+                user.JoinedDate = editUserDto.JoinedDate;
+            };
+
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                var roles = new string[] { Roles.Admin, Roles.Staff, Roles.User };
+                if (roles.Contains(editUserDto.Type))
+                {
+                    IList<string> userRoles = await _userManager.GetRolesAsync(user);
+
+                    // Remove from current role(s) if have more than 1 role or in different role
+                    // User can only have 1 role (either 'Admin' or 'Staff')
+                    if (userRoles.Count > 1 || !userRoles.Contains(editUserDto.Type))
+                    {
+                        await _userManager.RemoveFromRolesAsync(user, userRoles);
+                        await _userManager.AddToRoleAsync(user, editUserDto.Type);
+                    }
+                }
+                UserModel userDto = new UserModel();
+                userDto.FullName = user.FullName;
+                userDto.PhoneNumber = user.PhoneNumber;
+                userDto.Email = user.Email;
+                userDto.JoinedDate = user.JoinedDate;
+                userDto.Type = (editUserDto.Type == Roles.Admin)
+                    ? Roles.Admin
+                    : (editUserDto.Type == Roles.Staff)
+                    ? Roles.Staff
+                    : Roles.User;
+                return userDto;
+            }
+            return null;
+        }
+
+        public async Task<bool> DisableAsync(string id)
+        {
+            //User user = await _userManager.FindByIdAsync(id);
+            User user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (user == null /*|| user.Status == false*/)
+            {
+                throw new Exception("Error");
+            }
+            user.Status = false;
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> ChangeUserPasswordAsync(ChangeUserPasswordDto changeUserPasswordDto)
+        {
+            User user = await _userManager.FindByNameAsync(changeUserPasswordDto.Username);
+
+            var result = await _userManager.ChangePasswordAsync(user, changeUserPasswordDto.CurrentPassword, changeUserPasswordDto.NewPassword);
+            return result.Succeeded;
+        }
     }
 }

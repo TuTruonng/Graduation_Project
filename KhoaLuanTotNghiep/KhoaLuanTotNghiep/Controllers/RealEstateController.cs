@@ -40,6 +40,22 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
             return Ok(result);
         }
 
+
+        [HttpGet]
+        [Route("name={userName}")]
+        public async Task<ActionResult<RealEstateModel>> GetByUsername(string userName)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var result = await _realStateService.GetByUserNameAsync(userName);
+            if (result == null)
+                return NotFound();
+            return Ok(result);
+        }
+
         [HttpGet]
         [Route("{id}")]
         //[Authorize(Policy = SecurityConstants.ADMIN_ROLE_POLICY)]
@@ -103,14 +119,13 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
         }
 
         [HttpPut("{id}")]
-        [AllowAnonymous]
         //[Authorize(Policy = SecurityConstants.ADMIN_ROLE_POLICY)]
         public async Task<ActionResult<ListApprove>> UpdateAsync(string id, [FromForm] ListApprove model)
         {
-            //if (!ModelState.IsValid && string.IsNullOrEmpty(id))
-            //{
-            //    return BadRequest(id);
-            //}
+            if (!ModelState.IsValid && string.IsNullOrEmpty(id))
+            {
+                return BadRequest(id);
+            }
 
             var result = await _realStateService.UpdateRealEstateAsync(id, model);
             if (result == null)

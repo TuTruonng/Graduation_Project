@@ -34,6 +34,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByNameAsync(request.Username);
+
                 if (user == null)
                 {
                     return BadRequest(new
@@ -51,6 +52,15 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
                     }
                      );
                 }
+                var userRoles = await _userManager.GetRolesAsync(user);
+                if (userRoles.Contains(Roles.User))
+                {
+                    return BadRequest(new
+                    {
+                        message = "Username or password is incorrect. Please try again"
+                    }
+                     );
+                }
                 if (_userManager.FindByNameAsync(request.Username).Result.Status == false)
                 {
                     return BadRequest(new
@@ -61,7 +71,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
                 }
                 if (user != null && await _userManager.CheckPasswordAsync(user, request.Password))
                 {
-                    var userRoles = await _userManager.GetRolesAsync(user);
+                    //var userRoles = await _userManager.GetRolesAsync(user);
                     var authClaims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, request.Username),

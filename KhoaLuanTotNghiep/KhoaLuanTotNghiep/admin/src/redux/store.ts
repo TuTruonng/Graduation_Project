@@ -4,13 +4,15 @@ import {
     combineReducers,
 } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-
 import authReducer from 'src/containers/Authorize/reducer';
-
+import realEstateReducer from 'src/Pages/RealEstateList/reducer';
+import userReducer from 'src/Pages/UsersList/reducer';
 import rootSaga from './sagas/rootSaga';
 
 const reducer = combineReducers({
     authReducer,
+    realEstateReducer,
+    userReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();

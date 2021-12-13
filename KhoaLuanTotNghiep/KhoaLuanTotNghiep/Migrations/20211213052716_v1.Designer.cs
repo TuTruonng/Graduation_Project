@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KhoaLuanTotNghiep_BackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211204110006_v1")]
+    [Migration("20211213052716_v1")]
     partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,13 +88,17 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
             modelBuilder.Entity("KhoaLuanTotNghiep_BackEnd.Models.RealEstate", b =>
                 {
                     b.Property<string>("RealEstateID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Acgreage")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Approve")
-                        .HasColumnType("int");
+                    b.Property<string>("AdminID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("Approve")
+                        .HasColumnType("bit");
 
                     b.Property<string>("CategoryID")
                         .HasColumnType("nvarchar(450)");
@@ -117,8 +121,8 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                     b.Property<string>("ReportID")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -130,6 +134,8 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("RealEstateID");
+
+                    b.HasIndex("AdminID");
 
                     b.HasIndex("CategoryID");
 
@@ -189,9 +195,15 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<bool>("ChangePassword")
+                        .HasColumnType("bit");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -202,6 +214,9 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
 
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("JoinedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -234,6 +249,9 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -397,13 +415,21 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
 
             modelBuilder.Entity("KhoaLuanTotNghiep_BackEnd.Models.RealEstate", b =>
                 {
+                    b.HasOne("KhoaLuanTotNghiep_BackEnd.Models.User", "admin")
+                        .WithMany("RealEstateIdAdmin")
+                        .HasForeignKey("AdminID")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("KhoaLuanTotNghiep_BackEnd.Models.Category", "category")
-                        .WithMany("realEstates")
+                        .WithMany("RealEstates")
                         .HasForeignKey("CategoryID");
 
                     b.HasOne("KhoaLuanTotNghiep_BackEnd.Models.User", "user")
-                        .WithMany()
-                        .HasForeignKey("UserID");
+                        .WithMany("RealEstateIdUser")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("admin");
 
                     b.Navigation("category");
 
@@ -470,7 +496,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
 
             modelBuilder.Entity("KhoaLuanTotNghiep_BackEnd.Models.Category", b =>
                 {
-                    b.Navigation("realEstates");
+                    b.Navigation("RealEstates");
                 });
 
             modelBuilder.Entity("KhoaLuanTotNghiep_BackEnd.Models.RealEstate", b =>
@@ -481,6 +507,10 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
             modelBuilder.Entity("KhoaLuanTotNghiep_BackEnd.Models.User", b =>
                 {
                     b.Navigation("news");
+
+                    b.Navigation("RealEstateIdAdmin");
+
+                    b.Navigation("RealEstateIdUser");
                 });
 #pragma warning restore 612, 618
         }

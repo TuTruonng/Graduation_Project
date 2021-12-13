@@ -3,6 +3,7 @@ using KhoaLuanTotNghiep.Data;
 using KhoaLuanTotNghiep_BackEnd.Enum;
 using KhoaLuanTotNghiep_BackEnd.InterfaceService;
 using KhoaLuanTotNghiep_BackEnd.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShareModel;
@@ -18,11 +19,13 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly UserManager<User> _userManager;
 
-        public RealEstateService(ApplicationDbContext dbContext, IMapper mapper)
+        public RealEstateService(ApplicationDbContext dbContext, IMapper mapper, UserManager<User> userManager)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         public async Task<ICollection<RealEstateModel>> GetAllAsync()
@@ -31,8 +34,8 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             var product = await queryable.Select(p => new RealEstateModel
             {
                 RealEstateID = p.RealEstateID,
-                CategoryID = p.category.CategoryID,
-                UserID = p.user.Id,
+                // CategoryID = p.category.CategoryID,
+                UserName = p.user.FullName,
                 CategoryName = p.category.CategoryName,
                 ReportID = p.ReportID,
                 Title = p.Title,
@@ -40,7 +43,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
                 Image = p.Image,
                 Description = p.Description,
                 Acgreage = p.Acgreage,
-                Approve = p.Approve,
+                Approve = p.Approve.ToString(),
                 Status = p.Status,
                 PhoneNumber = Int32.Parse(p.user.PhoneNumber),
                 CreateTime = p.CreateTime,
@@ -48,6 +51,64 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
                 Location = p.Location,
             }).ToListAsync();
             return product;
+        }
+
+        public async Task<ICollection<RealEstateModel>> GetByUserNameAsync(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var productStaff = new List<RealEstateModel>();
+            var productAdmin = new List<RealEstateModel>();
+            if (userRoles.Contains(Roles.Staff))
+            {
+                var queryable = _dbContext.realEstates.Include(p => p.category).Include(p => p.user).AsQueryable();
+                queryable = queryable.Where(p => p.AdminID == user.Id && p.Approve == true);
+                productStaff = await queryable.Select(p => new RealEstateModel
+                {
+                    RealEstateID = p.RealEstateID,
+                    // CategoryID = p.category.CategoryID,
+                    UserName = p.user.FullName,
+                    CategoryName = p.category.CategoryName,
+                    ReportID = p.ReportID,
+                    Title = p.Title,
+                    Price = p.Price,
+                    Image = p.Image,
+                    Description = p.Description,
+                    Acgreage = p.Acgreage,
+                    Approve = p.Approve.ToString(),
+                    Status = p.Status,
+                    PhoneNumber = Int32.Parse(p.user.PhoneNumber),
+                    CreateTime = p.CreateTime,
+                    UpdateTime = p.UpdateTime,
+                    Location = p.Location,
+                }).ToListAsync();
+                return productStaff;
+            }
+
+            if (userRoles.Contains(Roles.Admin))
+            {
+                var queryable = _dbContext.realEstates.Include(p => p.category).Include(p => p.user).AsQueryable();
+                productAdmin = await queryable.Select(p => new RealEstateModel
+                {
+                    RealEstateID = p.RealEstateID,
+                    // CategoryID = p.category.CategoryID,
+                    UserName = p.user.FullName,
+                    CategoryName = p.category.CategoryName,
+                    ReportID = p.ReportID,
+                    Title = p.Title,
+                    Price = p.Price,
+                    Image = p.Image,
+                    Description = p.Description,
+                    Acgreage = p.Acgreage,
+                    Approve = p.Approve.ToString(),
+                    Status = p.Status,
+                    PhoneNumber = Int32.Parse(p.user.PhoneNumber),
+                    CreateTime = p.CreateTime,
+                    UpdateTime = p.UpdateTime,
+                    Location = p.Location,
+                }).ToListAsync();
+            }
+            return productAdmin;
         }
 
         //  public async Task<ActionResult<PageResponse<RealEstateModel>>> Getproduct(
@@ -143,8 +204,8 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             var real = await queryable.Select(p => new RealEstateModel
             {
                 RealEstateID = p.RealEstateID,
-                CategoryID = p.category.CategoryID,
-                UserID = p.user.Id,
+                //CategoryID = p.category.CategoryID,
+                UserName = p.user.FullName,
                 CategoryName = p.category.CategoryName,
                 ReportID = p.ReportID,
                 Title = p.Title,
@@ -152,7 +213,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
                 Image = p.Image,
                 Description = p.Description,
                 Acgreage = p.Acgreage,
-                Approve = p.Approve,
+                Approve = p.Approve.ToString(),
                 Status = p.Status,
                 PhoneNumber = Int32.Parse(p.user.PhoneNumber),
                 CreateTime = p.CreateTime,
@@ -198,14 +259,10 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
                 throw new Exception("Have not NewsID");
             }
             //realEstateModel.RealEstateID = Guid.NewGuid().ToString();
-            realEstate.Approve = realEstateModel.Approve;
-            //realEstate.PhoneNumber = realEstateModel.PhoneNumber;
-            var result = await _dbContext.SaveChangesAsync();
-            if (result > 0)
-            {
-                return realEstateModel;
-            }
-            throw new Exception("Update  fail");
+            realEstate.Approve = bool.Parse(realEstateModel.Approve);
+            realEstate.AdminID = realEstateModel.AssignTo;
+            await _dbContext.SaveChangesAsync();
+            return realEstateModel;
         }
 
         public async Task<bool> DeleteRealEstateModelAsync(string id)

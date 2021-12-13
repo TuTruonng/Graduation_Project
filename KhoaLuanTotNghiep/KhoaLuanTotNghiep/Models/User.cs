@@ -29,9 +29,16 @@ namespace KhoaLuanTotNghiep_BackEnd.Models
         public decimal Salary { get; set; }
 
         [PersonalData]
+        public DateTime JoinedDate { get; set; }
+
+        [PersonalData]
+        public DateTime CreateDate { get; set; }
+
+        [PersonalData]
         public int Point { get; set; }
 
-        public ICollection<News> news { get; set; }
-
+        public virtual ICollection<News> news { get; set; }
+        public virtual List<RealEstate> RealEstateIdUser { get; set; }
+        public virtual List<RealEstate> RealEstateIdAdmin { get; set; }
     }
 }

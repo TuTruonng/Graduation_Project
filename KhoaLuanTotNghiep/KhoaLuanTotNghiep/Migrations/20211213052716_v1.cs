@@ -27,7 +27,11 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    ChangePassword = table.Column<bool>(type: "bit", nullable: false),
                     Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    JoinedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Point = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -223,29 +227,34 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                 columns: table => new
                 {
                     RealEstateID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CategoryID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ReportID = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Acgreage = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Approve = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
+                    Approve = table.Column<bool>(type: "bit", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UpdateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    AdminID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CategoryID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ReportID = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_realEstates", x => x.RealEstateID);
                     table.ForeignKey(
+                        name: "FK_realEstates_AspNetUsers_AdminID",
+                        column: x => x.AdminID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_realEstates_AspNetUsers_UserID",
                         column: x => x.UserID,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_realEstates_categories_CategoryID",
                         column: x => x.CategoryID,
@@ -319,6 +328,11 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                 name: "IX_news_UserID",
                 table: "news",
                 column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_realEstates_AdminID",
+                table: "realEstates",
+                column: "AdminID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_realEstates_CategoryID",

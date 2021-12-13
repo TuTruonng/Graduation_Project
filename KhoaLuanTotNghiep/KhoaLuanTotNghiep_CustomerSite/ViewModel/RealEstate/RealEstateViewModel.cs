@@ -41,5 +41,7 @@ namespace KhoaLuanTotNghiep_CustomerSite.ViewModel.RealEstate
         public int PhoneNumber { get; set; }
 
         public string Location { get; set; }
+
+
     }
 }

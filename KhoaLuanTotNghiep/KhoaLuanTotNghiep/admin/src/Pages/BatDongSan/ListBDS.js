@@ -5,11 +5,23 @@ import history from "../../Helpers/Help";
 import BatDongSanService from "../../Services/BatDongSanService";
 import "./BDS.css"
 
-const ListBDS = () => {
+// type Props = {
+//   realEstates: IRealEstate | null;
+//   fetchData: Function;
+// };
+
+
+const ListBDS = (
+  {
+    realEstates,
+    fetchData,
+  }
+) => {
+  const dispatch = useAppDispatch();
+
   const [realEstate, setrealEstate] = useState([]);
   const [itemSelected, setSelected] = React.useState(null);
   let params = {};
-
   useEffect(() => {
     params = {     
       query: "",
@@ -21,16 +33,16 @@ const ListBDS = () => {
   const _fetchBDSs = () => {
     BatDongSanService.getList().then(({ data }) => setrealEstate(data));
   };
-  // const handleCreate = () => setSelected({ Name: "", TypeProductId: 0 });
+  const handleCreate = () => setSelected({ Name: "", TypeProductId: 0 });
 
-  // const handleDelete = (itemId) => {
-  //   let result = window.confirm("Delete this item?");
-  //   if (result) {
-  //       BatDongSanService.delete(itemId).then((resp) => {
-  //       setrealEstate(_removeViewItem(realEstate, itemId));
-  //     });
-  //   }
-  // };
+  const handleDelete = (itemId) => {
+    let result = window.confirm("Delete this item?");
+    if (result) {
+        BatDongSanService.delete(itemId).then((resp) => {
+        setrealEstate(_removeViewItem(realEstate, itemId));
+      });
+    }
+  };
 
   const _removeViewItem = (lists, itemDel) =>
     lists.filter((item) => item.realEstateID !== itemDel);
@@ -47,13 +59,13 @@ const ListBDS = () => {
   
 
   return (
-    <div className="content-wrapper" >
+    <div class="content-wrapper" >
        <br />
       <h3 className=" sidebar-light-primary elevation-2" id="h3"><b>Danh sách  bất động sản</b></h3> 
       <br />
       <div className="text-right">
         <div className="row" style={{ marginLeft: "500px" }}>
-          <div className="col-sm-6"  >
+          <div class="col-sm-6"  >
             <div className="input-group" data-widget="sidebar-search"  >
               <input       
                 className="form-control form-control-sidebar"
@@ -64,15 +76,16 @@ const ListBDS = () => {
               <div className="input-group-append">
                 <button className="btn btn-sidebar">
                   <i className="fas fa-search fa-fw"></i>
-                </button>              
+                </button>
+                
               </div>
             </div>
           </div>
-        </div>    
+
+        </div>
+        
       </div>
-
       <br/>
-
       <Table responsive="xl" >
         <thead>
           <tr className="title-table">
@@ -94,7 +107,7 @@ const ListBDS = () => {
           </tr>
         </thead>
         <tbody className='body'>
-          {realEstate && realEstate?.items?.map((item, i) => {
+          {realEstate.map(function (item, i) {
             return (
               <tr style={{backgroundColor:"#e9d8f4"}}>
                 <th scope="row">{i + 1}</th>

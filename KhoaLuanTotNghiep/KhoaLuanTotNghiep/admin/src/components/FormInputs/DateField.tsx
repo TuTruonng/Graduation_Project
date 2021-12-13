@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes } from 'react';
-import { useField, useFormikContext } from 'formik';;
+import { useField, useFormikContext } from 'formik';
 import DatePicker from 'react-datepicker';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 

@@ -81,7 +81,7 @@ namespace KhoaLuanTotNghiep_CustomerSite.Service
                 Image = realEstateModel.Image,
                 Description = realEstateModel.Description,
                 Acgreage = realEstateModel.Acgreage,
-                Approve = 0,
+                Approve = false,
                 Status = realEstateModel.Status,
                 CreateTime = DateTime.Now,
                 UpdateTime = DateTime.Now,

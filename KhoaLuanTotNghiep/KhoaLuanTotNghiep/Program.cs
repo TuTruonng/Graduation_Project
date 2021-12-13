@@ -20,10 +20,11 @@ namespace KhoaLuanTotNghiep_BackEnd
                 var serviceProvider = scope.ServiceProvider;
 
                 var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
-                //var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
                 await IdentityDataInitializer.SeedUsersAsync(userManager);
-                //await IdentityDataInitializer.SeedAsync(userManager);
+                await IdentityDataInitializer.SeedAsync(userManager);
+                await IdentityDataInitializer.SeedRoleAsync(roleManager);
             }
             await host.RunAsync();
         }

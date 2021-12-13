@@ -74,6 +74,22 @@ namespace KhoaLuanTotNghiep_BackEnd.Data.SeedData
             }
 
 
+            if (userManager.FindByNameAsync("user").Result == null)
+            {
+                User user = new User();
+                user.UserName = "user";
+                user.Email = "user@gmail.com";
+                user.Status = true;
+
+                await userManager.CreateAsync(user, "123456");
+            }
+        }
+
+        public static async Task SeedRoleAsync(RoleManager<IdentityRole> roleManager)
+        {
+            await roleManager.CreateAsync(new IdentityRole(Roles.Staff.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(Roles.Admin.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(Roles.User.ToString()));
         }
     }
 }

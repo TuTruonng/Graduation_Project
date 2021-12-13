@@ -1,8 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
 const config: AxiosRequestConfig = {
-    // baseURL: 'https://localhost:5001/'
-    baseURL: process.env.BACKEND_URL
+    baseURL: 'https://localhost:5001/'
 }
 
 class RequestService {

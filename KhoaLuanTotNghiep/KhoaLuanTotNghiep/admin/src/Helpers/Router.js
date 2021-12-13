@@ -10,7 +10,7 @@ export const LIST_USER ='/nhanvien';
 export const CREATE_USER ='/CreateUser';
 export const UPDATE_USER ='/EditUser/:id';
 
-export const LIST_BDS ='/batdongsan';
+export const LIST_BDS ='/Manage RealEstate';
 export const CREATE_BDS ='/CreateBDS';
 export const UPDATE_BDS ='/EditBDS/:id';
 

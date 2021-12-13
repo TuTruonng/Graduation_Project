@@ -26,13 +26,13 @@ namespace ShareModel
 
         public string Acgreage { get; set; }
 
-        public int Approve { get; set; }
+        public bool Approve { get; set; }
 
         public DateTime CreateTime { get; set; }
 
         public DateTime UpdateTime { get; set; }
 
-        public int Status { get; set; }
+        public bool Status { get; set; }
 
 
         public string Location { get; set; }

@@ -9,6 +9,7 @@ namespace ShareModel
     public class ListApprove
     {
         public string RealEstateID { get; set; }
-        public int Approve { get; set; }
+        public string AssignTo { get; set; }
+        public string Approve { get; set; }
     }
 }

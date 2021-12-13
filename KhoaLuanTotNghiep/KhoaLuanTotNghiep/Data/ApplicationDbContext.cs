@@ -12,10 +12,30 @@ namespace KhoaLuanTotNghiep.Data
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            modelBuilder.SeedRealEstateData();
-            base.OnModelCreating(modelBuilder);
+            builder.SeedRealEstateData();
+            base.OnModelCreating(builder);
+
+            builder.Entity<RealEstate>(entity =>
+            {
+                entity.ToTable("realEstates");
+
+                entity.HasKey(r => r.RealEstateID);
+                entity.Property(r => r.RealEstateID).ValueGeneratedOnAdd();
+
+                entity.HasOne<User>(r => r.user)
+                    .WithMany(u => u.RealEstateIdUser)
+                    .HasForeignKey(r => r.UserID)
+                    .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasOne<User>(r => r.admin)
+                    .WithMany(u => u.RealEstateIdAdmin)
+                    .HasForeignKey(r => r.AdminID)
+                    .OnDelete(DeleteBehavior.NoAction);
+
+                //entity.HasData(DefaultAssignments.SeedAssignments());
+            });
         }
 
         public DbSet<Category> categories { get; set; }

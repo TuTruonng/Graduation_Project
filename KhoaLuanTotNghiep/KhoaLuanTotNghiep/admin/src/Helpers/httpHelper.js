@@ -1,5 +1,4 @@
 import axios from "axios";
-import { UrlBackEnd } from "../Constants/oidc_config";
 
  const instance = axios.create({
     baseURL: "https://localhost:44375/",

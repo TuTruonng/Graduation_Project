@@ -1,6 +1,6 @@
 import httpClient from'../Helpers/httpHelper'
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { UrlBackEnd } from "../Constants/oidc_config";
+import { UrlBackEnd } from "../Constant/oidc_config";
 
 const config = {
   baseURL: UrlBackEnd

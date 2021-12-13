@@ -1,15 +1,13 @@
 const Endpoints = {
     authorize: '/api/Authen',
     me: '/api/Authen/me',
-    users: '/api/users',
-    changePassword: '/api/users/password',
-    disable: '/api/users/disable',
-    disableId: (id) => `/api/users/disable/${id}`,
-    usersId: (staffCode) => `/api/users/${staffCode}`,
-    assets: '/api/Assets',
-    disableAsset: '/api/assets/disable',
-    disableAssetId: (id) => `/api/assets/disable/${id}`,
-    assetsId: (staffCode) => `/api/assets/${staffCode}`,
+    users: '/api/User',
+    changePassword: '/api/User/password',
+    disable: '/api/User/disable',
+    disableId: (id) => `/api/User/disable/${id}`,
+    usersId: (staffCode) => `/api/User/${staffCode}`,
+    realEstates: (username) => `/RealEstate/name=${username}`,
+    realEstatesId: (realEstateID) => `/RealEstate/${realEstateID}`,
     authentication: '/api/Authen',
 };
 

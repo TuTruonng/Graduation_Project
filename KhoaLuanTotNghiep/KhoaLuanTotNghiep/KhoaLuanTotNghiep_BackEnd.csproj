@@ -34,6 +34,10 @@
 		<ProjectReference Include="..\ShareModel\ShareModel.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="admin\public\images\" />
+	</ItemGroup>
+
 	<ProjectExtensions>
 		<VisualStudio><UserProperties /></VisualStudio>
 	</ProjectExtensions>

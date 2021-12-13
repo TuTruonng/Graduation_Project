@@ -1,13 +1,9 @@
 export default interface IUserForm {
     userId?: number;
-    firstName: string;
-    lastName: string;
-    fullName?: string,
-    dateOfBirth?: Date;
-    gender: string;
+    fullName: string;
     joinedDate?: Date;
     type: string;
-    location: string;
+    phoneNumber: string;
     staffCode?: number;
     username?: string;
 }

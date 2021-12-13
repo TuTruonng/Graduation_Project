@@ -1,7 +1,7 @@
 import React, { Component,  useEffect } from 'react';
 import { UserContext } from "../index";
 import AuthService from "../Services/AuthService";
-import { USER_PROFILE_STORAGE_KEY } from "../Constants/oidc_config";
+import { USER_PROFILE_STORAGE_KEY } from "../Constant/oidc_config";
 import { Link } from 'react-router-dom';
 
 
@@ -32,8 +32,6 @@ export default class Navbar extends Component {
 
   render() {
     return (
-      <UserContext.Consumer>
-        {(value) => (
           <aside className="main-sidebar sidebar-dark-primary elevation-4">
             {/* <!-- Brand Logo --> */}
             <a href="/" className="brand-link">
@@ -148,8 +146,6 @@ export default class Navbar extends Component {
               </div>
             </div>
           </aside>
-        )}
-      </UserContext.Consumer>
     )
   }
 }
