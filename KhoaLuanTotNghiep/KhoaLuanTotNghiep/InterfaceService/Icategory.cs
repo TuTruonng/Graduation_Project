@@ -14,5 +14,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Interface
         Task<CategoryModel> UpdateCategoryAsync(string id, CategoryModel categoryModel);
 
         Task<bool> DeleteCategoryAsync(string id);
+
+        Task<CategoryModel> GetByIdAsync(string id);
     }
 }

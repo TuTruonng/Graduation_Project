@@ -29,6 +29,12 @@ namespace KhoaLuanTotNghiep_BackEnd.Models
         public decimal Salary { get; set; }
 
         [PersonalData]
+        public decimal SalaryBasic { get; set; }
+
+        [PersonalData]
+        public DateTime DateOfBirth { get; set; }
+
+        [PersonalData]
         public DateTime JoinedDate { get; set; }
 
         [PersonalData]
@@ -40,5 +46,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Models
         public virtual ICollection<News> news { get; set; }
         public virtual List<RealEstate> RealEstateIdUser { get; set; }
         public virtual List<RealEstate> RealEstateIdAdmin { get; set; }
+        public virtual List<Order> orderIdUser { get; set; }
+        public virtual List<Order> orderIdAdmin { get; set; }
     }
 }

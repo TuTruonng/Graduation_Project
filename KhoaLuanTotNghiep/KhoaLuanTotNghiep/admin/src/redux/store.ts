@@ -6,13 +6,19 @@ import {
 import createSagaMiddleware from 'redux-saga';
 import authReducer from 'src/containers/Authorize/reducer';
 import realEstateReducer from 'src/Pages/RealEstateList/reducer';
+import categoryReducer from 'src/Pages/CategoryList/reducer';
 import userReducer from 'src/Pages/UsersList/reducer';
+import customerReducer from 'src/Pages/CustomersList/reducer';
+import newsReducer from 'src/Pages/NewsList/reducer';
 import rootSaga from './sagas/rootSaga';
 
 const reducer = combineReducers({
     authReducer,
     realEstateReducer,
     userReducer,
+    customerReducer,
+    categoryReducer,
+    newsReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();

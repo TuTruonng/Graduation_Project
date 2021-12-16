@@ -10,7 +10,14 @@ import {
     EDIT_REALESTATE,
     USERMANAGER,
     CREATEUSER,
-    EDIT_USER
+    EDIT_USER,
+    CUSTOMERMANAGER,
+    CATEGORYMANAGER,
+    CREATECATEGORY,
+    EDIT_CATEGORY,
+    NEWSMANAGER,
+    CREATENEWS,
+    EDIT_NEWS
 } from '../constants/pages';
 import InLineLoader from '../components/InlineLoader';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
@@ -37,6 +44,7 @@ const Login = lazy(() => import('../containers/Authorize'));
 const ChangePassword = lazy(() => import('../containers/ChangePassword'));
 const NotFound = lazy(() => import('../containers/NotFound'));
 const UnAuthorization = lazy(() => import('../containers/UnAuthorization'));
+const CustomerManager = lazy(() => import('../Pages/CustomersList/UserManager'));
 const UserManager = lazy(() => import('../Pages/UsersList/UserManager'));
 const CreateUser = lazy(
     () => import('../Pages/UsersList/TableFunctions/Create')
@@ -44,7 +52,20 @@ const CreateUser = lazy(
 const EditUser = lazy(
     () => import('../Pages/UsersList/TableFunctions/Update')
 );
-
+const CategoryManager = lazy(() => import('../Pages/CategoryList/Manager'));
+const CreateCategpry = lazy(
+    () => import('../Pages/CategoryList/TableFunction/Create')
+);
+const EditCategory = lazy(
+    () => import('../Pages/CategoryList/TableFunction/Update')
+);
+const NewsManager = lazy(() => import('../Pages/NewsList/Manager'));
+const CreateNews = lazy(
+    () => import('../Pages/NewsList/TableFunction/Create')
+);
+const EditNews = lazy(
+    () => import('../Pages/NewsList/TableFunction/Update')
+);
 
 const SusspenseLoading = ({ children }) => (
     <Suspense fallback={<InLineLoader />}>{children}</Suspense>
@@ -89,6 +110,27 @@ const Routes = () => {
                 </PrivateRoute>
                 <PrivateRoute exact path={EDIT_USER}>
                     <EditUser />
+                </PrivateRoute>
+                <PrivateRoute exact path={CUSTOMERMANAGER}>
+                    <CustomerManager />
+                </PrivateRoute>
+                <PrivateRoute exact path={CATEGORYMANAGER}>
+                    <CategoryManager />
+                </PrivateRoute>
+                <PrivateRoute exact path={CREATECATEGORY}>
+                    <CreateCategpry />
+                </PrivateRoute>
+                <PrivateRoute exact path={EDIT_CATEGORY}>
+                    <EditCategory />
+                </PrivateRoute>
+                <PrivateRoute exact path={NEWSMANAGER}>
+                    <NewsManager />
+                </PrivateRoute>
+                <PrivateRoute exact path={CREATENEWS}>
+                    <CreateNews />
+                </PrivateRoute>
+                <PrivateRoute exact path={EDIT_NEWS}>
+                    <EditNews />
                 </PrivateRoute>
             </Switch>
         </SusspenseLoading>

@@ -49,17 +49,48 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                     b.Property<string>("NewsName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.Property<string>("UserID")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("NewsID");
 
                     b.HasIndex("UserID");
 
                     b.ToTable("news");
+                });
+
+            modelBuilder.Entity("KhoaLuanTotNghiep_BackEnd.Models.Order", b =>
+                {
+                    b.Property<string>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AdminId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RealestateId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("AdminId");
+
+                    b.HasIndex("RealestateId")
+                        .IsUnique()
+                        .HasFilter("[RealestateId] IS NOT NULL");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("orders");
                 });
 
             modelBuilder.Entity("KhoaLuanTotNghiep_BackEnd.Models.Rates", b =>
@@ -144,53 +175,53 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                     b.HasData(
                         new
                         {
-                            RealEstateID = "db32185e-0d97-4db4-a617-6feec85e7db1",
+                            RealEstateID = "23ca8b7f-b588-4bbb-94ba-7b8fe54d4402",
                             Acgreage = "95",
                             AdminID = "4dddfeb4-b7de-4206-840e-51128364cd7e",
                             Approve = false,
                             CategoryID = "1",
-                            CreateTime = new DateTime(2021, 12, 13, 13, 5, 40, 155, DateTimeKind.Local).AddTicks(3390),
+                            CreateTime = new DateTime(2021, 12, 16, 22, 48, 37, 256, DateTimeKind.Local).AddTicks(6606),
                             Description = "Bảng giá các căn giá tốt nhất thị trường của dự án The Manor Central Park: Mua trực tiếp chủ đầu tư Bitexco Group.Bảng hàng shophouse các căn vị trí đẹp của giai đoạn 1 và giai đoạn 2 của dự án The Manor Central Park",
                             Image = "https://res.cloudinary.com/dusq8k6rj/image/upload/v1634380024/leduyen/rv7lrwnztkzvnzrqltha.png",
                             Location = "50 Lê Lợi",
                             Price = "19 tỷ",
                             Status = false,
                             Title = "RA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐTRA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐT",
-                            UpdateTime = new DateTime(2021, 12, 13, 13, 5, 40, 158, DateTimeKind.Local).AddTicks(528),
+                            UpdateTime = new DateTime(2021, 12, 16, 22, 48, 37, 257, DateTimeKind.Local).AddTicks(7024),
                             UserID = "a9c2975b-9ad0-41f1-8f49-797202bac932"
                         },
                         new
                         {
-                            RealEstateID = "c6d8aa78-b335-40b8-861d-6c4691f719a4",
+                            RealEstateID = "7a03521d-aeae-45b7-a08a-f067486b7d14",
                             Acgreage = "95",
                             AdminID = "4dddfeb4-b7de-4206-840e-51128364cd7e",
                             Approve = false,
                             CategoryID = "1",
-                            CreateTime = new DateTime(2021, 12, 13, 13, 5, 40, 158, DateTimeKind.Local).AddTicks(1196),
+                            CreateTime = new DateTime(2021, 12, 16, 22, 48, 37, 257, DateTimeKind.Local).AddTicks(7722),
                             Description = "Bảng giá các căn giá tốt nhất thị trường của dự án The Manor Central Park: Mua trực tiếp chủ đầu tư Bitexco Group.Bảng hàng shophouse các căn vị trí đẹp của giai đoạn 1 và giai đoạn 2 của dự án The Manor Central Park",
                             Image = "https://res.cloudinary.com/dusq8k6rj/image/upload/v1634380024/leduyen/rv7lrwnztkzvnzrqltha.png",
                             Location = "50 Lê Lợi",
                             Price = "19 tỷ",
                             Status = false,
                             Title = "RA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐTRA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐT",
-                            UpdateTime = new DateTime(2021, 12, 13, 13, 5, 40, 158, DateTimeKind.Local).AddTicks(1205),
+                            UpdateTime = new DateTime(2021, 12, 16, 22, 48, 37, 257, DateTimeKind.Local).AddTicks(7732),
                             UserID = "a9c2975b-9ad0-41f1-8f49-797202bac932"
                         },
                         new
                         {
-                            RealEstateID = "f495e2d0-f6ee-4438-b189-8eada382be7c",
+                            RealEstateID = "0c050524-2b59-43ee-8f22-7a168efdeec1",
                             Acgreage = "95",
                             AdminID = "1e6eb4b9-f1c3-40d2-bbef-0cd34477efa4",
                             Approve = false,
                             CategoryID = "2",
-                            CreateTime = new DateTime(2021, 12, 13, 13, 5, 40, 158, DateTimeKind.Local).AddTicks(1217),
+                            CreateTime = new DateTime(2021, 12, 16, 22, 48, 37, 257, DateTimeKind.Local).AddTicks(7918),
                             Description = "Bảng giá các căn giá tốt nhất thị trường của dự án The Manor Central Park: Mua trực tiếp chủ đầu tư Bitexco Group.Bảng hàng shophouse các căn vị trí đẹp của giai đoạn 1 và giai đoạn 2 của dự án The Manor Central Park",
                             Image = "https://res.cloudinary.com/dusq8k6rj/image/upload/v1634379964/leduyen/p9zypdbshv8spvwl0m0o.png",
                             Location = "50 Lê Lợi",
                             Price = "19 tỷ",
                             Status = false,
                             Title = "RA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐTRA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐT",
-                            UpdateTime = new DateTime(2021, 12, 13, 13, 5, 40, 158, DateTimeKind.Local).AddTicks(1218),
+                            UpdateTime = new DateTime(2021, 12, 16, 22, 48, 37, 257, DateTimeKind.Local).AddTicks(7921),
                             UserID = "a9c2975b-9ad0-41f1-8f49-797202bac932"
                         });
                 });
@@ -256,6 +287,9 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -296,6 +330,9 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Salary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("SalaryBasic")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("SecurityStamp")
@@ -464,6 +501,29 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                     b.Navigation("user");
                 });
 
+            modelBuilder.Entity("KhoaLuanTotNghiep_BackEnd.Models.Order", b =>
+                {
+                    b.HasOne("KhoaLuanTotNghiep_BackEnd.Models.User", "admin")
+                        .WithMany("orderIdAdmin")
+                        .HasForeignKey("AdminId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("KhoaLuanTotNghiep_BackEnd.Models.RealEstate", "realEstate")
+                        .WithOne("order")
+                        .HasForeignKey("KhoaLuanTotNghiep_BackEnd.Models.Order", "RealestateId");
+
+                    b.HasOne("KhoaLuanTotNghiep_BackEnd.Models.User", "user")
+                        .WithMany("orderIdUser")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("admin");
+
+                    b.Navigation("realEstate");
+
+                    b.Navigation("user");
+                });
+
             modelBuilder.Entity("KhoaLuanTotNghiep_BackEnd.Models.RealEstate", b =>
                 {
                     b.HasOne("KhoaLuanTotNghiep_BackEnd.Models.User", "admin")
@@ -552,12 +612,18 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
 
             modelBuilder.Entity("KhoaLuanTotNghiep_BackEnd.Models.RealEstate", b =>
                 {
+                    b.Navigation("order");
+
                     b.Navigation("reports");
                 });
 
             modelBuilder.Entity("KhoaLuanTotNghiep_BackEnd.Models.User", b =>
                 {
                     b.Navigation("news");
+
+                    b.Navigation("orderIdAdmin");
+
+                    b.Navigation("orderIdUser");
 
                     b.Navigation("RealEstateIdAdmin");
 

@@ -12,27 +12,28 @@ import UserForm from '../UserForm';
 const UpdateUserContainer = () => {
     const { users } = useAppSelector((state) => state.userReducer);
     const [user, setUser] = useState(undefined as IUserForm | undefined);
-    const { staffCode } = useParams<{ staffCode: string }>();
+    const { userId } = useParams<{ userId: string }>();
     const { state } = useLocation<{ existUser: IUserForm }>();
     const { existUser } = state; // Read values passed on state
 
-    //useEffect(() => {
-    //    if (existUser) {
-    //        setUser(
-    //            //undefined
-    //            {
-    //                firstName: existUser.firstName,
-    //                lastName: existUser.lastName,
-    //                dateOfBirth: existUser.dateOfBirth,
-    //                gender: existUser.gender,
-    //                joinedDate: existUser.joinedDate,
-    //                type: existUser.type,
-    //                location: existUser.location,
-    //                staffCode: existUser.staffCode,
-    //            }
-    //        );
-    //    }
-    //}, [existUser]);
+    useEffect(() => {
+       if (existUser) {
+           setUser(
+               //undefined
+               {
+                   userId: existUser.userId,
+                   fullName: existUser.fullName,
+                   dateOfBirth: existUser.dateOfBirth,
+                   joinedDate: existUser.joinedDate,
+                   type: existUser.type,
+                   email: existUser.email,
+                   phoneNumber: existUser.phoneNumber,
+                   username: existUser.username,
+                   salaryBasic: existUser.salaryBasic
+               }
+           );
+       }
+    }, [existUser]);
 
     return (
         <div className="ml-5">

@@ -20,13 +20,36 @@ const _location = localStorage.getItem('location');
 
 const initialFormValues: IUserForm = {
     fullName: '',
+    username: '',
+    email: '',
+    salaryBasic: '',
+    dateOfBirth: undefined,
     joinedDate: undefined,
     type: '',
     phoneNumber: '',
 };
 
+const phoneRegExp = /^(84|0[3|5|7|8|9])+([0-9]{8})\b$/
+
 const validationSchema = Yup.object().shape({
     fullName: Yup.string().required('Required'),
+    username: Yup.string().required('Required'),
+    email: Yup.string().email('Invalid email format').required('Required'),
+    phoneNumber: Yup.string().matches(phoneRegExp, 'Phone number is not valid')
+        .required('Required'),
+    salaryBasic: Yup.number()
+      .required()
+      .moreThan(0, 'salary should not be less than or equal zero'),
+    dateOfBirth: Yup.string()
+      .nullable()
+      .required('Required')
+      .test(
+          'dateOfBirth',
+          'User is under 18. Please select a different date',
+          (value) => {
+              return moment().diff(moment(value), 'years') >= 18;
+          }
+      ),
     joinedDate: Yup.string()
         .nullable()
         .required('Required')
@@ -57,7 +80,6 @@ const validationSchema = Yup.object().shape({
             }
         ),
     type: Yup.string().required('Required'),
-    phoneNumber: Yup.string().required('Required'),
 });
 
 type Props = {
@@ -73,7 +95,7 @@ const UserFormContainer: React.FC<Props> = ({
 
     const dispatch = useAppDispatch();
 
-    const isUpdate = initialUserForm.staffCode ? true : false;
+    const isUpdate = initialUserForm.userId ? true : false;
 
     const history = useHistory();
 
@@ -106,12 +128,16 @@ const UserFormContainer: React.FC<Props> = ({
                 setTimeout(() => {
                    
                     if (isUpdate) {
+                        const offset = values.dateOfBirth?.getTimezoneOffset()
+                        values.dateOfBirth = new Date(moment.utc(values.dateOfBirth).subtract(offset, 'minutes').format())
+                        values.joinedDate = new Date(moment.utc(values.joinedDate).subtract(offset, 'minutes').format())
                         dispatch(
                             updateUser({ handleResult, formValues: values })
                         );
                     }
                     else {
-                        const offset = values.joinedDate?.getTimezoneOffset()
+                        const offset = values.dateOfBirth?.getTimezoneOffset()
+                        values.dateOfBirth = new Date(moment.utc(values.dateOfBirth).subtract(offset, 'minutes').format())
                         values.joinedDate = new Date(moment.utc(values.joinedDate).subtract(offset, 'minutes').format())
                         dispatch(
                             createUser({ handleResult, formValues: values })
@@ -132,7 +158,32 @@ const UserFormContainer: React.FC<Props> = ({
                             name="fullName"
                             label="Full Name"
                             isrequired
+                            disabled={isUpdate ? false : false}
+                        /> 
+                        <TextField 
+                            name="username"
+                            label="User Name"
+                            isrequired
                             disabled={isUpdate ? true : false}
+                        /> 
+                        <TextField 
+                            name="email"
+                            label="Email"
+                            placeholder="example@gmail.com"
+                            isrequired
+                            disabled={isUpdate ? false : false}
+                        /> 
+                        <DateField
+                            name="dateOfBirth"
+                            label="Date Of Birth"
+                            isrequired
+                            disabled={isUpdate ? true : false}
+                        />
+                          <TextField 
+                            name="salaryBasic"
+                            label="Salary Basic"
+                            isrequired
+                            disabled={isUpdate ? false : false}
                         /> 
                         <DateField
                             name="joinedDate"
@@ -149,8 +200,9 @@ const UserFormContainer: React.FC<Props> = ({
                          <TextField 
                             name="phoneNumber"
                             label="Phone Number"
+                            placeholder="083xxxxxxx"
                             isrequired
-                            disabled={isUpdate ? true : false}
+                            disabled={isUpdate ? false : false}
                         /> 
 
                         <div className="d-flex">

@@ -34,8 +34,8 @@ const Info: React.FC<Props> = ({ user, handleClose }) => {
                 <Modal.Body>
                     <div>
                         <div className="row -intro-y">
-                            <div className="col-4">Staff Code:</div>
-                            <div>{'SD' + String(user.staffCode).padStart(4, '0')}</div>
+                            <div className="col-4">User Code:</div>
+                            <div>{user.userId}</div>
                         </div>
 
                         <div className="row -intro-y">
@@ -49,7 +49,51 @@ const Info: React.FC<Props> = ({ user, handleClose }) => {
                         </div>
 
                         <div className="row -intro-y">
-                            <div className="col-4">Date of Birth:</div>
+                            <div className="col-4">Email:</div>
+                            <div>{user.email}</div>
+                        </div>
+
+                        <div className="row -intro-y">
+                            <div className="col-4">Phone:</div>
+                            <div>{user.phoneNumber}</div>
+                        </div>
+
+                        <div className="row -intro-y">
+                            <div className="col-4">Salary Basic:</div>
+                            <div>{user.salaryBasic}</div>
+                        </div>
+
+                        <div className="row -intro-y">
+                            <div className="col-4">Salary:</div>
+                            <div>{user.salary}</div>
+                        </div>
+
+                        <div className="row -intro-y">
+                            <div className="col-4">Joined Date:</div>
+                            <div>{new Date(user.joinedDate).toLocaleString(
+                                'en-GB',
+                                {
+                                    year: 'numeric',
+                                    month: 'numeric',
+                                    day: 'numeric',
+                                }
+                            )}</div>
+                        </div>
+
+                        <div className="row -intro-y">
+                            <div className="col-4">Create Date:</div>
+                            <div>{new Date(user.createDate).toLocaleString(
+                                'en-GB',
+                                {
+                                    year: 'numeric',
+                                    month: 'numeric',
+                                    day: 'numeric',
+                                }
+                            )}</div>
+                        </div>
+
+                        <div className="row -intro-y">
+                            <div className="col-4">Date Of Birth:</div>
                             <div>{new Date(user.dateOfBirth).toLocaleString(
                                 'en-GB',
                                 {
@@ -61,28 +105,9 @@ const Info: React.FC<Props> = ({ user, handleClose }) => {
                         </div>
 
                         <div className="row -intro-y">
-                            <div className="col-4">Gender:</div>
-                            <div>{user.gender}</div>
-                        </div>
-
-                        <div className="row -intro-y">
-                            <div className="col-4">Joined Date:</div>
-                            {new Date(user.joinedDate).toLocaleString('en-GB', {
-                                year: 'numeric',
-                                month: 'numeric',
-                                day: 'numeric',
-                            })}
-                        </div>
-
-                        <div className="row -intro-y">
                             <div className="col-4">Type:</div>
                             {/* <div>{getBrandTypeName(user.type)}</div> */}
                             <div>{user.type}</div>
-                        </div>
-
-                        <div className="row -intro-y">
-                            <div className="col-4">Location:</div>
-                            <div>{user.location}</div>
                         </div>
                     </div>
                 </Modal.Body>

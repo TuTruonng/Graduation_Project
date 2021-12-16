@@ -33,14 +33,36 @@ namespace KhoaLuanTotNghiep.Data
                     .WithMany(u => u.RealEstateIdAdmin)
                     .HasForeignKey(r => r.AdminID)
                     .OnDelete(DeleteBehavior.NoAction);
+            });
 
-                //entity.HasData(DefaultAssignments.SeedAssignments());
+            builder.Entity<Order>(entity =>
+            {
+                entity.ToTable("orders");
+
+                entity.HasKey(o => o.OrderId);
+                entity.Property(o => o.OrderId).ValueGeneratedOnAdd();
+
+                entity.HasOne<User>(o => o.user)
+                    .WithMany(u => u.orderIdUser)
+                    .HasForeignKey(o => o.UserId)
+                    .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasOne<User>(o => o.admin)
+                    .WithMany(u => u.orderIdAdmin)
+                    .HasForeignKey(o => o.AdminId)
+                    .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasOne<RealEstate>(o => o.realEstate)
+                   .WithOne(r => r.order)
+                   .HasForeignKey<Order>(o => o.RealestateId);
             });
         }
 
         public DbSet<Category> categories { get; set; }
 
         public DbSet<RealEstate> realEstates { get; set; }
+
+        public DbSet<Order> orders { get; set; }
 
         public DbSet<Report> reports { get; set; }
 

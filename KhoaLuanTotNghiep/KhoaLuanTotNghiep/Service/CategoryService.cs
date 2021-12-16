@@ -69,6 +69,20 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
                 .ToListAsync();
         }
 
+        public async Task<CategoryModel> GetByIdAsync(string id)
+        {
+            var queryable = _dbContext.categories.AsQueryable();
+            queryable = queryable.Where(p => p.CategoryID == id);
+            var real = await queryable.Select(p => new CategoryModel
+            {
+                CategoryID = p.CategoryID,
+                CategoryName = p.CategoryName,
+                Description = p.Description,
+            }).FirstOrDefaultAsync();
+            return real;
+        }
+
+
         public async Task<CategoryModel> UpdateCategoryAsync(string id, CategoryModel categoryModel)
         {
             var category = await _dbContext.categories.FirstOrDefaultAsync(x => x.CategoryID == id);

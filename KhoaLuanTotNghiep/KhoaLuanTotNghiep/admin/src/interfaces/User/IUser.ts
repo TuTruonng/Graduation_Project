@@ -1,13 +1,13 @@
 export default interface IUser {
-    id: number,
-    username: string,
-    staffCode: number,
-    type: string;
-    firstName: string,
-    lastName: string,
+    userId: string,  
+    phoneNumber: string,
     fullName: string,
-    dateOfBirth: Date,
-    location: string,
-    gender: string,
+    email: string,
+    username: string,
+    salaryBasic: number,
+    salary: number,
     joinedDate: Date,
+    dateOfBirth: Date,
+    type: string,
+    createDate: Date,
 }

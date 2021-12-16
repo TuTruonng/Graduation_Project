@@ -1,7 +1,9 @@
-import React, { InputHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes, useEffect } from 'react';
 import { useField, useFormikContext } from 'formik';
+import { CalendarDateFill } from 'react-bootstrap-icons';
 import DatePicker from 'react-datepicker';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import moment from 'moment';
 
 type DateFieldProps = InputHTMLAttributes<HTMLInputElement> & {
     label: string;
@@ -38,6 +40,11 @@ const DateField: React.FC<DateFieldProps> = (props) => {
     const handleChangeAssignedDate = (assignDate: Date) => {
         setValue(assignDate);
     };
+    
+    useEffect(() => {
+        const temp = new Date(moment(field.value, "YYYY-MM-DD").format())
+        if(disabled) setValue(new Date (temp))
+    }, []);
     return (
         <>
             <div className="mb-3 row">
@@ -51,13 +58,14 @@ const DateField: React.FC<DateFieldProps> = (props) => {
                             {...field}
                             className={`border w-100 text-center ${validateClass()}`}
                             selected={
-                                disabled ? new Date(field.value) : field.value
+                               field.value
                             }
+                            dateFormat='dd/MM/yyyy'
                             onChangeRaw={(e) => {
                                 setFieldTouched(field.name, true, true);
                             }}
                             onChange={(date) =>
-                                // handleChangeAssignedDate(date as Date)
+                                //handleChangeAssignedDate(date as Date)
                                 setFieldValue(field.name, date)
                             }
                             showDisabledMonthNavigation

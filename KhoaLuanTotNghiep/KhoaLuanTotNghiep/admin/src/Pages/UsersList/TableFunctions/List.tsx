@@ -25,6 +25,7 @@ const ListUsers = () => {
         fetchData();
         // dispatch(setUsers(users));
     }, []);
+    console.log(users);
 
     return (
         <>

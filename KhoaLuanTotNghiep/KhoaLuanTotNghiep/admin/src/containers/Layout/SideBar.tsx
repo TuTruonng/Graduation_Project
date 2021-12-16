@@ -6,7 +6,10 @@ import {
     REPORT,
     REQUEST,
     USERMANAGER,
-    REALESTATEMANAGER
+    REALESTATEMANAGER,
+    CUSTOMERMANAGER,
+    CATEGORYMANAGER,
+    NEWSMANAGER
 } from 'src/constants/pages';
 import Roles from 'src/constants/roles';
 import { LIST_BDS } from 'src/Helpers/Router';
@@ -23,16 +26,19 @@ const SideBar = () => {
             <NavLink className="navItem intro-x" exact to={HOME}>
                 <button className="btnCustom">Home</button>
             </NavLink>
-            <NavLink className="navItem intro-x" to={REPORT}>
-                <button className="btnCustom">Manage Category RealEstate</button>
+            <NavLink className="navItem intro-x" to={CATEGORYMANAGER}>
+                <button className="btnCustom">Manage Category</button>
             </NavLink>
             <NavLink className="navItem intro-x" to={REALESTATEMANAGER}>
                 <button className="btnCustom">Manage RealEstate</button>
             </NavLink>
-            <NavLink className="navItem intro-x" to={REPORT}>
+            <NavLink className="navItem intro-x" to={CUSTOMERMANAGER}>
                 <button className="btnCustom">Manage Customer</button>
             </NavLink>
             <NavLink className="navItem intro-x" to={REPORT}>
+                <button className="btnCustom">Manage Order</button>
+            </NavLink>
+            <NavLink className="navItem intro-x" to={NEWSMANAGER}>
                 <button className="btnCustom">Manage News</button>
             </NavLink>
             <NavLink className="navItem intro-x" to={REPORT}>

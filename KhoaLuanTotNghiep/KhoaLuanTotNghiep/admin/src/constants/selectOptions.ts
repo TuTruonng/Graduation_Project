@@ -8,5 +8,4 @@ export const stateApprove: ISelectOption[] = [
 export const UserOptions: ISelectOption[] = [
     { id: 1, label: 'Admin', value: 'ADMIN' },
     { id: 2, label: 'Staff', value: 'STAFF' },
-    { id: 3, label: 'User', value: 'USER' },
 ];

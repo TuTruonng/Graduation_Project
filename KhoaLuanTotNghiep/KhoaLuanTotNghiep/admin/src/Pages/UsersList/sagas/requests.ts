@@ -27,9 +27,13 @@ export function getUsersRequest(
 export function UpdateUserRequest(
     UserForm: IUserForm
 ): Promise<AxiosResponse<IUser>> {
+    console.log('hello')
     const formData = new FormData();
     Object.keys(UserForm).forEach((key) => {
         if (key === 'joinedDate' && UserForm.joinedDate instanceof Date) {
+            formData.append(key, (UserForm[key] as Date).toISOString())
+        }
+        else if (key === 'dateOfBirth' && UserForm.dateOfBirth instanceof Date) {
             formData.append(key, (UserForm[key] as Date).toISOString())
         }
         else {
@@ -38,7 +42,7 @@ export function UpdateUserRequest(
     });
 
     return RequestService.axios.put(
-        EndPoints.usersId(UserForm.staffCode ?? -1),
+        EndPoints.usersId(UserForm.userId ?? -1),
         formData
     ).then((response) => {
         if (response.data) {

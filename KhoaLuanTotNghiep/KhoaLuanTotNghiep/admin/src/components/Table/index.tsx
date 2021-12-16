@@ -40,25 +40,29 @@ const Table: React.FC<Props> = ({ columns, children }) => {
   return (
     <>
       <div className="table-container">
-        <table className="table">
-          <thead>
-            <tr>
-              {
-                columns.map((col, i) => (
-                  <th key={i}>
-                    <ColumnHeader
-                      colName={col.columnName}
-                      colValue={col.columnValue} />
-                  </th>
-                ))
-              }
-            </tr>
-          </thead>
+        {
+          <>
+            <table className="table">
+              <thead>
+                <tr>
+                  {
+                    columns.map((col, i) => (
+                      <th key={i}>
+                        <ColumnHeader
+                          colName={col.columnName}
+                          colValue={col.columnValue} />
+                      </th>
+                    ))
+                  }
+                </tr>
+              </thead>
 
-          <tbody>
-            {children}
-          </tbody>
-        </table>
+              <tbody>
+                {children}
+              </tbody>
+            </table>
+          </>
+        }
       </div>
     </>
   );

@@ -25,6 +25,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Models
         public virtual Category category { get; set; }
         public virtual User user { get; set; }
         public virtual User admin { get; set; }
+        public virtual Order order { get; set; }
         public virtual List<Report> reports { get; set; }
 
     }

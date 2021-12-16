@@ -23,10 +23,10 @@ namespace KhoaLuanTotNghiep_BackEnd.InterfaceService
 
         Task<ListApprove> UpdateRealEstateAsync(string id, ListApprove realEstateModel);
 
-        Task<bool> DeleteRealEstateModelAsync(string id);
-
         Task<IEnumerable<RealEstatefromCategory>> GetByCategoryAsync(string categoryname);
 
         Task<RealEstateModel> GetByIdAsync(string id);
+
+        Task<OrderModel> OrderAsync(string id);
     }
 }

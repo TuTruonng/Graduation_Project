@@ -104,17 +104,20 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("{id}")]
+        [HttpPost]
+        [Route("{id}")]
         [AllowAnonymous]
         //[Authorize(Policy = SecurityConstants.ADMIN_ROLE_POLICY)]
-        public async Task<ActionResult<bool>> Delete(string id)
+        public async Task<ActionResult> OrderAsync(string id)
         {
-            if (!ModelState.IsValid && string.IsNullOrEmpty(id))
+            if (!ModelState.IsValid)
             {
                 return BadRequest(id);
             }
 
-            var result = await _realStateService.DeleteRealEstateModelAsync(id);
+            var result = await _realStateService.OrderAsync(id);
+            if (result == null)
+                return NotFound();
             return Ok(result);
         }
 

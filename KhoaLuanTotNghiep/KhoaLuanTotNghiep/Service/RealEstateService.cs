@@ -241,22 +241,12 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             return products;
         }
 
-        public async Task<RealEstate> DeleteAsync(string id)
-        {
-            var product = await _dbContext.realEstates.FindAsync(id);
-            if (product == null)
-                return null;
-            _dbContext.realEstates.Remove(product);
-            await _dbContext.SaveChangesAsync();
-            return product;
-        }
-
         public async Task<ListApprove> UpdateRealEstateAsync(string id, ListApprove realEstateModel)
         {
             var realEstate = await _dbContext.realEstates.FirstOrDefaultAsync(x => x.RealEstateID == id);
             if (realEstate == null)
             {
-                throw new Exception("Have not NewsID");
+                throw new Exception("Have not RealEstateID");
             }
             //realEstateModel.RealEstateID = Guid.NewGuid().ToString();
             realEstate.Approve = bool.Parse(realEstateModel.Approve);
@@ -265,20 +255,49 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             return realEstateModel;
         }
 
-        public async Task<bool> DeleteRealEstateModelAsync(string id)
+        public async Task<OrderModel> OrderAsync(string id)
         {
             var realEstate = await _dbContext.realEstates.FirstOrDefaultAsync(x => x.RealEstateID == id);
             if (realEstate == null)
             {
-                throw new Exception("Have not RealEstate");
+                throw new Exception("Have not RealEstateID");
             }
-            var delete = _dbContext.Remove(realEstate);
-            var result = _dbContext.SaveChanges();
-            if (result > 0)
+            var orderCreate = new Order
             {
-                return true;
+                OrderId = Guid.NewGuid().ToString(),
+                OrderDate = DateTime.Now,
+                RealestateId = id,
+                UserId = realEstate.UserID,
+                AdminId = realEstate.AdminID
+            };
+            var create = _dbContext.Add(orderCreate);
+
+            realEstate.Status = true;
+
+            User staff = await _userManager.FindByIdAsync(realEstate.AdminID);
+            User user = await _userManager.FindByIdAsync(realEstate.UserID);
+            if (staff.Salary == 0)
+            {
+                staff.Salary = staff.SalaryBasic + ((staff.SalaryBasic) / 10);
             }
-            throw new Exception("Delete fail");
+            else
+            {
+                staff.Salary = staff.Salary + ((staff.SalaryBasic) / 10);
+            }
+            var result = _dbContext.SaveChanges();
+
+            var userIdList = (await _userManager.GetUsersInRoleAsync(Roles.User)).Select(u => u.Id);
+            var staffIdList = (await _userManager.GetUsersInRoleAsync(Roles.Staff)).Select(u => u.Id);
+
+            //User category = await _dbContext.realEstates.Where(c => c.Name == createAssetDto.Category).SingleOrDefaultAsync();
+            //Rea state = await _dbContext.realEstates.Where(s => s.Name == createAssetDto.State).SingleOrDefaultAsync();
+            OrderModel orderDto = new OrderModel();
+            orderDto.OrderId = orderCreate.OrderId;
+            orderDto.OrderDate = orderCreate.OrderDate;
+            orderDto.Title = orderCreate.RealestateId;
+            orderDto.UserName = (userIdList.Contains(user.Id)) ? user.FullName : null;
+            orderDto.AdminName = (staffIdList.Contains(staff.Id)) ? staff.UserName : null;
+            return orderDto;
         }
     }
 }

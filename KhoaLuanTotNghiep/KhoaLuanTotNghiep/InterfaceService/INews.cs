@@ -9,11 +9,14 @@ namespace KhoaLuanTotNghiep_BackEnd.InterfaceService
     public interface INews
     {
         Task<ICollection<NewsModel>> GetListNewsAsync();
+        Task<ICollection<NewsModel>> GetListNewsUserNameAsync(string userName);
 
-        Task<NewsModel> CreateNewsAsync(NewsModel newsModel);
+        Task<CreateNewsModel> CreateNewsAsync(CreateNewsModel newsModel, string userName);
 
         Task<NewsModel> UpdateNewsAsync(string id, NewsModel newsModel);
 
-        Task<bool> DeleteCategoryAsync(string id);
+        Task<bool> DeleteNewsAsync(string id);
+
+        Task<NewsModel> GetNewsByIDAsync(string id);
     }
 }

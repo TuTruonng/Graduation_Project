@@ -36,6 +36,21 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route("{id}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<CategoryModel>> GetByIdAsync(string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var result = await _categoryService.GetByIdAsync(id);
+            if (result == null)
+                return NotFound();
+            return Ok(result);
+        }
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<ActionResult<CategoryModel>> CreateAsync(CategoryModel Model)
@@ -52,7 +67,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<CategoryModel>> UpdateAsync(string id, CategoryModel category)
+        public async Task<ActionResult<CategoryModel>> UpdateAsync(string id, [FromForm] CategoryModel category)
         {
             if (!ModelState.IsValid)
             {
