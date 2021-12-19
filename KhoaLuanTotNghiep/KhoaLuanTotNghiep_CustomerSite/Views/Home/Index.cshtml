@@ -76,10 +76,13 @@
                             int j = 0;
                             for (; j <= 2 && i + j < Model.Count(); j++)
                             {
-                                <div class="col-md-4" id="row-item" style="height:400px">
+                                <div class="col-md-4" id="row-item" style="height:450px">
                                     <a class="card" style="height:100%" asp-action="Details" asp-controller="RealEstate" asp-route-id="@Model[i+j].RealEstateID">
-                                        <img class="card-img-top" style="height:300px" src="@Model[i+j].Image" alt="Card image cap">
-                                        <div class="card-body">
+                                        <div style="height:30%">
+                                            <img class="card-img-top" style="height:100%" src="@Model[i+j].Image" alt="Card image cap">
+                                        </div>
+
+                                        <div class="card-body" style="height:60%">
                                             <p style="display: -webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden; " class="card-title">
                                             <p class="card-title">
                                                 @(Model[i + j].Title.Length > 70 ? Model[i + j].Title.Substring(0, 70) + "..." : Model[i + j].Title)
@@ -89,7 +92,7 @@
                                             <p class="card-text">Vị Trí: @Model[i + j].Location</p>
                                         </div>
 
-                                        <div class="card-footer">
+                                        <div class="card-footer" style="height:10%">
                                             <small class="text-muted">@Model[i + j].CreateTime</small>
                                         </div>
                                     </a>
