@@ -7,6 +7,8 @@ namespace KhoaLuanTotNghiep_BackEnd.Interface
 {
     public interface IUser
     {
+        Task<IEnumerable<User>> GetAllUserAsync();
+        Task<UserModel> CreateAsync(CreateClientModel createUser);
         Task<IEnumerable<UserModel>> GetAdminAsync();
         Task<IEnumerable<UserModel>> GetUserAsync();
         Task<UserModel> AddAsync(CreateUserModel createUser);

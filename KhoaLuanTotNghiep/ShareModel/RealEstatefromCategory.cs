@@ -1,5 +1,7 @@
 ﻿
 
+using System;
+
 namespace ShareModel
 {
     public class RealEstatefromCategory
@@ -9,7 +11,8 @@ namespace ShareModel
         public int CategoryID { get; set; }
 
         public string UserID { get; set; }
-        
+        public string UserName { get; set; }
+
         public string CategoryName { get; set; }
 
         public string ReportID { get; set; }
@@ -29,6 +32,7 @@ namespace ShareModel
         public string Status { get; set; }
 
         public string Location { get; set; }
+        public DateTime CreateTime { get; set; }
 
 
         //public List<RealEstatefromCategory> realestates { get; set; }

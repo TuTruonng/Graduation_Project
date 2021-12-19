@@ -34,7 +34,6 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByNameAsync(request.Username);
-
                 if (user == null)
                 {
                     return BadRequest(new

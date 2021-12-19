@@ -8,7 +8,6 @@ import IAssetForm from 'src/interfaces/Asset/IAssetForm';
 import { string } from 'yup/lib/locale';
 // import Users from '../AssetManager';
 // import UserFormContainer from '../AssetForm';
-import format from "date-fns/format";
 import IRealEstateForm from 'src/interfaces/RealEstate/IRealEstateForm';
 import RealEstateForm from '../RealEstateForm';
 
@@ -26,7 +25,8 @@ const UpdateRealEstateContainer = () => {
                 {
                     realEstateID: existRealEstate?.realEstateID,
                     approve: existRealEstate.approve.toString(),
-                    assigned: existRealEstate.assigned,
+                    assignTo: existRealEstate.assignTo,
+                    userName: existRealEstate.userName
                 }
             );
            

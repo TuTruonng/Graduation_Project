@@ -9,6 +9,8 @@ namespace ShareModel
     public class RealEstateModel
     {
         public string RealEstateID { get; set; }
+        public string CategoryID { get; set; }
+        public string UserID { get; set; }
         public string UserName { get; set; }
         public string CategoryName { get; set; }
         public string ReportID { get; set; }
@@ -20,8 +22,9 @@ namespace ShareModel
         public string Approve { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime UpdateTime { get; set; }
-        public bool Status { get; set; }
+        public string Status { get; set; }
         public int PhoneNumber { get; set; }
         public string Location { get; set; }
+        public List<UserModel> UserNames { get; set; }
     }
 }

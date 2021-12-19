@@ -8,7 +8,6 @@ using ShareModel.Constant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 
 namespace KhoaLuanTotNghiep_BackEnd.Service
@@ -22,6 +21,45 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
         {
             _dbContext = dbContext;
             _userManager = userManager;
+        }
+
+        public async Task<IEnumerable<User>> GetAllUserAsync()
+        {
+            var user = await _dbContext.Users.ToListAsync();
+            return user;
+        }
+
+        public async Task<UserModel> CreateAsync(CreateClientModel createUser)
+        {
+            var userCreate = new User
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = createUser.Username,
+                PhoneNumber = createUser.PhoneNumber,
+                Email = createUser.Email,
+                CreateDate = createUser.CreateDate,
+            };
+
+            var result1 = await _userManager.CreateAsync(userCreate);
+            if (result1.Succeeded)
+            {
+                userCreate = await _userManager.FindByNameAsync(userCreate.UserName);
+                var result2 = await _userManager.AddToRoleAsync(userCreate,
+                   Roles.User);
+
+                UserModel userDto = new UserModel();
+                if (result2.Succeeded)
+                {
+                    userDto.UserId = userCreate.Id;
+                    userDto.Username = userCreate.UserName;
+                    userDto.PhoneNumber = userCreate.PhoneNumber;
+                    userDto.Email = userCreate.Email;
+                    userDto.CreateDate = userCreate.CreateDate;
+                    userDto.Type = Roles.User;
+                    return userDto; ;
+                }
+            }
+            return null;
         }
 
         public async Task<IEnumerable<UserModel>> GetAdminAsync()
@@ -143,39 +181,6 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             return null;
         }
 
-        //public async Task<UserModel> CreateAsync(CreateClientModel createUser)
-        //{
-        //    var userCreate = new User
-        //    {
-        //        Id = Guid.NewGuid().ToString(),
-        //        UserName = createUser.Username,
-        //        PhoneNumber = createUser.PhoneNumber,
-        //        Email = createUser.Email,
-        //        CreateDate = createUser.CreateDate,
-        //    };
-
-        //    var result1 = await _userManager.CreateAsync(userCreate);
-        //    if (result1.Succeeded)
-        //    {
-        //        userCreate = await _userManager.FindByNameAsync(userCreate.UserName);
-        //        var result2 = await _userManager.AddToRoleAsync(userCreate,
-        //           Roles.User);
-
-        //        UserModel userDto = new UserModel();
-        //        if (result2.Succeeded)
-        //        {
-        //            userDto.UserId = userCreate.Id;
-        //            userDto.Username = userCreate.UserName;
-        //            userDto.PhoneNumber = userCreate.PhoneNumber;
-        //            userDto.Email = userCreate.Email;
-        //            userDto.CreateDate = userCreate.CreateDate;
-        //            userDto.Type = Roles.User;
-        //            return userDto; ;
-        //        }
-        //    }
-        //    return null;
-        //}
-
         public async Task<UserModel> UpdateAsync(string id, EditUserModel editUserDto)
         {
             User user = await _userManager.FindByIdAsync(id);
@@ -245,7 +250,5 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             var result = await _userManager.ChangePasswordAsync(user, changeUserPasswordDto.CurrentPassword, changeUserPasswordDto.NewPassword);
             return result.Succeeded;
         }
-
-
     }
 }

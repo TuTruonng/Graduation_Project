@@ -57,18 +57,6 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             throw new Exception("Delete category fail");
         }
 
-        public async Task<ICollection<CategoryModel>> GetListCategoryAsync()
-        {
-            return await _dbContext.categories
-                .Select(category => new CategoryModel
-                {
-                    CategoryID = category.CategoryID,
-                    CategoryName = category.CategoryName,
-                    Description = category.Description
-                })
-                .ToListAsync();
-        }
-
         public async Task<CategoryModel> GetByIdAsync(string id)
         {
             var queryable = _dbContext.categories.AsQueryable();
@@ -82,6 +70,17 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             return real;
         }
 
+        public async Task<ICollection<CategoryModel>> GetListCategoryAsync()
+        {
+            return await _dbContext.categories
+                .Select(category => new CategoryModel
+                {
+                    CategoryID = category.CategoryID,
+                    CategoryName = category.CategoryName,
+                    Description = category.Description
+                })
+                .ToListAsync();
+        }
 
         public async Task<CategoryModel> UpdateCategoryAsync(string id, CategoryModel categoryModel)
         {

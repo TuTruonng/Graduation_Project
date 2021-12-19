@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 import moment, { invalid } from 'moment';
 import { Link, useHistory } from 'react-router-dom';
 import { NotificationManager } from 'react-notifications';
-import differenceInYears from 'date-fns/differenceInYears';
 import TextAreaField from 'src/components/FormInputs/TextAreaField';
 import TextField from 'src/components/FormInputs/TextField';
 import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
@@ -41,7 +40,7 @@ const NewsFormContainer: React.FC<Props> = ({
     },
 }) => {
     const [loading, setLoading] = useState(false);
-    const [loadingImg, setLoadingImg] = useState(false);
+    //const [loadingImg, setLoadingImg] = useState(false);
     const [img, setImg] = useState("");
     const dispatch = useAppDispatch();
     const isUpdate = initialNewsForm.newsID ? true : false;
@@ -71,7 +70,6 @@ const NewsFormContainer: React.FC<Props> = ({
         data.append("file", files[0]);
         data.append("upload_preset", "leduyen");
         //setLoadingImg(true);
-        console.log("acb", loadingImg);
         const res = await fetch(
             " https://api.cloudinary.com/v1_1/dusq8k6rj/image/upload",
             {
@@ -92,20 +90,16 @@ const NewsFormContainer: React.FC<Props> = ({
             enableReinitialize
             validationSchema={validationSchema}
             onSubmit={(values) => {
-
                 values.img = img;
                 setLoading(true);
                 setTimeout(() => {
-                    console.log(img);
                     if (isUpdate) {
-                        console.log('values')
+                        history.push(NEWSMANAGER);  
                         dispatch(
                             updateNews({ handleResult, formValues: values })
                         );
                     }
                     else {
-                        console.log('values')
-                        console.log(values)
                         dispatch(
                             createNews({ handleResult, formValues: values })
                         );

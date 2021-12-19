@@ -11,4 +11,5 @@ export default interface IRealEstate {
     phoneNumber: number;
     approve: string;
     location: string;
+    userNames: object;
 }

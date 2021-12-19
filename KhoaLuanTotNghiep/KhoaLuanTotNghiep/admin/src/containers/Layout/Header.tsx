@@ -10,6 +10,7 @@ import { putChangePasswordUser } from '../Authorize/sagas/requests';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
 import { logout } from '../Authorize/reducer';
+import { getLocalStorage } from 'src/utils/localStorage';
 
 const initialValues: IChangePasswordUser = {
     userName: '',
@@ -33,6 +34,8 @@ const CustomToggle = React.forwardRef<any, any>(
 );
 
 const Header = () => {
+    const username = localStorage.getItem('user');
+    const rolename = localStorage.getItem('role');
     const history = useHistory();
     const { pathname } = useLocation();
     const { account, loading, error } = useAppSelector(
@@ -107,7 +110,8 @@ const Header = () => {
             <div className="header align-items-center font-weight-bold">
                 <div className="container-lg-min container-fluid d-flex pt-2">
                     <p className="headText">{`${headerName()}`}</p>
-
+                    <p className="headText" style={{marginLeft: '70px'}}>{`Username: ${username}`}</p>
+                    <p className="headText" style={{marginLeft: '70px'}}>{`Role: ${rolename}`}</p>
                     <div className="ml-auto text-white">
                         <Dropdown>
                             <Dropdown.Toggle as={CustomToggle}>

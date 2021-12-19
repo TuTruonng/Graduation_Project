@@ -16,12 +16,12 @@ import ConfirmModal from 'src/components/ConfirmModal';
 import { disableNews } from '../reducer';
 
 type Props = {
-  news: INews | null;
+  newses: INews | null;
   fetchData: Function;
 };
 
 const NewsTable = ({
-  news,
+  newses,
   fetchData,
 }) => {
   const dispatch = useAppDispatch();
@@ -92,7 +92,7 @@ const NewsTable = ({
   const handleShowInfo = (newsID: string) => {
     {
       console.log('Info')
-      news.map((item) => {
+      newses.map((item) => {
         if (item.newsID === newsID) {
           const news = item;
           console.log(news)
@@ -112,10 +112,10 @@ const NewsTable = ({
   const history = useHistory();
   const handleEdit = (newsID: string) => {
     {
-      news.map((item) => {
+      newses.map((item) => {
         if (item.newsID === newsID) {
           history.push(EDIT_NEWS_ID(newsID), {
-            existNews: item,
+            existNewses: item,
           });
         }
       })
@@ -137,8 +137,8 @@ const NewsTable = ({
             <th style={{ width: "10%" }}>Action</th>
           </tr>
         </thead>
-        <tbody className='body'>
-          {news && news.map((data, i) => (
+        <tbody className='body' style={{}}>
+          {newses && newses.map((data, i) => (
             <tr
               style={{ fontWeight: 'normal', fontSize: '14px' }}
               key={data.newsID}
@@ -166,7 +166,7 @@ const NewsTable = ({
       </Table>
 
       {NewsDetail && showDetail && (
-        <Info news={NewsDetail} handleClose={handleCloseDetail} />
+        <Info newses={NewsDetail} handleClose={handleCloseDetail} />
       )}
 
       <ConfirmModal

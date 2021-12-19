@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import News from 'src/Pages/NewsList/Manager';
 
-const RealEstateManager = () => {
+const NewsManager = () => {
     return (
         <>
             <div className="primaryColor text-title intro-x">
@@ -12,4 +12,4 @@ const RealEstateManager = () => {
     );
 };
 
-export default RealEstateManager;
+export default NewsManager;

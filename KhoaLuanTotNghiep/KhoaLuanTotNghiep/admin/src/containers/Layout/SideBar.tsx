@@ -9,7 +9,9 @@ import {
     REALESTATEMANAGER,
     CUSTOMERMANAGER,
     CATEGORYMANAGER,
-    NEWSMANAGER
+    NEWSMANAGER,
+    REPORTMANAGER,
+    ORDERMANAGER
 } from 'src/constants/pages';
 import Roles from 'src/constants/roles';
 import { LIST_BDS } from 'src/Helpers/Router';
@@ -20,8 +22,8 @@ const SideBar = () => {
 
     return (
         <div className="nav-left mb-5">
-            <img src="/images/Logo_lk.png" alt="logo" />
-            <p className="brand intro-x">Online Asset Management</p>
+            <img src="/images/logo.jpeg" style={{ width: '200px', height: '150px' }} alt="logo" />
+            {/* <p className="brand intro-x">Online Asset Management</p> */}
 
             <NavLink className="navItem intro-x" exact to={HOME}>
                 <button className="btnCustom">Home</button>
@@ -35,13 +37,10 @@ const SideBar = () => {
             <NavLink className="navItem intro-x" to={CUSTOMERMANAGER}>
                 <button className="btnCustom">Manage Customer</button>
             </NavLink>
-            <NavLink className="navItem intro-x" to={REPORT}>
-                <button className="btnCustom">Manage Order</button>
-            </NavLink>
             <NavLink className="navItem intro-x" to={NEWSMANAGER}>
                 <button className="btnCustom">Manage News</button>
             </NavLink>
-            <NavLink className="navItem intro-x" to={REPORT}>
+            <NavLink className="navItem intro-x" to={REPORTMANAGER}>
                 <button className="btnCustom">Manage Report</button>
             </NavLink>
             {/* account?.role === Roles.Admin && ( */}
@@ -51,6 +50,9 @@ const SideBar = () => {
                         <button className="btnCustom">
                             Manage Employee
                         </button>
+                    </NavLink>
+                    <NavLink className="navItem intro-x" to={ORDERMANAGER}>
+                        <button className="btnCustom">Manage Order</button>
                     </NavLink>
                 </div>
             )}

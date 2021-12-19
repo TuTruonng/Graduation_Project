@@ -1,0 +1,47 @@
+﻿@*@model KhoaLuanTotNghiep_CustomerSite.ViewModel.searchModel*@
+@model IList<ShareModel.NewsModel>
+
+
+@*@section Styles {
+    <link rel="stylesheet" href="~/css/app.css" />
+}
+
+@{ ViewData["Title"] = "Home Page"; }
+
+<div class="container" id="title-RealEstate">
+    <h2>Tin tức trong ngày</h2>
+</div>
+<div class="card-deck">
+    <div class="card" style="width: 0; height: 0; border: none">
+        <img class="card-img-top" src="~/images/main.jpg" style="width: 0; height: 0">
+
+    </div>
+</div>
+
+<div class="card-deck" id="card-RealEstate">
+    @for (int i = 0; i < Model.Count(); i += 3)
+    {
+    <div class="row">
+        @{
+            int j = 0;
+            for (; j <= 2 && i + j < Model.Count(); j++)
+            {
+                <div class="col-md-4" id="row-item">
+                    <img class="card-img-top" src="@Model[i].Img" alt="Card image cap">
+                </div>
+                <div class="col-md-8" id="row-item">
+                    <a class="card" asp-action="Details" asp-controller="News" asp-route-id="@Model[i].NewsName">
+
+                        <div class="card-body">
+                            <p class="card-title">@Model[i].Description</p>
+                            <p class="card-text">   @Model[i].UserName</p>
+                        </div>
+                    </a>
+                </div>
+            }
+        }
+    </div>
+        <br />
+    }
+
+</div>*@

@@ -4,8 +4,7 @@ import { useHistory } from 'react-router';
 import ButtonIcon from 'src/components/ButtonIcon';
 import { Button, Table } from "reactstrap";
 import { Link } from "react-router-dom";
-import "../../../styles/BDS.css"
-// import Info from './Info';
+import "../../../styles/BDS.css";
 import ConfirmModal from 'src/components/ConfirmModal';
 import IAsset from 'src/interfaces/Asset/IAsset';
 import IColumnOption from 'src/interfaces/IColumnOption';
@@ -14,6 +13,7 @@ import { useAppDispatch } from 'src/hooks/redux';
 import IRealEstate from 'src/interfaces/RealEstate/IRealEstate';
 import { EDIT_REALESTATE_ID } from 'src/constants/pages';
 import { object } from 'yup/lib/locale';
+import Info from './Info';
 
 type Props = {
   realEstates: IRealEstate | null;
@@ -116,6 +116,9 @@ const RealEstateTable = ({
           ))}
         </tbody>
       </Table>
+      {realEstateDetail && showDetail && (
+                <Info realEstates={realEstateDetail} handleClose={handleCloseDetail} />
+            )}
     </>
   );
 };

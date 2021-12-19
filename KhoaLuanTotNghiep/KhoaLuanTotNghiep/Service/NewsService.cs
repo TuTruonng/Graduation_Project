@@ -15,7 +15,6 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly UserManager<User> _userManager;
-
         public NewsService(ApplicationDbContext dbContext, UserManager<User> userManager)
         {
             _dbContext = dbContext;
@@ -46,21 +45,31 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             return newsModel;
         }
 
-        public async Task<bool> DeleteNewsAsync(string id)
+        public async Task<NewsModel> UpdateNewsAsync(string id, NewsModel newsModel)
         {
             var news = await _dbContext.news.FirstOrDefaultAsync(x => x.NewsID == id);
             if (news == null)
             {
-                throw new Exception("Have not News");
+                throw new Exception("Have not NewsID");
             }
-            news.Status = false;
-            await _dbContext.SaveChangesAsync();
-            return true;
+            newsModel.NewsID = Guid.NewGuid().ToString();
+            news.NewsName = newsModel.NewsName;
+            news.Description = newsModel.Description;
+            news.Img = newsModel.Img;
+            var result = await _dbContext.SaveChangesAsync();
+            if (result > 0)
+            {
+                return newsModel;
+            }
+            throw new Exception("Update News fail");
         }
 
-        public async Task<ICollection<NewsModel>> GetListNewsAsync()
+        public async Task<ICollection<NewsModel>> GetListNewsUserNameAsync(string userName)
         {
-            var news = await _dbContext.news.Include(x => x.user).Where(n => n.Status == true).Select(x =>
+            var user = await _userManager.FindByNameAsync(userName);
+            var queryable = _dbContext.news.AsQueryable();
+            queryable = queryable.Where(n => n.UserID == user.Id && n.Status == true);
+            var news = await queryable.Select(x =>
                         new NewsModel
                         {
                             //UserID = x.UserID,
@@ -74,15 +83,30 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             return news;
         }
 
-        public async Task<ICollection<NewsModel>> GetListNewsUserNameAsync(string userName)
+
+        /// <summary>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<bool> DeleteNewsAsync(string id)
         {
-            var user = await _userManager.FindByNameAsync(userName);
-            var queryable = _dbContext.news.AsQueryable();
-            queryable = queryable.Where(n => n.UserID == user.Id && n.Status == true);
-            var news = await queryable.Select(x =>
+            var news = await _dbContext.news.FirstOrDefaultAsync(x => x.NewsID == id);
+            if (news == null)
+            {
+                throw new Exception("Have not News");
+            }
+            news.Status = false;
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
+
+        public async Task<ICollection<NewsModel>> GetListNewsAsync()
+        {
+            var news = await _dbContext.news.Include(x => x.user).Select(x =>
                         new NewsModel
                         {
-                            //UserID = x.UserID,
+                            UserID = x.user.Id,
                             UserName = x.user.UserName,
                             NewsID = x.NewsID,
                             NewsName = x.NewsName,
@@ -105,7 +129,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             {
                 NewsID = news.NewsID,
                 UserID = news.UserID,
-                //UserName = news.UserName,
+                UserName = news.user.UserName,
                 NewsName = news.NewsName,
                 Description = news.Description,
                 Img = news.Img,
@@ -113,23 +137,6 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             return newsModel;
         }
 
-        public async Task<NewsModel> UpdateNewsAsync(string id, NewsModel newsModel)
-        {
-            var news = await _dbContext.news.FirstOrDefaultAsync(x => x.NewsID == id);
-            if (news == null)
-            {
-                throw new Exception("Have not NewsID");
-            }
-            newsModel.NewsID = Guid.NewGuid().ToString();
-            news.NewsName = newsModel.NewsName;
-            news.Description = newsModel.Description;
-            news.Img = newsModel.Img;
-            var result = await _dbContext.SaveChangesAsync();
-            if (result > 0)
-            {
-                return newsModel;
-            }
-            throw new Exception("Update News fail");
-        }
+
     }
 }

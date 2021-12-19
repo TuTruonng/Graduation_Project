@@ -14,6 +14,8 @@ using ShareModel.Constant;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
+using AspNet.Security.OpenIdConnect.Primitives;
 
 namespace KhoaLuanTotNghiep_CustomerSite
 {
@@ -84,6 +86,10 @@ namespace KhoaLuanTotNghiep_CustomerSite
             services.AddTransient<IRealEstateApiClient, RealEstateApiClient>();
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<INewsApiClient, NewsApiCLient>();
+            services.AddTransient<IReportApiClient, ReportApiClient>();
+            services.AddTransient<IOrderApiClient, OrderApiClient>();
+            services.AddTransient<ISearchApiClient, SearchApiClient>();
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);

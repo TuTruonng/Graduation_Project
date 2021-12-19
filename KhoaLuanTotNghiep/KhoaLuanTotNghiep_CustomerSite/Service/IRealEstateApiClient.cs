@@ -15,10 +15,15 @@ namespace KhoaLuanTotNghiep_CustomerSite.Service
         Task<RealEstateModel> GetProductById(string id);
 
         Task<IEnumerable<RealEstatefromCategory>> GetProductByCategory(string category);
+
         Task<bool> CreateRealEstates(RealEstateCreateRequest realEstateModel);
 
         Task<IList<RateResponse>> GetListRatings();
 
         Task<bool> Rating(string productId, int values);
+
+     //   Task<IEnumerable<RealEstateModel>> Search(string query);
+
+
     }
 }

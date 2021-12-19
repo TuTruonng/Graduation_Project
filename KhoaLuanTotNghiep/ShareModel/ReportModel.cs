@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace ShareModel
 {
-   public class ReportModel
+    public class ReportModel
     {
         public string ReportID { get; set; }
 
-        public string RealEstatetID { get; set; }
+        public string RealEstateID { get; set; }
+        public string Title { get; set; }
 
         public string Status { get; set; }
 

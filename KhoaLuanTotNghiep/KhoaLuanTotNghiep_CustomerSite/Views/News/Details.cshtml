@@ -1,0 +1,29 @@
+﻿@model ShareModel.NewsModel
+@*@{
+        var rate = (ShareModel.RateResponse)ViewBag.rating;
+    }*@
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/app.css" />
+}
+
+@using Microsoft.AspNetCore.Http
+<div class="p-5 border rounded">
+    <div class="form-group row ">
+        <div class="col-12">
+            <div class="product-name" style=" color: #B22222;font:22px;text-shadow: black 1px 1px;text-align:center">
+                <h3>@Model.NewsName</h3>
+            </div>
+            <hr />
+            <div class="col-10" style="text-align: center">
+                <img src="@Model.Img" alt="New york" style="width:1000px;height:400px">
+            </div>
+            <div class="col-10" style="text-align: center">
+                <p>
+                    <span class="item-title" style="font-size:18px; white-space: pre-line"> @Model.Description</span>
+                </p>
+                </div>
+            </div>
+
+        </div>
+    </div>

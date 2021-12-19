@@ -2,127 +2,272 @@
 @model KhoaLuanTotNghiep_CustomerSite.Pages.RealEstates.CreateModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
+
 @section Styles {
     <link rel="stylesheet" href="~/css/dropzone.css" />
-    <link rel="stylesheet" href="~/css/app.css" />
+    <link rel="stylesheet" href="~/css/project.css" />
 }
 
 @{
     ViewData["Title"] = "Create";
 }
 
+
 <hr />
 <div class="row">
     <div class="container">
         <form enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <select name="cate" style="text-align:center">
-                <option value="1">Nhà Đất Bán</option>
-                <option value="2">Nhà Cho Thuê</option>
-                <option value="3">Dự Án</option>
-            </select>
-            <div class="title-create">
+            <div class=" title-create">
                 <h1>ĐĂNG TIN RAO BÁN, CHO THUÊ NHÀ ĐẤT</h1>
                 <p>(Quý vị nhập thông tin nhà đất cần bán hoặc cho thuê vào các mục dưới đây)</p>
             </div>
             <br />
-            <div class="mb-3">
-                <label asp-for="realEstate.Title">Tiêu Đề</label>
-                <input asp-for="realEstate.Title" class="form-control" />
-                <span asp-validation-for="realEstate.Title" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="mb-3">
-                <label asp-for="realEstate.Price">Giá</label>
-                <input asp-for="realEstate.Price" class="form-control" />
-                <span asp-validation-for="realEstate.Price" class="text-danger"></span>
-            </div>
-            <br />
-
-            @*<div class="field-info">
+            <div id="divPostNews">
+                <div class="rowHeader  elevation-2 " style="border: 1px solid #999;width:900px;margin-left:100px">
                     <div class="title-info">
-                        <h4 style="color: white">Hình Ảnh</h4>
+                        <h4 style="color: white; text-align:center">Thông tin cơ bản</h4>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <input name="image" type="file" class="form-control" accept="image/*" />
+                    <br />
+                    <div class="rowPost">
+                        <select name="cate" style="margin-left:400px">
+                            <option value="1">Nhà Đất Bán</option>
+                            <option value="2">Nhà Cho Thuê</option>
+                            <option value="3">Dự Án</option>
+                        </select>
+                    </div>
+                    <div class="rowPost">
+                        <div class="mb-3">
+                            <label style="width:80px; float:left;" asp-for="realEstate.Title">Tiêu Đề:</label>
+                            <input style="width:700px; " asp-for="realEstate.Title" required class="form-control" data-val="true" data-val-length="Vượt quá 500 ký tự." data-val-length-max="500" data-val-required="Tiêu đề không được trống." id="Title" maxlength="100" name="Title" />
+                            <span asp-validation-for="realEstate.Title" class="text-danger"></span>
+                            <span class="text-danger field-validation-valid" data-valmsg-for="Title" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                    <div class="rowPost">
+                        <div class="mb-3">
+                            <label style="width:80px; float:left;" asp-for="realEstate.Price">Giá:</label>
+                            <input style="width:700px; " asp-for="realEstate.Price" asp-format="{0:#,###.00}" required class="form-control" data-val="true" data-val-length="Vượt quá 500 ký tự." data-val-length-max="500" data-val-required="Gía không được trống." id="Price" maxlength="100" name="Price" />
+                            <span asp-validation-for="realEstate.Price" class="text-danger"></span>
+                            <span class="text-danger field-validation-valid" data-valmsg-for="Price" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+
+                    @*<div class="field-info">
+                            <div class="title-info">
+                                <h4 style="color: white">Hình Ảnh</h4>
                             </div>
-                            <input type="submit" value="Upload" class="btn btn-default" />0
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input name="image" type="file" class="form-control" accept="image/*" />
+                                    </div>
+                                    <input type="submit" value="Upload" class="btn btn-default" />0
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3>Recent Upload</h3>
+
+                                <div>
+                                    <img id="recentImage" class="img-responsive img-thumbnail" style="width: 500px; height: 500px" />
+                                </div>
+                            </div>w
+                        </div>*@
+
+                    <div class="rowPost">
+                        <div class="mb-3">
+                            <label style="width:80px; float:left;" asp-for="realEstate.Description">Mô tả:</label>
+                            <input style="width:700px; " asp-for="realEstate.Description" required class="form-control" data-val="true" data-val-length="Vượt quá 500 ký tự." data-val-length-max="500" data-val-required="Mô tả không được trống." id="Description" maxlength="100" name="Description" />
+                            <span asp-validation-for="realEstate.Description" class="text-danger"></span>
+                            <span class="text-danger field-validation-valid" data-valmsg-for="Description" data-valmsg-replace="true"></span>
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h3>Recent Upload</h3>
-
-                        <div>
-                            <img id="recentImage" class="img-responsive img-thumbnail" style="width: 500px; height: 500px" />
+                    <div class="rowPost">
+                        <div class="mb-3">
+                            <label style="width:80px; float:left;" asp-for="realEstate.Acgreage">Diện tích:</label>
+                            <input style="width:700px; " asp-for="realEstate.Acgreage" required class="form-control" data-val="true" data-val-length="Vượt quá 500 ký tự." data-val-length-max="500" data-val-required="Diện tích không được trống." id="Acgreage" maxlength="100" name="Acgreage" />
+                            <span asp-validation-for="realEstate.Acgreage" class="text-danger"></span>
+                            <span class="text-danger field-validation-valid" data-valmsg-for="Acgreage" data-valmsg-replace="true"></span>
                         </div>
-                    </div>w
-                </div>*@
-            <br />
-            <div class="field-info">
-                <div class="title-info">
-                    <h4 style="color: white">Thông Tin Mô Tả</h4>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="realEstate.Description"></label>
-                    <input asp-for="realEstate.Description" class="form-control" />
-                    <span asp-validation-for="realEstate.Description" class="text-danger"></span>
-                </div>
-            </div>
-            <br />
-            <div class="field-info">
-                <div class="title-info">
-                    <h4 style="color: white">Diện Tích</h4>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="realEstate.Acgreage"></label>
-                    <input asp-for="realEstate.Acgreage" class="form-control" />
-                    <span asp-validation-for="realEstate.Acgreage" class="text-danger"></span>
-                </div>
-                <br />
-            </div>
-            <br />
-            <div class="field-info">
-                <div class="title-info">
-                    <h4 style="color: white">Vị Trí</h4>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="realEstate.Location">Vị Trí</label>
-                    <input asp-for="realEstate.Location" class="form-control" />
-                    <span asp-validation-for="realEstate.Location" class="text-danger"></span>
-                </div>
-                <br />
-            </div>
-            <br />
-            <div class="field-info">
-                <div class="title-info">
-                    <h4 style="color: white">Hinh Ảnh</h4>
-                </div>
-                <div id="backend_upload">
-                    <input id="fileupload" type="file" name="images" multiple accept="image/gif, image/jpeg, image/png">
-                </div>
-                <br />
-            </div>
+                    </div>
+                    <div class="rowPost">
+                        <div class="mb-3">
+                            <label style="width:80px; float:left;" asp-for="realEstate.Location">Số nhà, tên đường:</label>
+                            <input style="width:400px; " asp-for="realEstate.Location" required class="form-control" data-val="true" data-val-length="Vượt quá 500 ký tự."
+                                   data-val-length-max="500" data-val-required="Vị trí không được trống." id="Location" maxlength="100" name="Location" />
+                            <br />
+                            <select style="margin-left: 80px" name="calc_shipping_provinces" required="">
+                                <option value="">Tỉnh / Thành phố</option>
+                            </select>
+                            <select style="margin-left: 50px" name="calc_shipping_district" required="">
+                                <option value="">Quận / Huyện</option>
+                            </select>
+                            <input class="billing_address_1" asp-for="realEstate.Province" name="Province" type="hidden" value="realEstate.Province">
+                            <input class="billing_address_2" asp-for="realEstate.District" name="District" type="hidden" value="realEstate.District">
+                            <span asp-validation-for="realEstate.Location" class="text-danger"></span>
+                            <span class="text-danger field-validation-valid" data-valmsg-for="Location" data-valmsg-replace="true"></span>
 
-            <div class="mb-3">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </div>
+                    <div class="rowPost">
+                        <div id="backend_upload">
+                            <div class="mb-3">
+                                <label style="width:80px; float:left;" asp-for="realEstate.Image">Hình Ảnh:</label>
+                                <input id="fileupload" type="file" maxlength="100" multiple accept="image/gif, image/jpeg, image/png" data-val="true" data-val-required="Image không được trống." name="images">
+                                <span class="text-danger field-validation-valid" data-valmsg-for="Image" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            <div id="divPostNews">
+                <div class="rowHeader  elevation-2 " style="border: 1px solid #999;width:900px;margin-left:100px">
+                    <div class="title-info">
+                        <h4 style="color: white; text-align:center">Thông tin liên hệ</h4>
+                    </div>
+                    <br />
+                    <div class="rowPost">
+                        <div class="mb-3">
+                            <label style="width:80px; float:left;" asp-for="user.Username">Tên liên hệ:</label>
+                            <input style="width:700px; " asp-for="user.Username" class="form-control" data-val="true" data-val-length="Vượt quá 500 ký tự." data-val-length-max="500" data-val-required="Vị trí không được trống." id="Username" maxlength="100" name="Username" />
+                            <span asp-validation-for="user.Username" class="text-danger"></span>
+                            <span class="text-danger field-validation-valid" data-valmsg-for="Username" data-valmsg-replace="true"></span>
+
+                        </div>
+                    </div>
+
+                    <div class="rowPost">
+                        <div class="mb-3">
+                            <label style="width:80px; float:left;" asp-for="user.FullName">Tên liên hệ:</label>
+                            <input style="width:700px; " asp-for="user.FullName" class="form-control" data-val="true" data-val-length="Vượt quá 500 ký tự." data-val-length-max="500" data-val-required="Vị trí không được trống." id="FullName" maxlength="100" name="FullName" />
+                            <span asp-validation-for="user.FullName" class="text-danger"></span>
+                            <span class="text-danger field-validation-valid" data-valmsg-for="FullName" data-valmsg-replace="true"></span>
+
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label style="width:80px; float:left;" asp-for="user.PhoneNumber">Điện thoại:</label>
+                        <input style="width:700px; " asp-for="user.PhoneNumber" class="form-control" data-val="true" data-val-length="Vượt quá 500 ký tự." data-val-length-max="500" data-val-required="Vị trí không được trống." id="PhoneNumber" maxlength="100" name="PhoneNumber" />
+                        <span asp-validation-for="user.PhoneNumber" class="text-danger"></span>
+                        <span class="text-danger field-validation-valid" data-valmsg-for="PhoneNumber" data-valmsg-replace="true"></span>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label style="width:80px; float:left;" asp-for="user.Email">Email:</label>
+                        <input style="width:700px; " asp-for="user.Email" class="form-control" data-val="true" data-val-length="Vượt quá 500 ký tự." data-val-length-max="500" data-val-required="Vị trí không được trống." id="Email" maxlength="100" name="Email" />
+                        <span asp-validation-for="user.Email" class="text-danger"></span>
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3" style="margin-left: 500px">
+                <input type="submit" value="Thêm" class="btn btn-primary" onclick="javascript: return edit_confirm();" />
+
             </div>
         </form>
     </div>
 </div>
 
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
 
-
 @section Scripts {
+    @*<script type="text/javascript">
+                function openSuccessModal(strMessage) {
+                    var myDiv = document.getElementById("MyModalSuccessAlertBody");
+                    myDiv.innerHTML = strMessage;
+                    $('#myModalSuccess').modal('show');
+                }
+                $(document).ready(function () {
+                    var msg = "@TempData["SuccessMessage"]";
+                    if (msg)
+                        openSuccessModal(msg);
+                });
+        </script>*@
     <script src="~/lib/dropzone.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/gh/vietblogdao/js/districts.min.js'></script>
+    <script>
+        //<![CDATA[
+        if (address_2 = localStorage.getItem('address_2_saved')) {
+            $('select[name="calc_shipping_district"] option').each(function () {
+                if ($(this).text() == address_2) {
+                    $(this).attr('selected', '')
+                }
+            })
+            $('input.billing_address_2').attr('value', address_2)
+        }
+        if (district = localStorage.getItem('district')) {
+            $('select[name="calc_shipping_district"]').html(district)
+            $('select[name="calc_shipping_district"]').on('change', function () {
+                var target = $(this).children('option:selected')
+                target.attr('selected', '')
+                $('select[name="calc_shipping_district"] option').not(target).removeAttr('selected')
+                address_2 = target.text()
+                $('input.billing_address_2').attr('value', address_2)
+                district = $('select[name="calc_shipping_district"]').html()
+                localStorage.setItem('district', district)
+                localStorage.setItem('address_2_saved', address_2)
+            })
+        }
+        $('select[name="calc_shipping_provinces"]').each(function () {
+            var $this = $(this),
+                stc = ''
+            c.forEach(function (i, e) {
+                e += +1
+                stc += '<option value=' + e + '>' + i + '</option>'
+                $this.html('<option value="">Tỉnh / Thành phố</option>' + stc)
+                if (address_1 = localStorage.getItem('address_1_saved')) {
+                    $('select[name="calc_shipping_provinces"] option').each(function () {
+                        if ($(this).text() == address_1) {
+                            $(this).attr('selected', '')
+                        }
+                    })
+                    $('input.billing_address_1').attr('value', address_1)
+                }
+                $this.on('change', function (i) {
+                    i = $this.children('option:selected').index() - 1
+                    var str = '',
+                        r = $this.val()
+                    if (r != '') {
+                        arr[i].forEach(function (el) {
+                            str += '<option value="' + el + '">' + el + '</option>'
+                            $('select[name="calc_shipping_district"]').html('<option value="">Quận / Huyện</option>' + str)
+                        })
+                        var address_1 = $this.children('option:selected').text()
+                        var district = $('select[name="calc_shipping_district"]').html()
+                        localStorage.setItem('address_1_saved', address_1)
+                        localStorage.setItem('district', district)
+                        $('select[name="calc_shipping_district"]').on('change', function () {
+                            var target = $(this).children('option:selected')
+                            target.attr('selected', '')
+                            $('select[name="calc_shipping_district"] option').not(target).removeAttr('selected')
+                            var address_2 = target.text()
+                            $('input.billing_address_2').attr('value', address_2)
+                            district = $('select[name="calc_shipping_district"]').html()
+                            localStorage.setItem('district', district)
+                            localStorage.setItem('address_2_saved', address_2)
+                        })
+                    } else {
+                        $('select[name="calc_shipping_district"]').html('<option value="">Quận / Huyện</option>')
+                        district = $('select[name="calc_shipping_district"]').html()
+                        localStorage.setItem('district', district)
+                        localStorage.removeItem('address_1_saved', address_1)
+                    }
+                })
+            })
+        })
+        //]]></script>
     <script>
         $("#imageUploadForm").dropzone({
             url: "/imageupload",
@@ -133,5 +278,21 @@
             }
         });
     </script>
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script language="javascript">
+        function edit_confirm() {
+            var result = confirm(" Bạn muốn thực hiện giao dịch này ? !");
+            if (result) {
+                return true;
+            }
+            return false;
+        }
+        function success_confirm() {
+            var success = openSuccessModal("Thành công");
+            if (success) {
+                return success;
+            }
+            return false;
+
+    </script>
+    <partial name="_ValidationScriptsPartial" />
 }

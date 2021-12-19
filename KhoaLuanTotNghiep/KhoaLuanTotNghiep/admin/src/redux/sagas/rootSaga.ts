@@ -4,5 +4,7 @@ import UserSagas from 'src/Pages/UsersList/sagas';
 import CustomerSagas from 'src/Pages/CustomersList/sagas';
 import CategorySagas from 'src/Pages/CategoryList/sagas';
 import NewsSagas from 'src/Pages/NewsList/sagas';
+import OrderSagas from 'src/Pages/OrderList/sagas';
+import ReportSagas from 'src/Pages/ReportList/sagas';
 
-export default [AuthorizeSagas, RealEstateSagas, UserSagas, CustomerSagas, CategorySagas, NewsSagas];
+export default [AuthorizeSagas, RealEstateSagas, UserSagas, CustomerSagas, CategorySagas, NewsSagas, OrderSagas, ReportSagas];

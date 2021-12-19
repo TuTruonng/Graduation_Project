@@ -47,7 +47,7 @@ const Login = () => {
                 <div>
                     <div className="headText-Login">
                         <p className="text">
-                            Welcome To Online Asset Management
+                            Welcome To RealEstate Management Website
                         </p>
                     </div>
 

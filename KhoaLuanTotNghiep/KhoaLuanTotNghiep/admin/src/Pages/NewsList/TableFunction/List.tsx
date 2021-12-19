@@ -15,7 +15,7 @@ type Props = {
 const ListNews = () => {
   const dispatch = useAppDispatch();
   const [New, setNew] = useState([]);
-  const {news, loading } = useAppSelector((state) => state.newsReducer);
+  const {newses, loading } = useAppSelector((state) => state.newsReducer);
 
   const [itemSelected, setSelected] = React.useState(null);
   // let params = {};
@@ -28,7 +28,7 @@ const ListNews = () => {
     fetchData();
   }, []);
 
-  console.log(news);
+  console.log(newses);
 
   const _removeViewItem = (lists, itemDel) =>
     lists.filter((item) => item.newsID !== itemDel);
@@ -52,7 +52,7 @@ const ListNews = () => {
         </div>
 
         <NewsTable
-          news={news}
+          newses={newses}
           fetchData={fetchData}
         />
       </div>

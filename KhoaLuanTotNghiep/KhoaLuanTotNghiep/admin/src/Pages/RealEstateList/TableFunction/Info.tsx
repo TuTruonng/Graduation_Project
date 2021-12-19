@@ -3,11 +3,11 @@ import { Modal } from 'react-bootstrap';
 import IRealEstate from '../../../interfaces/RealEstate/IRealEstate';
 
 type Props = {
-    RealEstate: IRealEstate;
+    realEstates: IRealEstate;
     handleClose: () => void;
 };
 
-const Info: React.FC<Props> = ({ RealEstate, handleClose }) => {
+const Info: React.FC<Props> = ({ realEstates, handleClose }) => {
 
     return (
         <>
@@ -22,42 +22,37 @@ const Info: React.FC<Props> = ({ RealEstate, handleClose }) => {
                     <div>
                         <div className="row -intro-y">
                             <div className="col-4">RealEstate Code:</div>
-                            <div>{RealEstate.realEstateID}</div>
+                            <div>{realEstates.realEstateID}</div>
                         </div>
 
                         <div className="row -intro-y">
                             <div className="col-4">User Name:</div>
-                            <div>{RealEstate.userName}</div>
+                            <div>{realEstates.userName}</div>
                         </div>
 
                         <div className="row -intro-y">
                             <div className="col-4">Category Name:</div>
-                            <div>{RealEstate.categoryName}</div>
+                            <div>{realEstates.categoryName}</div>
                         </div>
 
                         <div className="row -intro-y">
                             <div className="col-4">Title:</div>
-                            <div>{RealEstate.title}</div>
+                            <div>{realEstates.title}</div>
                         </div>
 
                         <div className="row -intro-y">
-                            <div className="col-4">Phone:</div>
-                            <div>{RealEstate.price}</div>
+                            <div className="col-4">Price:</div>
+                            <div>{realEstates.price}</div>
                         </div>
 
                         <div className="row -intro-y">
-                            <div className="col-4">Salary Basic:</div>
-                            <div>{RealEstate.image}</div>
+                            <div className="col-4">Description:</div>
+                            <div>{realEstates.description}</div>
                         </div>
 
                         <div className="row -intro-y">
-                            <div className="col-4">Salary:</div>
-                            <div>{RealEstate.description}</div>
-                        </div>
-
-                        <div className="row -intro-y">
-                            <div className="col-4">Joined Date:</div>
-                            <div>{new Date(RealEstate.createTime).toLocaleString(
+                            <div className="col-4">Create Time:</div>
+                            <div>{new Date(realEstates.createTime).toLocaleString(
                                 'en-GB',
                                 {
                                     year: 'numeric',
@@ -68,8 +63,8 @@ const Info: React.FC<Props> = ({ RealEstate, handleClose }) => {
                         </div>
 
                         <div className="row -intro-y">
-                            <div className="col-4">Create Date:</div>
-                            <div>{new Date(RealEstate.updateTime).toLocaleString(
+                            <div className="col-4">Update Time:</div>
+                            <div>{new Date(realEstates.updateTime).toLocaleString(
                                 'en-GB',
                                 {
                                     year: 'numeric',
@@ -82,19 +77,19 @@ const Info: React.FC<Props> = ({ RealEstate, handleClose }) => {
                         <div className="row -intro-y">
                             <div className="col-4">Phone:</div>
                             {/* <div>{getBrandTypeName(RealEstate.type)}</div> */}
-                            <div>{RealEstate.phoneNumber}</div>
+                            <div>{realEstates.phoneNumber}</div>
                         </div>
 
                         <div className="row -intro-y">
                             <div className="col-4">Approve:</div>
                             {/* <div>{getBrandTypeName(RealEstate.type)}</div> */}
-                            <div>{RealEstate.approve}</div>
+                            <div>{realEstates.approve}</div>
                         </div>
 
                         <div className="row -intro-y">
                             <div className="col-4">Loacation:</div>
                             {/* <div>{getBrandTypeName(RealEstate.type)}</div> */}
-                            <div>{RealEstate.location}</div>
+                            <div>{realEstates.location}</div>
                         </div>
                     </div>
                 </Modal.Body>

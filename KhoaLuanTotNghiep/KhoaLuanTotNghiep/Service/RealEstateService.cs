@@ -31,11 +31,12 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
         public async Task<ICollection<RealEstateModel>> GetAllAsync()
         {
             var queryable = _dbContext.realEstates.Include(p => p.category).Include(p => p.user).AsQueryable();
+            queryable = queryable.Where(p => p.Approve == true && p.Status == false);
             var product = await queryable.Select(p => new RealEstateModel
             {
                 RealEstateID = p.RealEstateID,
-                // CategoryID = p.category.CategoryID,
-                UserName = p.user.FullName,
+                CategoryID = p.category.CategoryID,
+                UserID = p.user.Id,
                 CategoryName = p.category.CategoryName,
                 ReportID = p.ReportID,
                 Title = p.Title,
@@ -44,7 +45,34 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
                 Description = p.Description,
                 Acgreage = p.Acgreage,
                 Approve = p.Approve.ToString(),
-                Status = p.Status,
+                Status = p.Status.ToString(),
+                PhoneNumber = Int32.Parse(p.user.PhoneNumber),
+                CreateTime = p.CreateTime,
+                UpdateTime = p.UpdateTime,
+                Location = p.Location,
+            }).ToListAsync();
+            return product;
+        }
+
+        public async Task<ICollection<RealEstateModel>> Search(string query)
+        {
+            var queryable = _dbContext.realEstates.Include(p => p.category).Include(p => p.user).AsQueryable();
+            if (!string.IsNullOrEmpty(query))
+                queryable = queryable.Where(x => x.Title.Contains(query) || x.Price.Contains(query) || x.Acgreage.Contains(query));
+            var product = await queryable.Select(p => new RealEstateModel
+            {
+                RealEstateID = p.RealEstateID,
+                CategoryID = p.category.CategoryID,
+                UserID = p.user.Id,
+                CategoryName = p.category.CategoryName,
+                ReportID = p.ReportID,
+                Title = p.Title,
+                Price = p.Price,
+                Image = p.Image,
+                Description = p.Description,
+                Acgreage = p.Acgreage,
+                Approve = p.Approve.ToString(),
+                Status = p.Status.ToString(),
                 PhoneNumber = Int32.Parse(p.user.PhoneNumber),
                 CreateTime = p.CreateTime,
                 UpdateTime = p.UpdateTime,
@@ -76,7 +104,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
                     Description = p.Description,
                     Acgreage = p.Acgreage,
                     Approve = p.Approve.ToString(),
-                    Status = p.Status,
+                    Status = p.Status.ToString(),
                     PhoneNumber = Int32.Parse(p.user.PhoneNumber),
                     CreateTime = p.CreateTime,
                     UpdateTime = p.UpdateTime,
@@ -101,7 +129,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
                     Description = p.Description,
                     Acgreage = p.Acgreage,
                     Approve = p.Approve.ToString(),
-                    Status = p.Status,
+                    Status = p.Status.ToString(),
                     PhoneNumber = Int32.Parse(p.user.PhoneNumber),
                     CreateTime = p.CreateTime,
                     UpdateTime = p.UpdateTime,
@@ -111,59 +139,6 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             return productAdmin;
         }
 
-        //  public async Task<ActionResult<PageResponse<RealEstateModel>>> Getproduct(
-        //[FromQuery] RealEstateCriteria productCriteriaDto,
-        //CancellationToken cancellationToken)
-        //  {
-        //      var productQuery = _dbContext
-        //                              .realEstates
-        //                              .Include(p => p.category)
-        //                              .Include(p => p.user)
-        //                              .AsQueryable();
-
-        //      productQuery = ProductFilter(productQuery, productCriteriaDto);
-
-        //      var pageProducts = await productQuery
-        //                                  .AsNoTracking()
-        //                                  .PaginateAsync(productCriteriaDto, cancellationToken);
-
-        //      var productDto = _mapper.Map<IEnumerable<RealEstateModel>>(pageProducts.Items);
-        //      return new PageResponse<RealEstateModel>
-        //      {
-        //          TotalPages = pageProducts.TotalPages,
-        //          TotalItems = pageProducts.TotalItems,
-        //          Search = productCriteriaDto.Search,
-        //          Items = productDto
-        //      };
-        //  }
-
-        //  #region Private Method
-        //  private IQueryable<RealEstate> ProductFilter(
-        //      IQueryable<RealEstate> productQuery,
-        //      RealEstateCriteria productCriteriaDto)
-        //  {
-        //      if (!String.IsNullOrEmpty(productCriteriaDto.Search))
-        //      {
-        //          productQuery = productQuery.Where(b =>
-        //              b.Title.Contains(productCriteriaDto.Search));
-        //      }
-
-        //      //if (productCriteriaDto.Types != null)
-        //      //{
-        //      //    for (int i = 0; i < productCriteriaDto.Types.Length; i++)
-        //      //    {
-        //      //        if (productCriteriaDto.Types[i] != "0")
-        //      //        {
-        //      //            productQuery = productQuery.Where(x =>
-        //      //            productCriteriaDto.Types.Any(t => t == x.CategoryId));
-        //      //        }
-        //      //    }
-        //      //}
-
-        //      return productQuery;
-        //  }
-        //  #endregion
-
         public async Task<RealEstateCreateRequest> CreateRealEstatesAsync(RealEstateCreateRequest realEstateModel)
         {
             //var realEstate = await _dbContext.categories.FirstOrDefaultAsync(p => p.CategoryID == realEstateModel.CategoryID);
@@ -171,12 +146,41 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             //{
             //    throw new Exception("Have not Category");
             //}
+            var userCreate = new User
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = realEstateModel.Username,
+                FullName = realEstateModel.Fullname,
+                PhoneNumber = realEstateModel.PhoneNumber,
+                Email = realEstateModel.Email,
+                CreateDate = realEstateModel.CreateDate,
+            };
+
+            var result1 = await _userManager.CreateAsync(userCreate);
+            if (result1.Succeeded)
+            {
+                userCreate = await _userManager.FindByNameAsync(userCreate.UserName);
+                var result2 = await _userManager.AddToRoleAsync(userCreate,
+                   Roles.User);
+
+                //UserModel userDto = new UserModel();
+                //if (result2.Succeeded)
+                //{
+                //    userDto.UserId = userCreate.Id;
+                //    userDto.Username = userCreate.UserName;
+                //    userDto.PhoneNumber = userCreate.PhoneNumber;
+                //    userDto.Email = userCreate.Email;
+                //    userDto.CreateDate = userCreate.CreateDate;
+                //    userDto.Type = Roles.User;
+                //    return userDto; 
+                //}
+            }
 
             var Model = new RealEstate
             {
                 RealEstateID = Guid.NewGuid().ToString(),
                 CategoryID = realEstateModel.CategoryID,
-                UserID = realEstateModel.UserID,
+                UserID = userCreate.Id,
                 Title = realEstateModel.Title,
                 Price = realEstateModel.Price,
                 Image = realEstateModel.Image,
@@ -204,7 +208,8 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             var real = await queryable.Select(p => new RealEstateModel
             {
                 RealEstateID = p.RealEstateID,
-                //CategoryID = p.category.CategoryID,
+                CategoryID = p.category.CategoryID,
+                UserID = p.user.Id,
                 UserName = p.user.FullName,
                 CategoryName = p.category.CategoryName,
                 ReportID = p.ReportID,
@@ -214,7 +219,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
                 Description = p.Description,
                 Acgreage = p.Acgreage,
                 Approve = p.Approve.ToString(),
-                Status = p.Status,
+                Status = p.Status.ToString(),
                 PhoneNumber = Int32.Parse(p.user.PhoneNumber),
                 CreateTime = p.CreateTime,
                 UpdateTime = p.UpdateTime,
@@ -225,34 +230,68 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
 
         public async Task<IEnumerable<RealEstatefromCategory>> GetByCategoryAsync(string categoryname)
         {
-            var products = await _dbContext.realEstates.Include(p => p.category)
-                .Where(p => p.category.CategoryName == categoryname)
-                .Select(p =>
+            var queryable = _dbContext.realEstates.Include(p => p.category).Include(p => p.user).AsQueryable();
+            queryable = queryable.Where(p => p.Approve == true && p.Status == false && p.category.CategoryName == categoryname);
+            var product = await queryable.Select(p => new RealEstatefromCategory
+            {
+                RealEstateID = p.RealEstateID,
+                Title = p.Title,
+                Description = p.Description,
+                Price = p.Price,
+                Image = p.Image,
+                CategoryName = p.category.CategoryName,
+                Location = p.Location,
+                UserID = p.user.Id,
+                UserName = p.user.FullName,
+                CreateTime = p.CreateTime,
+            }).ToListAsync();
 
-                new RealEstatefromCategory
-                {
-                    Title = p.Title,
-                    Description = p.Description,
-                    Price = p.Price,
-                    Image = p.Image,
-                    CategoryName = p.category.CategoryName
-                }).ToListAsync();
+            return product;
+        }
 
-            return products;
+        public async Task<RealEstate> DeleteAsync(string id)
+        {
+            var product = await _dbContext.realEstates.FindAsync(id);
+            if (product == null)
+                return null;
+            _dbContext.realEstates.Remove(product);
+            await _dbContext.SaveChangesAsync();
+            return product;
         }
 
         public async Task<ListApprove> UpdateRealEstateAsync(string id, ListApprove realEstateModel)
         {
+            var user = await _userManager.FindByNameAsync(realEstateModel.AssignTo);
             var realEstate = await _dbContext.realEstates.FirstOrDefaultAsync(x => x.RealEstateID == id);
             if (realEstate == null)
             {
-                throw new Exception("Have not RealEstateID");
+                throw new Exception("Have not NewsID");
             }
             //realEstateModel.RealEstateID = Guid.NewGuid().ToString();
             realEstate.Approve = bool.Parse(realEstateModel.Approve);
-            realEstate.AdminID = realEstateModel.AssignTo;
-            await _dbContext.SaveChangesAsync();
-            return realEstateModel;
+            realEstate.AdminID = user.Id;
+            var result = await _dbContext.SaveChangesAsync();
+            if (result > 0)
+            {
+                return realEstateModel;
+            }
+            throw new Exception("Update  fail");
+        }
+
+        public async Task<bool> DeleteRealEstateModelAsync(string id)
+        {
+            var realEstate = await _dbContext.realEstates.FirstOrDefaultAsync(x => x.RealEstateID == id);
+            if (realEstate == null)
+            {
+                throw new Exception("Have not RealEstate");
+            }
+            var delete = _dbContext.Remove(realEstate);
+            var result = _dbContext.SaveChanges();
+            if (result > 0)
+            {
+                return true;
+            }
+            throw new Exception("Delete fail");
         }
 
         public async Task<OrderModel> OrderAsync(string id)
@@ -284,7 +323,8 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             {
                 staff.Salary = staff.Salary + ((staff.SalaryBasic) / 10);
             }
-            var result = _dbContext.SaveChanges();
+            //var create = _dbContext.Add(model);
+
 
             var userIdList = (await _userManager.GetUsersInRoleAsync(Roles.User)).Select(u => u.Id);
             var staffIdList = (await _userManager.GetUsersInRoleAsync(Roles.Staff)).Select(u => u.Id);
@@ -297,6 +337,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             orderDto.Title = orderCreate.RealestateId;
             orderDto.UserName = (userIdList.Contains(user.Id)) ? user.FullName : null;
             orderDto.AdminName = (staffIdList.Contains(staff.Id)) ? staff.UserName : null;
+            var result = await _dbContext.SaveChangesAsync();
             return orderDto;
         }
     }

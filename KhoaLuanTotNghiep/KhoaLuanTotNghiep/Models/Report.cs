@@ -14,12 +14,14 @@ namespace KhoaLuanTotNghiep_BackEnd.Models
         public string RealEstateID { get; set; }
 
         public string Status { get; set; }
+        public bool State { get; set; }
 
         public DateTime CreaeTime { get; set; }
 
         public DateTime UpadateTime { get; set; }
 
-
         public string IPAddress { get; set; }
+
+        public RealEstate realEstates { get; set; }
     }
 }

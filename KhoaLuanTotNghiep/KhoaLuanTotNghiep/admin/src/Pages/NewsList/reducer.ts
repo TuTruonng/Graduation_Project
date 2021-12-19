@@ -10,7 +10,7 @@ import INews from 'src/interfaces/News/INews';
 type Newstate = {
     loading: boolean;
     newsResult?: INews;
-    news: INews | null;
+    newses: INews | null;
     status?: number;
     error?: IError;
 };
@@ -26,7 +26,7 @@ export type CreateAction = {
 };
 
 const initialState: Newstate = {
-    news: null,
+    newses: null,
     loading: false,
 };
 
@@ -47,11 +47,11 @@ const NewsReducerSlice = createSlice({
             state,
             action: PayloadAction<INews>
         ): Newstate => {
-            const news = action.payload;
+            const newses = action.payload;
 
             return {
                 ...state,
-                news,
+                newses,
                 loading: false,
             };
         },

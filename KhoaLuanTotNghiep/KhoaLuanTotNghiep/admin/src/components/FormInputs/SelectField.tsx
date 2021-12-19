@@ -44,8 +44,10 @@ const SelectField: React.FC<InputFieldProps> = (props) => {
                         <option selected hidden>
                          
                         </option>
-                        {options.map(                          
-                            ({                               
+                        
+                        {options.map(                         
+                            (
+                                {                               
                                 id,
                                 label: optionLabel,
                                 value: optionValue,
@@ -55,12 +57,13 @@ const SelectField: React.FC<InputFieldProps> = (props) => {
                                     key={id}
                                     value={optionValue}
                                     selected={optionValue === value}
-                                  
+                                
                                 >
                                     {optionLabel}
                                 </option>
                             )
-                        )}
+                        )
+                    }
                     </select>
                     {error && touched && <div className="invalid">{error}</div>}
                 </div>

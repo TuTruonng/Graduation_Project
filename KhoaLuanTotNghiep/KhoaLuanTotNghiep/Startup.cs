@@ -72,6 +72,7 @@ namespace KhoaLuanTotNghiep_BackEnd
             services.AddTransient<Icategory, CategoryService>();
             services.AddTransient<IRate, RateService>();
             services.AddTransient<IRealEstate, RealEstateService>();
+            services.AddTransient<IReport, ReportService>();
             services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
 
             //services.AddSingleton<IAuthorizationHandler, AdminRoleHandler>();

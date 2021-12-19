@@ -1,0 +1,46 @@
+﻿@*@model KhoaLuanTotNghiep_CustomerSite.ViewModel.searchModel*@
+@model IList<ShareModel.NewsModel>
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/app.css" />
+}
+
+@{ ViewData["Title"] = "News Page"; }
+
+<div class="container" id="title-RealEstate">
+    <h2>Tin tức trong ngày</h2>
+</div>
+
+<div class="card-deck" id="card-RealEstate">
+    @for (int i = 0; i < Model.Count(); i += 3)
+    {
+    <div class="row">
+        @{
+
+            @foreach (var item in @Model)
+            {
+        <div class="col-md-6" style="height:200px">
+            <div class="col-md-12" style=" text-align: center;">
+                <h4 class="card-title" style="font-size:20px">@item.NewsName</h4>
+            </div>
+            <div class="col-md-12" id="row-item">
+                <a class="card" asp-action="Details" asp-controller="News" asp-route-id="@item.NewsID">
+                    <div class="card-body row">
+                        <div class="col-md-3" style="height:100%">
+                            <img class="card-img-top" src="@item.Img" alt="Card image cap">
+                        </div>
+                        <div class=" col-md-9">
+                            <p class="card-description" style="display: -webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden; font-size:15px">@Model[i].Description</p>
+                            <p class="card-text" style="color:#007bff " hidden>   @item.UserName</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+            }
+        }
+    </div>
+    }
+
+</div>

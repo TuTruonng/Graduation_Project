@@ -16,26 +16,26 @@ const UpdateNewsContainer = () => {
     //const { users } = useAppSelector((state) => state.userReducer);
     const [news, setNews] = useState(undefined as INewsForm | undefined);
     const { newsID } = useParams<{ newsID: string }>();
-    const { state } = useLocation<{ existNews: INewsForm }>();
-    const { existNews } = state; // Read values passed on state
+    const { state } = useLocation<{ existNewses: INewsForm }>();
+    const { existNewses } = state; // Read values passed on state
 
     useEffect(() => {
-        if (existNews) {
-            console.log(existNews?.newsID);
+        if (existNewses) {
+            console.log(existNewses?.newsID);
             setNews(
                 {
-                    newsID: existNews.newsID,
+                    newsID: existNewses.newsID,
                     //userName: existNews.userName,
-                    newsName: existNews.newsName,
-                    img: existNews.img,
-                    description: existNews.description,
+                    newsName: existNewses.newsName,
+                    img: existNewses.img,
+                    description: existNewses.description,
                 }
             );
            
         }
 
-    }, [existNews]);
-    console.log(existNews?.newsID);
+    }, [existNewses]);
+    console.log(existNewses?.newsID);
 
     return (
         <div className="ml-5">

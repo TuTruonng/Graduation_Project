@@ -1,5 +1,4 @@
 import React, { lazy } from 'react';
-import { Edit } from 'react-feather';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import {

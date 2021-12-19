@@ -1,10 +1,5 @@
-﻿using KhoaLuanTotNghiep_CustomerSite.Extentions;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using share.Constant;
 using ShareModel;
 using ShareModel.Constant;
 using System;
@@ -27,22 +22,6 @@ namespace KhoaLuanTotNghiep_CustomerSite.Service
             _httpContextAccessor = httpContextAccessor;
             //_configuration = configuration;
         }
-
-        //public async Task<PageResponse<RealEstateModel>> GetProductAsync(RealEstateCriteria realCriteria)
-        //{
-        //    var client = _httpClientFactory.CreateClient(ServiceConstants.BACK_END_NAMED_CLIENT);
-
-        //    var Search = realCriteria.Search;
-
-
-        //    var queryString = $"Search={Search}";
-        //    var response = await client
-        //        .GetAsync($"{EndpointConstants.GET_REALESTATES}");
-
-        //    response.EnsureSuccessStatusCode();
-        //    var pagedProducts = await response.Content.ReadAsAsync<PageResponse<RealEstateModel>>();
-        //    return pagedProducts;
-        //}
         public async Task<IEnumerable<RealEstateModel>> GetProducts()
         {
             var client = _httpClientFactory.CreateClient(ServiceConstants.BACK_END_NAMED_CLIENT);
@@ -51,6 +30,15 @@ namespace KhoaLuanTotNghiep_CustomerSite.Service
             var list = await response.Content.ReadAsAsync<IEnumerable<RealEstateModel>>();
             return list;
         }
+
+        //public async Task<IEnumerable<RealEstateModel>> Search(string query)
+        //{
+        //    var client = _httpClientFactory.CreateClient(ServiceConstants.BACK_END_NAMED_CLIENT);
+        //    var response = await client.GetAsync($"{EndpointConstants.GET_REALESTATES}\\{"search/query=" + query}");
+        //    response.EnsureSuccessStatusCode();
+        //    var list = await response.Content.ReadAsAsync<IEnumerable<RealEstateModel>>();
+        //    return list;
+        //}
 
         public async Task<RealEstateModel> GetProductById(string id)
         {
@@ -74,7 +62,6 @@ namespace KhoaLuanTotNghiep_CustomerSite.Service
         {
             var realRequest = new RealEstateCreateRequest
             {
-                UserID = "cb5033df-419d-4268-89cf-a719c05e3b26",
                 CategoryID = realEstateModel.CategoryID,
                 Title = realEstateModel.Title,
                 Price = realEstateModel.Price,
@@ -82,10 +69,15 @@ namespace KhoaLuanTotNghiep_CustomerSite.Service
                 Description = realEstateModel.Description,
                 Acgreage = realEstateModel.Acgreage,
                 Approve = false,
+                Fullname = realEstateModel.Fullname,
                 Status = realEstateModel.Status,
                 CreateTime = DateTime.Now,
                 UpdateTime = DateTime.Now,
                 Location = realEstateModel.Location,
+                Username = realEstateModel.Username,
+                PhoneNumber = realEstateModel.PhoneNumber,
+                Email = realEstateModel.Email,
+                CreateDate = realEstateModel.CreateDate,
             };
 
             var json = JsonConvert.SerializeObject(realRequest);
@@ -93,7 +85,6 @@ namespace KhoaLuanTotNghiep_CustomerSite.Service
 
             var client = _httpClientFactory.CreateClient(ServiceConstants.BACK_END_NAMED_CLIENT);
             var response = await client.PostAsync(EndpointConstants.GET_REALESTATES, data);
-
             response.EnsureSuccessStatusCode();
 
             return await Task.FromResult(true);
@@ -128,5 +119,21 @@ namespace KhoaLuanTotNghiep_CustomerSite.Service
 
             return await Task.FromResult(true);
         }
+
+        //public async Task<bool> Ordering(string RealEstateId)
+        //{
+        //    var Request = new OrderModel
+        //    {
+        //        RealEstateId = RealEstateId,
+        //    };
+        //    var json = JsonConvert.SerializeObject(Request);
+        //    var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+        //    var client = _httpClientFactory.CreateClient(ServiceConstants.BACK_END_NAMED_CLIENT);
+        //    var response = await client.PostAsync($"{EndpointConstants.GET_REALESTATES}\\{"RealEstateId=" + RealEstateId}", data);
+        //    response.EnsureSuccessStatusCode();
+
+        //    return await Task.FromResult(true); ;
+        //}
     }
 }

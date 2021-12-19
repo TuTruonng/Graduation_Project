@@ -1,5 +1,6 @@
 export default interface IRealEstateForm {
-    realEstateID: string;
-    assigned: string;
+    realEstateID?: string;
+    assignTo: string;
     approve: string;
+    userName: object;
 }

@@ -3,7 +3,7 @@ import { Button, Table } from "reactstrap";
 import { Link } from "react-router-dom";
 import BaoCaoService from "../../Services/BaoCaoService";
 import "./BaoCao.css";
-import {ExportToExcel} from'./ExportToExcel ';
+import {ExportToExcel} from'../ReportList/ExportToExcel ';
 
 const ListBaoCao = () => {
   const [report, setreports] = useState([]);

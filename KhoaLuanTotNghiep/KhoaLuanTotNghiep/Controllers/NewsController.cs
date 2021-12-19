@@ -57,6 +57,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
 
         }
 
+
         [HttpPut("{id}")]
         [AllowAnonymous]
         public async Task<ActionResult<NewsModel>> UpdateAsync(string id, [FromForm] NewsModel newsModel)

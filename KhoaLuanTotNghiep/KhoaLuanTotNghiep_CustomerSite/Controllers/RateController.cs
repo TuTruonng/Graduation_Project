@@ -13,21 +13,6 @@ namespace KhoaLuanTotNghiep_CustomerSite.Controllers
             _realEstateApiClient = realEstateApiClient;
         }
 
-        public async Task<IActionResult> Voting(string ProductID, int rating)
-        {
-            if (!ModelState.IsValid || ProductID is null)
-            {
-                return NotFound();
-            }
-
-            string uri_Redirect = Request.Headers["Referer"].ToString();
-            var result = await _realEstateApiClient.Rating(ProductID, rating);
-
-            if (result is false)
-            {
-                return Content("false");
-            }
-            return Redirect(uri_Redirect);
-        }
+       
     }
 }

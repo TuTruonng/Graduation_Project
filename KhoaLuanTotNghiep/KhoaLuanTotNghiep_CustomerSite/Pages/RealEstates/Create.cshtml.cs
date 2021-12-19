@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -11,6 +11,7 @@ using KhoaLuanTotNghiep_CustomerSite.ViewModel.RealEstate;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Nancy.FlashMessages;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ShareModel;
@@ -38,6 +39,9 @@ namespace KhoaLuanTotNghiep_CustomerSite.Pages.RealEstates
         [BindProperty]
         public RealEstateViewModel realEstate { get; set; }
 
+        [BindProperty]
+        public CreateClientModel user { get; set; }
+
         public IActionResult OnGetAsync()
         {
             return Page();
@@ -53,13 +57,13 @@ namespace KhoaLuanTotNghiep_CustomerSite.Pages.RealEstates
 
             if (images == null || images.Length == 0)
             {
-                return RedirectToPage("Create");
+                throw new Exception();
             }
 
             IFormatProvider provider = CultureInfo.CreateSpecificCulture("en-US");
             foreach (var image in images)
             {
-                if (image.Length == 0) return RedirectToPage("Create");
+                //if (image.Length == 0) return RedirectToPage("Create");
 
                 var result = await _cloudinary.UploadAsync(new ImageUploadParams
                 {
@@ -105,49 +109,25 @@ namespace KhoaLuanTotNghiep_CustomerSite.Pages.RealEstates
 
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
-            if (!ModelState.IsValid)
-            {
-                return NotFound();
-            }
-
-            //var p = _context.Photos;S
             realEstate.CategoryID = cate;
+            realEstate.Location = realEstate.Location + "," + " " + realEstate.District + "," + " " + realEstate.Province;
             var real = _mapper.Map<RealEstateCreateRequest>(realEstate);
-            if (await _realestateApiClient.CreateRealEstates(real))
-            {
-                return RedirectToPage("./Index");
-            }
 
+            var client = new RealEstateCreateRequest();
+            client.ID = Guid.NewGuid().ToString();
+            client.Username = user.Username;
+            client.Fullname = user.FullName;
+            client.PhoneNumber = user.PhoneNumber;
+            client.Email = user.Email;
+            client.CreateDate = DateTime.Now;
+
+            await _realestateApiClient.CreateRealEstates(real);
+
+
+            TempData["SuccessMessage"] = "Đăng tin thành công";
             return RedirectToAction("Index", "Home");
+            //return RedirectToPage("./Index");
+
         }
-
-        //public async Task OnPostEditAsync(IFormFile image)
-        //{
-        //    Account account = new Account(CLOUD_NAME, API_KEY, API_SECRET);
-        //    cloudinary = new Cloudinary(account);
-
-        //    Console.WriteLine("[Please specify image path]");
-        //    string imagePath = image.FileName;
-        //    uploadImage(imagePath);
-        //    Console.ReadLine();
-        //}
-
-        //public static void uploadImage(string imagePath)
-        //{
-        //    try
-        //    {
-        //        var uploadParams = new ImageUploadParams()
-        //        {
-        //            File = new FileDescription(imagePath)
-        //        };
-
-        //        var uploadResult = cloudinary.Upload(uploadParams);
-        //        Console.WriteLine("[Image was uploaded successfully]");
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e.Message);
-        //    }
-        //}
     }
 }

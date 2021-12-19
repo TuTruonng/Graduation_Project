@@ -61,8 +61,7 @@ const HeaderLogin = () => {
     <>
       <div className='header align-items-center font-weight-bold'>
         <div className="container-lg-min container-fluid d-flex pt-2">
-          <img className="img-logo" src='/images/Logo_lk.png' alt='logo' />
-            <p className="headText">Online Asset Management</p>
+            <p className="headText">RealEstate Management Website</p>
         </div>
       </div>
     </>

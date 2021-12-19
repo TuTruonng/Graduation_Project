@@ -16,6 +16,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
 
     public class UserController : ControllerBase
     {
+
         private readonly UserManager<User> _userManager;
         private readonly IUser _user;
 
@@ -24,6 +25,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
             _userManager = userManager;
             _user = user;
         }
+
 
         [HttpGet]
         [AllowAnonymous]
@@ -42,6 +44,22 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
             var results = await _user.GetUserAsync();
             return Ok(results);
         }
+
+
+        [HttpPost("Client")]
+        [AllowAnonymous]
+        public async Task<ActionResult<UserModel>> CreateClient(
+           [FromBody] CreateClientModel createUserDto)
+        {
+            UserModel dto = await _user.CreateAsync(createUserDto);
+            if (dto == null)
+            {
+                return Problem(statusCode: 500);
+            }
+
+            return CreatedAtAction(nameof(CreateClient), dto);
+        }
+
 
         [HttpPost]
         public async Task<ActionResult<UserModel>> CreateUser(

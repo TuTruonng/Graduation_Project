@@ -1,5 +1,4 @@
 import React, { lazy } from 'react';
-import { Edit } from 'react-feather';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import {
@@ -12,7 +11,7 @@ const CreateNews = lazy(() => import('./TableFunction/Create'));
 const ListNews = lazy(() => import('./TableFunction/List'));
 const EditNews = lazy(() => import('./TableFunction/Update'));
 
-const Categories = () => {
+const News = () => {
     return (
         <>
             <Route exact path={CREATENEWS} component={CreateNews} />
@@ -22,4 +21,4 @@ const Categories = () => {
     );
 };
 
-export default Categories;
+export default News;

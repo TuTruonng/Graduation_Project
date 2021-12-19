@@ -1,10 +1,28 @@
 ﻿@model IList<ShareModel.CategoryModel>
 
 <ul class="nav-navbar-nav flex-grow-1">
-    @foreach (var category in Model)
+    @if (Model.Count() > 3)
     {
-        <li class="nav-item" style=" display: inline-block;">
-            <a class="nav-link text-dark" asp-controller="RealEstate" asp-action="CategoryById" asp-route-categoryName="@category.CategoryName">@category.CategoryName</a>
-        </li>
+        @for (int i = 0; i <= 2; i++)
+        {
+            <li class="nav-item" style=" display: inline-block;font-weight:bold">
+                <a class="nav-link text-dark" asp-controller="RealEstate" asp-action="CategoryById" asp-route-categoryName="@Model[i].CategoryName">@Model[i].CategoryName</a>
+            </li>
+        }
+
+
+        @*<li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-info" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    ...
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    @for (int i = 3; i <= Model.Count(); i++)
+                    {
+                        <button type="button" class="dropdown-item btn btn-info btn-sm">@Model[i].CategoryName</button>
+                    }
+                </div>
+            </li>*@
     }
+
+
 </ul>

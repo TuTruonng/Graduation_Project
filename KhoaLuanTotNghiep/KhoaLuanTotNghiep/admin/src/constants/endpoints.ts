@@ -15,6 +15,8 @@ const Endpoints = {
     news: '/News',
     newsId: (newsID) => `/News/${newsID}`,
     disableNewsId: (id) => `/News/disable/${id}`,
+    orders: '/RealEstate/Order',
+    reports:(username) => `/Report/name=${username}`,
     authentication: '/api/Authen',
 };
 

@@ -1,49 +1,118 @@
-﻿@model ShareModel.RealEstateModel
+﻿
+@using ShareModel
+@model RealEstateModel
 @*@{
         var rate = (ShareModel.RateResponse)ViewBag.rating;
     }*@
 
+@*@{
+        var comment_client = ViewData as IList<ReportModel>;
+    }*@
+
 @section Styles {
-    <link rel="stylesheet" href="~/css/font.css" />
+    <link rel="stylesheet" href="~/css/project.css" />
+    <style type="text/css">
+        .txtStyle {
+            resize: none;
+            width: 97.1%;
+            overflow: auto;
+            padding: 5px;
+            border: 1px dotted #B6B7BC;
+            height: 100px;
+        }
+
+        .copybtn {
+            display: inline-block;
+            outline: none;
+            padding: 5px;
+            text-decoration: none;
+            text-align: center;
+            width: 85%;
+            vertical-align: middle;
+            line-height: 30px;
+            color: #000;
+            background-color: #e2e2e2;
+            border: 1px solid #A9A9A9;
+        }
+
+            .copybtn.zeroclipboard-is-hover {
+                color: #000;
+                background-color: #B6B7BC;
+                border-color: #000;
+            }
+
+            .copybtn.zeroclipboard-is-active {
+                color: #000;
+                background-color: #B6B7BC;
+                border-color: #000;
+            }
+    </style>
 }
 
-@using Microsoft.AspNetCore.Http
 <div class="p-5 border rounded">
     <div class="form-group row ">
-        <div class="col-6" style="text-align: center;">
-            <img src="@Model.Image" alt="New york" style="width:450px;">
+        <div class="col-4" style="text-align: center">
+            <img src="@Model.Image" alt="New york" style="width:330px;height:250px">
         </div>
         <div class="col-6">
-            <div class="product-name" style=" text-shadow: black 2px 3px 4px; color: #FFCC66;">
-                <h1>@Model.Title</h1>
+            <div class="product-name" style=" color: #B22222;font:18px;text-shadow: black 1px 1px">
+                <h5>@Model.Title</h5>
             </div>
             <hr />
             <p>
-                <span class="item-title">Description: @Model.Description</span>
+                <span class="item-title" style="font-size:18px"><b>Thông tin mô tả:</b><br /> @Model.Description</span>
             </p>
             <p>
-                <span class="item-title">Category Name: @Model.CategoryName</span>
+                <span class="item-title"><b>Tên loại:</b> @Model.CategoryName</span>
             </p>
             <div class="price-box">
-                <h3>@Model.Price.ToString().Insert(3, ".") VNĐ</h3>
+                <h5>Diện tích :@Model.Acgreage m2</h5>
             </div>
-            <div>
+            <div class="price-box">
+                <h3>Gíá :@Model.Price VNĐ</h3>
+            </div>
 
+            <br />
+            <span>
+                <form asp-controller="Order" asp-action="Ordering" method="post" class="aa-review-form">
+                    <input name="id" value="@Model.RealEstateID" hidden />
 
-                @*@for (int i = 0; i < .value; i++)
-                    {
-                        <span class="glyphicon glyphicon-star"></span>
-                    }
-                    @for (int i = rate.value; i < 5; i++)
-                    {
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                    }
-                    @rate.value stars*@
+                    <button style="width:100px" type="submit" onclick="javascript : return confirm();" class="btn btn-secondary aa-review-submit">Giao dịch</button>
+                </form>
+            </span>
 
+            <span>
+                <form style="margin-top:20px" asp-controller="RealEstate" asp-action="addProductToCart" method="post" class="aa-review-form">
+                    <input name="id" value="@Model.RealEstateID" hidden />
+                    <button style="width:100px" type="submit" onclick="javascript : return confirm_save();" class="btn btn-danger aa-review-submit">Lưu Tin</button>
+                </form>
+            </span>
+
+        </div>
+        <div class="col-2">
+            <div class="container-contact" style="border: none; border-radius: 5px; height: auto; width: 100%">
+                <p style="text-align: center">Thông tin liên hệ</p>
+                <button style="width:100px; border-radius: 5px; margin-left: 20px" class="btn btn-dark">@Model.PhoneNumber</button>
+                @*<input type="button" value="@Model.PhoneNumber" style="width: 100%; background-color: yellow; height: 30px; border: none" id="YourButtonId" data-clipboard-target="<%=YourButton.ClientID%>" />*@
             </div>
         </div>
+        <hr />
 
+        <div style="margin-top:100px">
+            <h4 style="margin-left:100px">Báo Cáo sản phẩm</h4>
+        </div>
+        <form asp-controller="Report" asp-action="Reporting" method="post" class="aa-review-form" style="width:1500px;margin-left:100px">
+            <div class="row">
+                <div class="mb-3">
+                    <label for="status" style="width:100px"><b>Đánh giá: </b></label>
+                    <textarea style=" width:800px" class="form-control" rows="4" for="status" data-val="true" data-val-length="Vượt quá ký tự." data-val-length-max="500" data-val-required="Bạn chưa điền đánh giá." id="status" maxlength="100" name="status"></textarea>
+                    <span class="text-danger field-validation-valid" data-valmsg-for="status" data-valmsg-replace="true"></span>
+                </div>
+                <input name="id" value="@Model.RealEstateID" hidden />
+            </div>
+            <button style="margin-left:700px; width:80px" type="submit" onclick="javascript: return edit_confirm();" class="btn btn-danger aa-review-submit">Gửi</button>
 
+        </form>
         @if (User.Identity.IsAuthenticated)
         {
             @using (Html.BeginForm("Voting", "Rate"))
@@ -71,3 +140,53 @@
         }
     </div>
 </div>
+
+
+@section Scripts {
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.3.0/ZeroClipboard.js'></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript">
+                function openSuccessModal(strMessage) {
+                    var myDiv = document.getElementById("MyModalSuccessAlertBody");
+                    myDiv.innerHTML = strMessage;
+                    $('#myModalSuccess').modal('show');
+                }
+                $(document).ready(function () {
+                    var msg = "@TempData["SuccessMessage"]";
+                    if (msg)
+                        openSuccessModal(msg);
+                });
+    </script>
+    <script language="success">
+        function success_confirm() {
+            var success = openSuccessModal("Thành công");
+            return success;
+        }
+    </script>
+    <script language="javascript">
+        function edit_confirm() {
+            var result = confirm("Cảm ơn bạn đã gửi báo cáo cho chúng tôi !");
+            if (result) {
+                return true;
+            }
+            return false;
+        }</script>
+    <script language="javascript">
+        function confirm() {
+            var result = confirm("Bạn có đồng ý chấp nhận giao dịch này không !");
+            if (result) {
+                return true;
+            }
+            return false;
+        }</script>
+    <script language="javascript">
+        function confirm_save() {
+            var result = confirm("Bạn có đồng ý lưu tin này không !");
+            if (result) {
+                return true;
+            }
+            return false;
+        }</script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

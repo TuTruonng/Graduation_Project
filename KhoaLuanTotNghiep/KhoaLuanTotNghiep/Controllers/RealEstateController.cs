@@ -40,6 +40,21 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("query/{query}")]
+        public async Task<ActionResult<RealEstateModel>> SearchAsync(string query)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var result = await _realStateService.Search(query);
+            if (result == null)
+                return NotFound();
+            return Ok(result);
+        }
 
         [HttpGet]
         [Route("name={userName}")]
@@ -104,8 +119,37 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
             return Ok(result);
         }
 
+        [HttpDelete("{id}")]
+        [AllowAnonymous]
+        //[Authorize(Policy = SecurityConstants.ADMIN_ROLE_POLICY)]
+        public async Task<ActionResult<bool>> Delete(string id)
+        {
+            if (!ModelState.IsValid && string.IsNullOrEmpty(id))
+            {
+                return BadRequest(id);
+            }
+
+            var result = await _realStateService.DeleteRealEstateModelAsync(id);
+            return Ok(result);
+        }
+
+        [HttpPut("{id}")]
+        [AllowAnonymous]
+        //[Authorize(Policy = SecurityConstants.ADMIN_ROLE_POLICY)]
+        public async Task<ActionResult<ListApprove>> UpdateAsync(string id, [FromForm] ListApprove model)
+        {
+            //if (!ModelState.IsValid && string.IsNullOrEmpty(id))
+            //{
+            //    return BadRequest(id);
+            //}
+
+            var result = await _realStateService.UpdateRealEstateAsync(id, model);
+            if (result == null)
+                return NotFound();
+            return Ok(result);
+        }
         [HttpPost]
-        [Route("{id}")]
+        [Route("RealEstateId={id}")]
         [AllowAnonymous]
         //[Authorize(Policy = SecurityConstants.ADMIN_ROLE_POLICY)]
         public async Task<ActionResult> OrderAsync(string id)
@@ -116,21 +160,6 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
             }
 
             var result = await _realStateService.OrderAsync(id);
-            if (result == null)
-                return NotFound();
-            return Ok(result);
-        }
-
-        [HttpPut("{id}")]
-        //[Authorize(Policy = SecurityConstants.ADMIN_ROLE_POLICY)]
-        public async Task<ActionResult<ListApprove>> UpdateAsync(string id, [FromForm] ListApprove model)
-        {
-            if (!ModelState.IsValid && string.IsNullOrEmpty(id))
-            {
-                return BadRequest(id);
-            }
-
-            var result = await _realStateService.UpdateRealEstateAsync(id, model);
             if (result == null)
                 return NotFound();
             return Ok(result);

@@ -175,53 +175,53 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
                     b.HasData(
                         new
                         {
-                            RealEstateID = "23ca8b7f-b588-4bbb-94ba-7b8fe54d4402",
+                            RealEstateID = "4fdf1bd9-1262-4df2-b918-a4254d424959",
                             Acgreage = "95",
                             AdminID = "4dddfeb4-b7de-4206-840e-51128364cd7e",
                             Approve = false,
                             CategoryID = "1",
-                            CreateTime = new DateTime(2021, 12, 16, 22, 48, 37, 256, DateTimeKind.Local).AddTicks(6606),
+                            CreateTime = new DateTime(2021, 12, 18, 15, 22, 10, 797, DateTimeKind.Local).AddTicks(9558),
                             Description = "Bảng giá các căn giá tốt nhất thị trường của dự án The Manor Central Park: Mua trực tiếp chủ đầu tư Bitexco Group.Bảng hàng shophouse các căn vị trí đẹp của giai đoạn 1 và giai đoạn 2 của dự án The Manor Central Park",
                             Image = "https://res.cloudinary.com/dusq8k6rj/image/upload/v1634380024/leduyen/rv7lrwnztkzvnzrqltha.png",
                             Location = "50 Lê Lợi",
                             Price = "19 tỷ",
                             Status = false,
                             Title = "RA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐTRA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐT",
-                            UpdateTime = new DateTime(2021, 12, 16, 22, 48, 37, 257, DateTimeKind.Local).AddTicks(7024),
+                            UpdateTime = new DateTime(2021, 12, 18, 15, 22, 10, 799, DateTimeKind.Local).AddTicks(6549),
                             UserID = "a9c2975b-9ad0-41f1-8f49-797202bac932"
                         },
                         new
                         {
-                            RealEstateID = "7a03521d-aeae-45b7-a08a-f067486b7d14",
+                            RealEstateID = "c6e99714-342c-4cd5-9cf7-ff1f333e6593",
                             Acgreage = "95",
                             AdminID = "4dddfeb4-b7de-4206-840e-51128364cd7e",
                             Approve = false,
                             CategoryID = "1",
-                            CreateTime = new DateTime(2021, 12, 16, 22, 48, 37, 257, DateTimeKind.Local).AddTicks(7722),
+                            CreateTime = new DateTime(2021, 12, 18, 15, 22, 10, 799, DateTimeKind.Local).AddTicks(7804),
                             Description = "Bảng giá các căn giá tốt nhất thị trường của dự án The Manor Central Park: Mua trực tiếp chủ đầu tư Bitexco Group.Bảng hàng shophouse các căn vị trí đẹp của giai đoạn 1 và giai đoạn 2 của dự án The Manor Central Park",
                             Image = "https://res.cloudinary.com/dusq8k6rj/image/upload/v1634380024/leduyen/rv7lrwnztkzvnzrqltha.png",
                             Location = "50 Lê Lợi",
                             Price = "19 tỷ",
                             Status = false,
                             Title = "RA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐTRA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐT",
-                            UpdateTime = new DateTime(2021, 12, 16, 22, 48, 37, 257, DateTimeKind.Local).AddTicks(7732),
+                            UpdateTime = new DateTime(2021, 12, 18, 15, 22, 10, 799, DateTimeKind.Local).AddTicks(7816),
                             UserID = "a9c2975b-9ad0-41f1-8f49-797202bac932"
                         },
                         new
                         {
-                            RealEstateID = "0c050524-2b59-43ee-8f22-7a168efdeec1",
+                            RealEstateID = "3d810b20-fa75-4636-a9ac-b3ffb85da5ce",
                             Acgreage = "95",
                             AdminID = "1e6eb4b9-f1c3-40d2-bbef-0cd34477efa4",
                             Approve = false,
                             CategoryID = "2",
-                            CreateTime = new DateTime(2021, 12, 16, 22, 48, 37, 257, DateTimeKind.Local).AddTicks(7918),
+                            CreateTime = new DateTime(2021, 12, 18, 15, 22, 10, 799, DateTimeKind.Local).AddTicks(7845),
                             Description = "Bảng giá các căn giá tốt nhất thị trường của dự án The Manor Central Park: Mua trực tiếp chủ đầu tư Bitexco Group.Bảng hàng shophouse các căn vị trí đẹp của giai đoạn 1 và giai đoạn 2 của dự án The Manor Central Park",
                             Image = "https://res.cloudinary.com/dusq8k6rj/image/upload/v1634379964/leduyen/p9zypdbshv8spvwl0m0o.png",
                             Location = "50 Lê Lợi",
                             Price = "19 tỷ",
                             Status = false,
                             Title = "RA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐTRA HÀNG DÃY SHOPHOUSE CHÂN THÁP TÀI CHÍNH DỰ ÁN THE MANOR CETRAL PARK KINH DOANH CỰC TỐT",
-                            UpdateTime = new DateTime(2021, 12, 16, 22, 48, 37, 257, DateTimeKind.Local).AddTicks(7921),
+                            UpdateTime = new DateTime(2021, 12, 18, 15, 22, 10, 799, DateTimeKind.Local).AddTicks(7847),
                             UserID = "a9c2975b-9ad0-41f1-8f49-797202bac932"
                         });
                 });
@@ -239,6 +239,9 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
 
                     b.Property<string>("RealEstateID")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("State")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
@@ -549,9 +552,11 @@ namespace KhoaLuanTotNghiep_BackEnd.Migrations
 
             modelBuilder.Entity("KhoaLuanTotNghiep_BackEnd.Models.Report", b =>
                 {
-                    b.HasOne("KhoaLuanTotNghiep_BackEnd.Models.RealEstate", null)
+                    b.HasOne("KhoaLuanTotNghiep_BackEnd.Models.RealEstate", "realEstates")
                         .WithMany("reports")
                         .HasForeignKey("RealEstateID");
+
+                    b.Navigation("realEstates");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

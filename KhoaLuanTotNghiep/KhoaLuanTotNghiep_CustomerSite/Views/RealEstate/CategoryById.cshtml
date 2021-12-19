@@ -1,47 +1,151 @@
 ﻿@model IEnumerable<ShareModel.RealEstatefromCategory>
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/font.css" />
+    <link rel="stylesheet" href="~/css/project.css" />
 }
 
 @{
     ViewData["Title"] = "introduce";
 }
-
-<div class="container">
-    @foreach (var name in Model)
-    {
-        <h2> @name.CategoryName</h2>
-        break;
-    }
-
-
-    <hr />
-    @if (Model.Count() != 0)
-    {
-        @foreach (var product in Model)
+</br>
+</br>
+<div class="row">
+    <div class="col-md-9">
+        @foreach (var name in Model)
         {
-            <div class="card" style="width: 60%;">
-                <div class="row no-gutters">
-                    <div class="col-sm-5">
-                        <img class="card-img" src="@product.Image" alt="Card image cap">
-                    </div>
-                    <div class="col-sm-7">
-                        <div class="card-body">
-                            <p class="card-title">@product.Title</p>
-                            <p class="card-text">@product.Price  <br />    @product.Location</p>
-                            <a asp-action="Details" asp-controller="RealEstate" asp-route-id="@product.RealEstateID class="btn btn-primary">Xem chi tiết</a>
+            <h2 style="margin-left: 100px;"> @name.CategoryName</h2>
+            break;
+        }
+
+        <hr />
+        @if (Model.Count() != 0)
+        {
+            @foreach (var product in Model)
+            {
+                <div class="card" id="card-real">
+                    <div class="row no-gutters" id="card-content">
+                        <div class="col-md-4" id="img-content">
+                            <img style="height: 100%" class="card-img" src="@product.Image" alt="Card image cap">
+                        </div>
+                        <div class="col-md-8" id="card-body">
+                            <p class="card-title">
+                                @(product.Title.Length > 100 ? product.Title.Substring(0, 100) + "..." : product.Title)
+                            </p>
+                            <p class="card-text">@product.Price</p>
+                            <p class="card-text">
+                                @product.Location
+                            </p>
+                            <p style="color: gray">Đăng bởi: @product.UserName</p>
+                            <p style="color: gray">@product.CreateTime</p>
+                            <a class="btn btn-block" style="color:deepskyblue" asp-action="Details" asp-controller="RealEstate" asp-route-id="@product.RealEstateID ">Xem chi tiết</a>
+
                         </div>
                     </div>
                 </div>
+                <br />
+            }
+            <br />
+        }
+        else
+        {
+            <div class="row">
+                <strong>Không có sản phẩm nào!</strong>
             </div>
         }
-        <br />
-    }
-    else
-    {
-        <div class="row">
-            <strong>Không có sản phẩm nào!</strong>
+    </div>
+    <div class="post-sidebar large-4 col">
+        <div id="secondary" class="widget-area " role="complementary">
+            <aside id="woocommerce_product_categories-3" class="widget woocommerce widget_product_categories">
+                <div id="divPostNews" style="width:300px;border: 1px  #999">
+                    <div class="rowHeader  elevation-2 ">
+                        <div class="title-info">
+                            <h4 style="color: white; text-align:center">Tất cả danh mục</h4>
+                        </div>
+                        <ul class="product-categories">
+                            @*<br />
+                                        <li class="cat-item " style="  list-style-type: none;margin-left:20px"><a href="https://localhost:44360/RealEstate/categoryNh%C3%A0%20%C4%90%E1%BA%A5t%20B%C3%A1n">Nhà Đất Bán</a></li>
+                                        <hr />
+                                        <li class="cat-item " style="  list-style-type: none;margin-left:20px"><a href="https://localhost:44360/RealEstate/categoryNh%C3%A0%20Cho%20Thu%C3%AA">Nhà Cho thuê</a></li>
+                                        <hr />
+                                        <li class="cat-
+                                             <li class="nav-item">
+                                    @await Component.InvokeAsync("CategoryMenu")
+                                </li>item " style="  list-style-type: none;margin-left:20px"><a href="https://localhost:44360/RealEstate/categoryD%E1%BB%B1%20%C3%81n">Dự án</a></li>
+                                        <hr />*@
+
+                            @await Component.InvokeAsync("Dropdown")
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+            <br /><br />
+            <aside id="woocommerce_products-2" class="widget woocommerce widget_products">
+                <div id="divPostNews" style="width:300px;border: 1px  #999">
+                    <div class="rowHeader  elevation-2 ">
+                        <div class="title-info">
+                            <h4 style="color: white; text-align:center">Danh mục nổi bật</h4>
+                        </div>
+                        <br />
+                        <ul class="product_list_widget">
+                            <li style="  list-style-type: none">
+
+                                <a href="/">
+                                    <img width="100" height="100" src="https://res.cloudinary.com/dusq8k6rj/image/upload/v1639595527/Source/nha3_xsoqqj_w0kenv.jpg">
+                                    <span style="display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden">Biệt thự view biển đẹp</span>
+                                </a>
+
+
+                                <span class="lien-he-price"></span>
+                            </li>
+                            <hr />
+                            <li style="  list-style-type: none">
+
+                                <a href="/">
+                                    <img width="100" height="100" src="https://res.cloudinary.com/dusq8k6rj/image/upload/v1639595526/Source/vensong_tuenwb.jpg">
+                                    <p style="display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden; ">Biệt thự An Viên Nha Trang</p>
+                                </a>
+
+
+                                <span class="lien-he-price"></span>
+                            </li>
+                            <hr />
+                            <li style="  list-style-type: none">
+
+                                <a href="/">
+                                    <img width="100" height="100" src="https://res.cloudinary.com/dusq8k6rj/image/upload/v1639595525/Source/du-an-baria-residence-vung-tau-800x447_ktmk08.jpg">
+                                    <p style="display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden; ">Biệt thự Hoa Thiên - Phan Thiết</p>
+                                </a>
+
+
+                                <span class="lien-he-price"></span>
+                            </li>
+                            <hr />
+                            <li style="  list-style-type: none">
+
+                                <a href="/">
+                                    <img width="100" height="100" src="https://res.cloudinary.com/dusq8k6rj/image/upload/v1639595525/Source/bds_kae2hh.jpg">
+                                    <p style="display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden; ">Biệt thự Cô Liên - Đà Lạt</p>
+                                </a>
+
+
+                                <span class="lien-he-price"></span>
+                            </li>
+                            <hr />
+                            <li style="list-style-type: none">
+
+                                <a href="/">
+                                    <img width="100" height="100" src="https://res.cloudinary.com/dusq8k6rj/image/upload/v1638014252/Source/ggkd8n9oeqpncrusnnbe.jpg">
+                                    <p style="display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden; ">Biệt thự Thành Thành - Đà Nẵng</p>
+                                </a>
+
+
+                                <span class="lien-he-price"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
         </div>
-    }
+    </div>
 </div>
+

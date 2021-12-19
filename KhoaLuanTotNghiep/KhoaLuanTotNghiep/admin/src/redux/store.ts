@@ -9,6 +9,8 @@ import realEstateReducer from 'src/Pages/RealEstateList/reducer';
 import categoryReducer from 'src/Pages/CategoryList/reducer';
 import userReducer from 'src/Pages/UsersList/reducer';
 import customerReducer from 'src/Pages/CustomersList/reducer';
+import orderReducer from 'src/Pages/OrderList/reducer';
+import reportReducer from 'src/Pages/ReportList/reducer';
 import newsReducer from 'src/Pages/NewsList/reducer';
 import rootSaga from './sagas/rootSaga';
 
@@ -19,6 +21,8 @@ const reducer = combineReducers({
     customerReducer,
     categoryReducer,
     newsReducer,
+    orderReducer,
+    reportReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();

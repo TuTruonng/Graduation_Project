@@ -3,7 +3,7 @@
 
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/app.css" />
+    <link rel="stylesheet" href="~/css/project.css" />
 }
 
 @{ ViewData["Title"] = "Home Page"; }
@@ -39,25 +39,19 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
-        <div id="frm-main" asp-controller="Movies" asp-action="Index" method="get" ">
+        <div id="frm-main">
             <div class="col height d-flex justify-content-center align-items-center" style="width: 100%; height: 100%">
-                <div class="dropdown" id="drop-category">
-                    <select name="cate" style="text-align:center">
-                        @await Component.InvokeAsync("Dropdown")
-                        @*<option value="0">Tất Cả Nhà Đất</option>
-                            <option value="1">Nhà Đất Bán</option>
-                            <option value="2">Nhà Cho Thuê</option>
-                            <option value="3">Dự Án</option>*@
-                    </select>
-                    @*<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Loại Nhà Dất
-                        </button>*@
-
-                </div>
                 <div class="search">
-                    <i class="fa fa-search"></i>
-                    <input class="form-control" type="search" name="searchString" value="a" placeholder="Search..." aria-label="Search">
-                    <button class="btn btn-primary d-flex justify-content-center align-items-center">Tìm kiếm</button>
+                    <form asp-controller="Search" asp-action="SearchRealEstate" method="get" class="aa-review-form">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <input class="form-control" type="search" name="query" value="" placeholder="Nhập thông tin..." aria-label="Search" data-val="true" data-val-length="Vượt quá 500 ký tự." data-val-length-max="500" data-val-required="Tiêu đề không được trống." id="query" maxlength="100">
+                                <span class="text-danger field-validation-valid" data-valmsg-for="query" data-valmsg-replace="true"></span>
+                            </div>
+                            <input class="btn btn-danger input-search" type="submit" style="text-align: center" value="Tìm">
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -72,55 +66,159 @@
 
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="card-deck" id="card-RealEstate">
+                @for (int i = 0; i < Model.Count(); i += 3)
+                {
+                    <div class="row" style=" margin-top:30px; width:100%">
+                        @{
+                            int j = 0;
+                            for (; j <= 2 && i + j < Model.Count(); j++)
+                            {
+                                <div class="col-md-4" id="row-item" style="height:400px">
+                                    <a class="card" style="height:100%" asp-action="Details" asp-controller="RealEstate" asp-route-id="@Model[i+j].RealEstateID">
+                                        <img class="card-img-top" style="height:300px" src="@Model[i+j].Image" alt="Card image cap">
+                                        <div class="card-body">
+                                            <p style="display: -webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden; " class="card-title">
+                                            <p class="card-title">
+                                                @(Model[i + j].Title.Length > 70 ? Model[i + j].Title.Substring(0, 70) + "..." : Model[i + j].Title)
+                                            </p>
+                                            <p class="card-text">Gía: @Model[i + j].Price
+                                            <p class="card-text">Diện Tích: @Model[i + j].Acgreage</p>
+                                            <p class="card-text">Vị Trí: @Model[i + j].Location</p>
+                                        </div>
 
-    <div class="card-deck" id="card-RealEstate">
-        @for (int i = 0; i < Model.Count(); i += 3)
-        {
-            <div class="row">
-                @{
-                    int j = 0;
-                    for (; j <= 2 && i + j < Model.Count(); j++)
-                    {
-                        <div class="col-md-4" id="row-item">
-                            <a class="card" asp-action="Details" asp-controller="RealEstate" asp-route-id="@Model[i].RealEstateID">
-                                <img class="card-img-top" src="@Model[i].Image" alt="Card image cap">
-                                <div class="card-body">
-                                    <p class="card-title">@Model[i].Title</p>
-                                    <p class="card-text">@Model[i].Price  -  @Model[i].Acgreage  <br /><br />    @Model[i].Location</p>
+                                        <div class="card-footer">
+                                            <small class="text-muted">@Model[i + j].CreateTime</small>
+                                        </div>
+                                    </a>
+
                                 </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">@Model[i].CreateTime</small>
-                                </div>
-                            </a>
-                        </div>
-                    }
+                            }
+                        }
+                    </div>
+                    <br />
                 }
             </div>
-            <br />
-        }
-
-        @*@for (int i = 0; i < Model.Products.Items.Count(); i += 3)
-            {
-                <div class="row">
-                    @{
-                        int j = 0;
-                        for (; j <= 2 && i + j < Model.Products.Items.Count(); j++)
-                        {
-                            <div class="col-md-4">
-                                <a class="card" asp-action="Details" asp-controller="RealEstate" asp-route-id="@Model.Products.Items.ElementAt(i).RealEstateID">
-                                    <img class="card-img-top" src="@Model.Products.Items.ElementAt(i).Image" alt="Card image cap">
-                                    <div class="card-body">
-                                        <p class="card-title">@Model.Products.Items.ElementAt(i).Title</p>
-                                        <p class="card-text">@Model.Products.Items.ElementAt(i).Price  -  @Model.Products.Items.ElementAt(i).Acgreage  <br /><br />    @Model.Products.Items.ElementAt(i).Location</p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <small class="text-muted">@Model.Products.Items.ElementAt(i).CreateTime</small>
-                                    </div>
-                                </a>
+        </div>
+        <div class="post-sidebar large-4 col">
+            <div id="secondary" class="widget-area " role="complementary">
+                <aside id="woocommerce_product_categories-3" class="widget woocommerce widget_product_categories">
+                    <div id="divPostNews" style="width:300px;border: 1px  #999">
+                        <div class="rowHeader  elevation-2 ">
+                            <div class="title-info">
+                                <h4 style="color: white; text-align:center">Tất cả danh mục</h4>
                             </div>
-                        }
-                    }
-                </div>
-            }*@
+                            <ul class="product-categories">
+                                @*<br />
+                                            <li class="cat-item " style="  list-style-type: none;margin-left:20px"><a href="https://localhost:44360/RealEstate/categoryNh%C3%A0%20%C4%90%E1%BA%A5t%20B%C3%A1n">Nhà Đất Bán</a></li>
+                                            <hr />
+                                            <li class="cat-item " style="  list-style-type: none;margin-left:20px"><a href="https://localhost:44360/RealEstate/categoryNh%C3%A0%20Cho%20Thu%C3%AA">Nhà Cho thuê</a></li>
+                                            <hr />
+                                            <li class="cat-
+                                                 <li class="nav-item">
+                                        @await Component.InvokeAsync("CategoryMenu")
+                                    </li>item " style="  list-style-type: none;margin-left:20px"><a href="https://localhost:44360/RealEstate/categoryD%E1%BB%B1%20%C3%81n">Dự án</a></li>
+                                            <hr />*@
+
+                                @await Component.InvokeAsync("Dropdown")
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+                <br /><br />
+                <aside id="woocommerce_products-2" class="widget woocommerce widget_products">
+                    <div id="divPostNews" style="width:300px;border: 1px  #999">
+                        <div class="rowHeader  elevation-2 ">
+                            <div class="title-info">
+                                <h4 style="color: white; text-align:center">Danh mục nổi bật</h4>
+                            </div>
+                            <br />
+                            <ul class="product_list_widget">
+                                <li style="  list-style-type: none">
+
+                                    <a href="/">
+                                        <img width="100" height="100" src="https://res.cloudinary.com/dusq8k6rj/image/upload/v1639595527/Source/nha3_xsoqqj_w0kenv.jpg">
+                                        <span style="display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden">Biệt thự view biển đẹp</span>
+                                    </a>
+
+
+                                    <span class="lien-he-price"></span>
+                                </li>
+                                <hr />
+                                <li style="  list-style-type: none">
+
+                                    <a href="/">
+                                        <img width="100" height="100" src="https://res.cloudinary.com/dusq8k6rj/image/upload/v1639595526/Source/vensong_tuenwb.jpg">
+                                        <p style="display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden; ">Biệt thự An Viên Nha Trang</p>
+                                    </a>
+
+
+                                    <span class="lien-he-price"></span>
+                                </li>
+                                <hr />
+                                <li style="  list-style-type: none">
+
+                                    <a href="/">
+                                        <img width="100" height="100" src="https://res.cloudinary.com/dusq8k6rj/image/upload/v1639595525/Source/du-an-baria-residence-vung-tau-800x447_ktmk08.jpg">
+                                        <p style="display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden; ">Biệt thự Hoa Thiên - Phan Thiết</p>
+                                    </a>
+
+
+                                    <span class="lien-he-price"></span>
+                                </li>
+                                <hr />
+                                <li style="  list-style-type: none">
+
+                                    <a href="/">
+                                        <img width="100" height="100" src="https://res.cloudinary.com/dusq8k6rj/image/upload/v1639595525/Source/bds_kae2hh.jpg">
+                                        <p style="display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden; ">Biệt thự Cô Liên - Đà Lạt</p>
+                                    </a>
+
+
+                                    <span class="lien-he-price"></span>
+                                </li>
+                                <hr />
+                                <li style="list-style-type: none">
+
+                                    <a href="/">
+                                        <img width="100" height="100" src="https://res.cloudinary.com/dusq8k6rj/image/upload/v1638014252/Source/ggkd8n9oeqpncrusnnbe.jpg">
+                                        <p style="display: -webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden; ">Biệt thự Thành Thành - Đà Nẵng</p>
+                                    </a>
+
+
+                                    <span class="lien-he-price"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
     </div>
+
 </div>
+<script>
+    $("#btnNext").click(function () {
+        $.ajax({
+            url: 'RealEstate/Next',
+            data: { RealEstateId: cureentid },
+            success: function (response) {
+                $("body").html(response);
+            }
+        });
+    });
+
+
+    $("#btnPrevious").click(function () {
+        $.ajax({
+            url: 'Category/Previous',
+            data: { personId: cureentid },
+            success: function (response) {
+                $("body").html(response);
+            }
+        });
+    });
+</script>
+

@@ -45,7 +45,7 @@ namespace KhoaLuanTotNghiep_CustomerSite.Controllers
         //    return View(pro);
         //}
 
-        public async Task<IActionResult> Index(string cate)
+        public async Task<IActionResult> Index()
         {
 
             var pagedProducts = await _realestateApiClient.GetProducts();
@@ -63,6 +63,7 @@ namespace KhoaLuanTotNghiep_CustomerSite.Controllers
         {
             return View();
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
