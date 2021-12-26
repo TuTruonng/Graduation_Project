@@ -11,18 +11,42 @@ import {
 } from '../reducer';
 
 import {
+    getInfosRequest,
     getRealEstatesRequest,
     UpdateRealEstateRequest,
 } from './requests';
 import IAsset from 'src/interfaces/Asset/IAsset';
+import { setInfos } from 'src/Pages/SalaryList/reducer';
 
 
 export function* handleGetRealEstate() {
-    
+  
     //const query = action.payload;
     try {
+        console.log('real')
         const { data } = yield call(getRealEstatesRequest);
         yield put(setRealEstates(data));
+    } catch (error: any) {
+        const errorModel = error.response.data as IError;
+
+        console.log(errorModel);
+        yield put(
+            setStatus({
+                status: Status.Failed,
+                error: errorModel,
+            })
+        );
+    }
+}
+
+
+export function* handleGetInfo() {
+  
+    //const query = action.payload;
+    try {
+        console.log('real')
+        const { data } = yield call(getInfosRequest);
+        yield put(setInfos(data));
     } catch (error: any) {
         const errorModel = error.response.data as IError;
 

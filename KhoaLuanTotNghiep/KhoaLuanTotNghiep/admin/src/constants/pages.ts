@@ -37,6 +37,7 @@ export const EDIT_ORDERS = '/Manager Orders/Edit Orders/:orderId';
 export const EDIT_ORDER_ID = (orderId: string | number) =>
     `/Manager Orders/Edit Orders/${orderId}`;
 
+export const INFOMANAGER = '/Manager Info';
 // Not ready to use
 export const MANAGEASSIGNMENT = '/Manage AssignMent';
 export const REQUEST = '/Request';

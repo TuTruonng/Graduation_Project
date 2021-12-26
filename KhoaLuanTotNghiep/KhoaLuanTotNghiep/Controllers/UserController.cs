@@ -48,9 +48,9 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
 
 
         [HttpGet]
-        [Route("user={name}")]
+        [Route("user/{name}")]
         [AllowAnonymous]
-        public async Task<ActionResult<User>> GetUserInfo(string name)
+        public async Task<ActionResult<InfoModel>> GetUserInfo(string name)
         {
             var results = await _user.GetInfoSalaryAsync(name);
             return Ok(results);

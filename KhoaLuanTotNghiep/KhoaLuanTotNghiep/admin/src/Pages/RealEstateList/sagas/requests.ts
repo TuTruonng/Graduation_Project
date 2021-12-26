@@ -6,6 +6,7 @@ import EndPoints from 'src/constants/endpoints';
 import IQueryAssetModel from 'src/interfaces/Asset/IQueryAssetModel';
 import IRealEstateForm from 'src/interfaces/RealEstate/IRealEstateForm';
 import IUser from 'src/interfaces/User/IUser';
+import IInfo from 'src/interfaces/Info/IInfo';
 
 export function getRealEstatesRequest(
 ): Promise<AxiosResponse<IRealEstate>> {
@@ -30,3 +31,13 @@ export function UpdateRealEstateRequest(
         .put(EndPoints.realEstatesId(RealEstateForm.realEstateID ?? -1), formData)
 }
 
+export function getInfosRequest(
+    ): Promise<AxiosResponse<IInfo>> {
+        console.log('ket qua');
+        const username = localStorage.getItem('user');
+        console.log(username);
+        return RequestService.axios.get(EndPoints.infos(username), {
+            paramsSerializer: (params) => qs.stringify(params),
+        });
+    }
+    

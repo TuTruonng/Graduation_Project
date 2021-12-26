@@ -15,6 +15,6 @@ namespace KhoaLuanTotNghiep_BackEnd.Interface
         Task<UserModel> UpdateAsync(string id, EditUserModel editUserDto);
         Task<bool> DisableAsync(string id);
         Task<bool> ChangeUserPasswordAsync(ChangeUserPasswordDto changeUserPasswordDto);
-        Task<UserModel> GetInfoSalaryAsync(string userName);
+        Task<InfoModel> GetInfoSalaryAsync(string userName);
     }
 }

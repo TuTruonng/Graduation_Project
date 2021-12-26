@@ -1,14 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import Users from '.';
 
-const UserManager = () => {
+import React, { lazy } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+import {
+    INFOMANAGER,
+} from '../../constants/pages';
+
+const Info = lazy(() => import('./TableFunctions/List'));
+
+const Infos = () => {
     return (
         <>
-            <div className="primaryColor text-title intro-x">
-                <Users />
-            </div>
+            <Route exact path={INFOMANAGER} component={Info} />
         </>
     );
 };
 
-export default UserManager;
+export default Infos;

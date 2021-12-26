@@ -252,7 +252,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             return result.Succeeded;
         }
 
-        public async Task<UserModel> GetInfoSalaryAsync(string userName)
+        public async Task<InfoModel> GetInfoSalaryAsync(string userName)
         {
             //var adminIdList = (await _userManager.GetUsersInRoleAsync(Roles.Admin)).Select(u => u.Id);
             // var staffIdList = (await _userManager.GetUsersInRoleAsync(Roles.Staff)).Select(u => u.Id);
@@ -274,7 +274,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
                 .Include(p => p.user)
                 .Count(p => p.AdminID == userCreate.Id && p.Status == Convert.ToInt32(StateApprove.Available));
 
-            var users = new UserModel
+            var users = new InfoModel
             {
                 UserId = userCreate.Id,
                 FullName = userCreate.FullName,

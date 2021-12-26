@@ -2,55 +2,48 @@ import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
-import { getUsers, setUsers } from '../reducer';
-import { CREATEUSER, USERMANAGER } from 'src/constants/pages';
-import UserTable from './Table';
+import { getInfos } from '../reducer';
+import InfoTable from './Table';
+import IInfo from 'src/interfaces/Info/IInfo';
 
-// const _location = localStorage.getItem('location');
-// const _onTopStaffCodeLocalStoage = localStorage.getItem('onTopStaffCode')
-// const _onTopStaffCode = _onTopStaffCodeLocalStoage ? Number(_onTopStaffCodeLocalStoage) : 0
-// if (_onTopStaffCodeLocalStoage) {
-//     localStorage.removeItem('onTopStaffCode')
-// }
-const ListUsers = () => {
+type Props = {
+    infos: IInfo | null;
+    fetchData: Function;
+  };
+
+const Info = () => {
     const dispatch = useAppDispatch();
-    const [user, setUser] = useState([]);
-    const { users, loading } = useAppSelector((state) => state.userReducer);
+    const [info, setInfo] = useState(undefined as IInfo | undefined);
+    const {infos, loading} = useAppSelector((state) => state.infoReducer);
 
     const fetchData = () => {
-        dispatch(getUsers(user));
+        dispatch(getInfos(info as IInfo));
     };
 
     useEffect(() => {
         fetchData();
-        // dispatch(setUsers(users));
     }, []);
-    console.log(users);
+    console.log(infos);
 
     return (
-        <>
-            <div className="primaryColor text-title intro-x">User List</div>
-
-            <div>
-                <div className="d-flex mb-5 intro-x">
-                    <div className="d-flex align-items-center ml-3">
-                        <Link
-                            to={CREATEUSER}
-                            type="button"
-                            className="btn btn-danger"
-                        >
-                            Create new user
-                        </Link>
-                    </div>
-                </div>
-
-                <UserTable
-                    users={users}
+        <div className="content-wrapper" >
+            <br />
+            <h3 className="invalid"><b>Info List</b></h3>
+            <br />
+            <div className='tblRealEstate'>
+                <InfoTable
+                    infos={infos}
                     fetchData={fetchData}
                 />
             </div>
-        </>
+        </div>
+
+        // <div className="primaryColor text-title intro-x">Info List</div>
+        // <div>
+
+        // </div>
+
     );
 };
 
-export default ListUsers;
+export default Info;

@@ -1,25 +1,14 @@
-import React, { lazy } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import Infos from 'src/Pages/SalaryList/UserManager';
 
-import {
-    HOME,
-    USERMANAGER,
-    CREATEUSER,
-    EDIT_USER,
-} from '../../constants/pages';
-
-const ListUsers = lazy(() => import('./TableFunctions/List'));
-const CreateUser = lazy(() => import('./TableFunctions/Create'));
-const EditUser = lazy(() => import('./TableFunctions/Update'));
-
-const Users = () => {
+const InfoManager = () => {
     return (
         <>
-            <Route exact path={USERMANAGER} component={ListUsers} />
-            <Route exact path={CREATEUSER} component={CreateUser} />
-            <Route path={EDIT_USER} component={EditUser} />
+            <div className="primaryColor text-title intro-x">
+                <Infos />
+            </div>
         </>
     );
 };
 
-export default Users;
+export default InfoManager;

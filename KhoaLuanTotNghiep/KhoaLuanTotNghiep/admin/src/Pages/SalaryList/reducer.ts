@@ -1,92 +1,79 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SetStatusType } from 'src/constants/status';
+
 import IError from 'src/interfaces/IError';
 import IPagedModel from 'src/interfaces/IPagedModel';
-import IQueryUserModel from 'src/interfaces/User/IQueryUserModel';
-import IUser from 'src/interfaces/User/IUser';
-import IUserForm from 'src/interfaces/User/IUserForm';
+import IQueryAssetModel from 'src/interfaces/Asset/IQueryAssetModel';
+import IInfo from 'src/interfaces/Info/IInfo';
+import IInfoForm from 'src/interfaces/Info/IInfoForm';
 
-type UserState = {
+type InfoState = {
     loading: boolean;
-    userResult?: IUser;
-    users: IPagedModel<IUser> | null;
+    infosResult?: IInfo;
+    infos?: IInfo | null;
     status?: number;
     error?: IError;
-    disable: boolean;
 };
 
 export type CreateAction = {
     handleResult: Function;
-    formValues: IUserForm;
+    formValues: IInfoForm;
 };
 
-export type DisableAction = {
-    handleResult: Function;
-    userId: number;
-};
-
-const initialState: UserState = {
-    users: null,
+const initialState: InfoState = {
+    infos: null,
     loading: false,
-    disable: false,
 };
 
-const userReducerSlice = createSlice({
+const infoReducerSlice = createSlice({
     name: 'home',
     initialState,
     reducers: {
-        getUsers: (
+        getInfos: (
             state,
-            action
-        ): UserState => {
+            action: PayloadAction<IInfo>
+           
+        ): InfoState => {
+         
             return {
                 ...state,
                 loading: true,
             };
         },
-        setUsers: (
+        setInfos: (
             state,
-            action: PayloadAction<IPagedModel<IUser>>
-        ): UserState => {
-            const users = action.payload;
+            action: PayloadAction<IInfo>
+        ): InfoState => {
+            const infos = action.payload;
 
             return {
                 ...state,
-                users,
+                infos,
                 loading: false,
             };
         },
-        createUser: (state, action: PayloadAction<CreateAction>): UserState => {
-            return {
-                ...state,
-                loading: true,
-            };
-        },
-        updateUser: (state, action: PayloadAction<CreateAction>): UserState => {
-            return {
-                ...state,
-                loading: true,
-            };
-        },
-        disableUser: (
+        updateInfo: (
             state,
-            action: PayloadAction<DisableAction>
-        ): UserState => {
+            action: PayloadAction<CreateAction>
+        ): InfoState => {
             return {
                 ...state,
                 loading: true,
             };
         },
-        setUser: (state, action: PayloadAction<IUser>): UserState => {
-            const userResult = action.payload;
+        setInfo: (state, action: PayloadAction<IInfo>): InfoState => {
+            const infosResult = action.payload;
 
             return {
                 ...state,
-                userResult,
+                infosResult,
                 loading: false,
             };
         },
-        setStatus: (state, action: PayloadAction<SetStatusType>): UserState => {
+        setStatus: (
+            state,
+            action: PayloadAction<SetStatusType>
+        ): InfoState => {
             const { status, error } = action.payload;
 
             return {
@@ -96,10 +83,10 @@ const userReducerSlice = createSlice({
                 loading: false,
             };
         },
-        cleanUp: (state): UserState => ({
+        cleanUp: (state): InfoState => ({
             ...state,
             loading: false,
-            userResult: undefined,
+            infosResult: undefined,
             status: undefined,
             error: undefined,
         }),
@@ -107,14 +94,12 @@ const userReducerSlice = createSlice({
 });
 
 export const {
-    createUser,
-    setUser,
+    setInfos,
     setStatus,
     cleanUp,
-    getUsers,
-    setUsers,
-    updateUser,
-    disableUser,
-} = userReducerSlice.actions;
+    getInfos,
+    setInfo,
+    updateInfo,
+} = infoReducerSlice.actions;
 
-export default userReducerSlice.reducer;
+export default infoReducerSlice.reducer;

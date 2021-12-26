@@ -11,7 +11,8 @@ import {
     CATEGORYMANAGER,
     NEWSMANAGER,
     REPORTMANAGER,
-    ORDERMANAGER
+    ORDERMANAGER,
+    INFOMANAGER
 } from 'src/constants/pages';
 import Roles from 'src/constants/roles';
 import { LIST_BDS } from 'src/Helpers/Router';
@@ -43,6 +44,7 @@ const SideBar = () => {
             <NavLink className="navItem intro-x" to={REPORTMANAGER}>
                 <button className="btnCustom">Manage Report</button>
             </NavLink>
+
             {/* account?.role === Roles.Admin && ( */}
             {localStorage.getItem('role') === 'ADMIN' && (
                 <div>
@@ -54,6 +56,15 @@ const SideBar = () => {
                     <NavLink className="navItem intro-x" to={ORDERMANAGER}>
                         <button className="btnCustom">Manage Order</button>
                     </NavLink>
+                </div>
+            )}
+            {localStorage.getItem('role') === 'STAFF' && (
+                <div>
+                    <NavLink className="navItem intro-x" to={INFOMANAGER}>
+                        <button className="btnCustom">
+                            Manage Info
+                        </button>
+                    </NavLink>                
                 </div>
             )}
             {/* ) */}
