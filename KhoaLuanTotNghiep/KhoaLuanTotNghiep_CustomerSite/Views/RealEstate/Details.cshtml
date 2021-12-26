@@ -1,5 +1,5 @@
 ﻿
-@model ShareModel.RealEstateModel
+@model ShareModel.RealEstateDetail
 
 @{
     ViewData["Title"] = "Detail";
@@ -55,6 +55,7 @@
         <div class="col-2">
             <div class="container-contact" style="border: none; border-radius: 5px; height: auto; width: 100%">
                 <p style="text-align: center">Thông tin liên hệ</p>
+                <p style="text-align: center">Nhân viên quản lý: @Model.AdminName</p>
                 <button style="width:100px; border-radius: 5px; margin-left: 40px" class="btn btn-dark">@Model.PhoneNumber</button>
                 @*<input type="button" value="@Model.PhoneNumber" style="width: 100%; background-color: yellow; height: 30px; border: none" id="YourButtonId" data-clipboard-target="<%=YourButton.ClientID%>" />*@
             </div>

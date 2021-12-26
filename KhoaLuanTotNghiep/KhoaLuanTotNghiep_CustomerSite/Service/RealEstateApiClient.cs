@@ -41,12 +41,12 @@ namespace KhoaLuanTotNghiep_CustomerSite.Service
         //    return list;
         //}
 
-        public async Task<RealEstateModel> GetProductById(string id)
+        public async Task<RealEstateDetail> GetProductById(string id)
         {
             var client = _httpClientFactory.CreateClient(ServiceConstants.BACK_END_NAMED_CLIENT);
             var response = await client.GetAsync($"{EndpointConstants.GET_REALESTATES}\\{id}");
             response.EnsureSuccessStatusCode();
-            var realestate = await response.Content.ReadAsAsync<RealEstateModel>();
+            var realestate = await response.Content.ReadAsAsync<RealEstateDetail>();
             return realestate;
         }
 

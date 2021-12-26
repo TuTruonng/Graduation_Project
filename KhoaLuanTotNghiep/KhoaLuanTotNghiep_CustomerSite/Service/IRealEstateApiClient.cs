@@ -12,7 +12,7 @@ namespace KhoaLuanTotNghiep_CustomerSite.Service
 
         Task<IEnumerable<RealEstateModel>> GetProducts();
 
-        Task<RealEstateModel> GetProductById(string id);
+        Task<RealEstateDetail> GetProductById(string id);
 
         Task<IEnumerable<RealEstatefromCategory>> GetProductByCategory(string category);
 
@@ -22,7 +22,7 @@ namespace KhoaLuanTotNghiep_CustomerSite.Service
 
         Task<bool> Rating(string productId, int values);
 
-     //   Task<IEnumerable<RealEstateModel>> Search(string query);
+        //   Task<IEnumerable<RealEstateModel>> Search(string query);
 
 
     }

@@ -186,15 +186,16 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             throw new Exception("Create News Fail");
         }
 
-        public async Task<RealEstateModel> GetByIdAsync(string id)
+        public async Task<RealEstateDetail> GetByIdAsync(string id)
         {
-            var queryable = _dbContext.realEstates.Include(p => p.category).Include(p => p.user).AsQueryable();
+            var queryable = _dbContext.realEstates.Include(p => p.category).Include(p => p.user).Include(p => p.admin).AsQueryable();
             queryable = queryable.Where(p => p.RealEstateID == id);
-            var real = await queryable.Select(p => new RealEstateModel
+            var real = await queryable.Select(p => new RealEstateDetail
             {
                 RealEstateID = p.RealEstateID,
                 CategoryID = p.category.CategoryID,
                 UserID = p.user.Id,
+                AdminName = p.admin.FullName,
                 UserName = p.user.FullName,
                 CategoryName = p.category.CategoryName,
                 ReportID = p.ReportID,
