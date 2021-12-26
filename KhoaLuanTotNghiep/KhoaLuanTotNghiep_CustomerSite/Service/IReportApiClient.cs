@@ -8,6 +8,6 @@ namespace KhoaLuanTotNghiep_CustomerSite.Service
 {
     public interface IReportApiClient
     {
-        Task<CreateReport> CreateReport(CreateReport reportModel);
+        Task<bool> CreateReport(CreateReport reportModel);
     }
 }

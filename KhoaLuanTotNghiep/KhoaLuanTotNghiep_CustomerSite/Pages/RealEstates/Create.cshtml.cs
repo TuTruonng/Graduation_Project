@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using CloudinaryDotNet;
@@ -9,6 +10,7 @@ using KhoaLuanTotNghiep_CustomerSite.Datas;
 using KhoaLuanTotNghiep_CustomerSite.Service;
 using KhoaLuanTotNghiep_CustomerSite.ViewModel.RealEstate;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Nancy.FlashMessages;
@@ -26,14 +28,17 @@ namespace KhoaLuanTotNghiep_CustomerSite.Pages.RealEstates
         private const string Tags = "backend_PhotoAlbum";
         private readonly Cloudinary _cloudinary;
         private readonly PhotosDbContext _context;
+        private readonly IHttpContextAccessor _contextAccessor;
+
 
         public CreateModel(IRealEstateApiClient productApiClient, IMapper mapper, Cloudinary cloudinary,
-            PhotosDbContext context)
+            PhotosDbContext context, IHttpContextAccessor contextAccessor)
         {
             _realestateApiClient = productApiClient;
             _mapper = mapper;
             _cloudinary = cloudinary;
             _context = context;
+            _contextAccessor = contextAccessor;
         }
 
         [BindProperty]
@@ -44,12 +49,13 @@ namespace KhoaLuanTotNghiep_CustomerSite.Pages.RealEstates
 
         public IActionResult OnGetAsync()
         {
+            if (HttpContext.Session.GetString("JWToken") == null)
+            {
+                return RedirectToAction("Login", "Authen");
+            }
             return Page();
-        }
 
-        //public void OnGet()
-        //{
-        //}
+        }
 
         public async Task<IActionResult> OnPostAsync(IFormFile[] images, string cate)
         {
@@ -108,26 +114,29 @@ namespace KhoaLuanTotNghiep_CustomerSite.Pages.RealEstates
             }).ConfigureAwait(false);
 
             await _context.SaveChangesAsync().ConfigureAwait(false);
-
+            var username = HttpContext.Session.GetString("Username");
+            realEstate.Username = username;
             realEstate.CategoryID = cate;
             realEstate.Location = realEstate.Location + "," + " " + realEstate.District + "," + " " + realEstate.Province;
             var real = _mapper.Map<RealEstateCreateRequest>(realEstate);
 
-            var client = new RealEstateCreateRequest();
-            client.ID = Guid.NewGuid().ToString();
-            client.Username = user.Username;
-            client.Fullname = user.FullName;
-            client.PhoneNumber = user.PhoneNumber;
-            client.Email = user.Email;
-            client.CreateDate = DateTime.Now;
+            //var client = new RealEstateCreateRequest();
+            //client.ID = Guid.NewGuid().ToString();
+            //client.Username = user.Username;
+            //client.Fullname = user.FullName;
+            //client.PhoneNumber = user.PhoneNumber;
+            //client.Email = user.Email;
+            //client.CreateDate = DateTime.Now;
 
-            await _realestateApiClient.CreateRealEstates(real);
-
+            var resultCreate = await _realestateApiClient.CreateRealEstates(real);
+            if (resultCreate == false)
+            {
+                TempData["FailMessage"] = "Thông tin nhập không hợp lệ!";
+                return RedirectToPage("./Create");
+            }
 
             TempData["SuccessMessage"] = "Đăng tin thành công";
             return RedirectToAction("Index", "Home");
-            //return RedirectToPage("./Index");
-
         }
     }
 }

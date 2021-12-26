@@ -1,4 +1,5 @@
 ﻿using KhoaLuanTotNghiep_CustomerSite.Service;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShareModel;
 using System;
@@ -29,7 +30,19 @@ namespace KhoaLuanTotNghiep_CustomerSite.Controllers
                 UpdateTime = DateTime.Now,
             };
 
-            await _reportApiClient.CreateReport(commentCreateRequest);
+            if (HttpContext.Session.GetString("JWToken") == null)
+            {
+                return RedirectToAction("Login", "Authen");
+
+            }
+            //name = HttpContext.Session.GetString("Username");
+
+            var result = await _reportApiClient.CreateReport(commentCreateRequest);
+            if (result == false)
+            {
+                TempData["FailMessage"] = "Gửi đánh giá thành công";
+                return RedirectToAction("Details", "RealEstate");
+            }
             TempData["SuccessMessage"] = "Gửi đánh giá thành công";
             return RedirectToAction("Details", "RealEstate", new { id = commentCreateRequest.RealEstateID });
         }

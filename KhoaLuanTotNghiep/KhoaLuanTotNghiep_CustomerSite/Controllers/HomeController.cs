@@ -3,6 +3,7 @@ using KhoaLuanTotNghiep_CustomerSite.Models;
 using KhoaLuanTotNghiep_CustomerSite.Service;
 using KhoaLuanTotNghiep_CustomerSite.ViewModel;
 using KhoaLuanTotNghiep_CustomerSite.ViewModel.RealEstate;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -44,7 +45,6 @@ namespace KhoaLuanTotNghiep_CustomerSite.Controllers
         //    //var results = await _realestateApiClient.GetProducts();
         //    return View(pro);
         //}
-
         public async Task<IActionResult> Index()
         {
 

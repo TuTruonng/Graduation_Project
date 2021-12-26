@@ -6,6 +6,7 @@ import BatDongSanService from "src/Services/BatDongSanService";
 import IReport from "src/interfaces/Report/IReport";
 import { getReports } from "../reducer";
 import ReportTable from "./Table";
+import { ExportToExcel } from '../ExportToExcel';
 
 type Props = {
   reports: IReport | null;
@@ -14,6 +15,7 @@ type Props = {
 
 const ListBDS = () => {
   const dispatch = useAppDispatch();
+  const fileName = "Report file"; // here enter filename for your excel file
   const { reports, loading } = useAppSelector((state) => state.reportReducer);
   const [Report, setReport] = useState([]);
   const [itemSelected, setSelected] = React.useState(null);
@@ -43,6 +45,9 @@ const ListBDS = () => {
           fetchData={fetchData}
         />
       </div>
+      <div>
+        <ExportToExcel apiData={reports} fileName={fileName}/>
+        </div>
     </div>
   );
 };

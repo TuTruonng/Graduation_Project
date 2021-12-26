@@ -8,5 +8,6 @@ namespace ShareModel.Constant
         public static string GET_NEWS = "News";
         public static string GET_REPORT = "Report";
         public static string GET_USER = "User";
+        public static string GET_AUTHEN = "AuthenClient";
     }
 }

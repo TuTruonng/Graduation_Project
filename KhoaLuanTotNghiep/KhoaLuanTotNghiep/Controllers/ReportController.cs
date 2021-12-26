@@ -27,7 +27,8 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
         public async Task<ActionResult<CreateReport>> CreateAsync(CreateReport reportModel)
         {
             reportModel.IPAddress = RequestHelpper.GetLocalIPAddress();
-            if (!ModelState.IsValid) return BadRequest(reportModel);
+            if (!ModelState.IsValid)
+                return BadRequest(reportModel);
             return Ok(await _report.CreateReportAsync(reportModel));
         }
 

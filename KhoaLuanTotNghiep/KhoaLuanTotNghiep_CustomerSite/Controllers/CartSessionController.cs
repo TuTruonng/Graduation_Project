@@ -21,13 +21,15 @@ namespace KhoaLuanTotNghiep_CustomerSite.Controllers
             return View(result);
         }
 
-        public IActionResult Delete(int id)
+        public IActionResult Delete(string id)
         {
             List<CardSessionModel> cart = HttpContext.Session.Get<List<CardSessionModel>>("UserCart");
 
-            var deleteMe = cart.Find(x => x.RealEstateID == id.ToString());
+            var deleteMe = cart.Find(x => x.RealEstateID == id);
 
             cart.Remove(deleteMe);
+            //HttpContext.Session.Clear();
+            //TempData["SuccessMessage"] = "Đăng xuất thành công";
             HttpContext.Session.Set("UserCart", cart);
             Task.WaitAll(Task.Delay(2000));
             return RedirectToAction("Index", "CartSession");

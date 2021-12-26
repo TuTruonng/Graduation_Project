@@ -12,7 +12,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Models
         public string Description { get; set; }
         public string Acgreage { get; set; }
         public bool Approve { get; set; }
-        public bool Status { get; set; }
+        public int Status { get; set; }
         public string Location { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime UpdateTime { get; set; }

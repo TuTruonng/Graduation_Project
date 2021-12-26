@@ -7,6 +7,8 @@ namespace KhoaLuanTotNghiep_BackEnd.Enum
 {
     public enum StateApprove
     {
-        TRUE = 0, FALSE = 1
+        Available = 0,
+        WaitingAcceptance = 1,
+        Ordered = 2
     }
 }

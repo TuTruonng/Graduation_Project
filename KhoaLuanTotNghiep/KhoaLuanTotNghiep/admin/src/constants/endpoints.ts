@@ -3,6 +3,7 @@ const Endpoints = {
     me: '/api/Authen/me',
     users: '/api/User',
     customers: '/api/User/user',
+    infos: (username) => `/api/User/user=${username}`,
     changePassword: '/api/User/password',
     disable: '/api/User/disable',
     disableId: (id) => `/api/User/disable/${id}`,
@@ -16,6 +17,7 @@ const Endpoints = {
     newsId: (newsID) => `/News/${newsID}`,
     disableNewsId: (id) => `/News/disable/${id}`,
     orders: '/RealEstate/Order',
+    ordersId: (orderID) => `/RealEstate/id=${orderID}`,
     reports:(username) => `/Report/name=${username}`,
     authentication: '/api/Authen',
 };

@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Cart Page";
+}
+
+@model IEnumerable<ShareModel.OrderModel>
+<div class="divider" style="text-align: center;"><span></span><span class="title-products" style="font-size:32px;color:crimson">Tất Cả Giao Dịch</span><span></span></div>
+<div>
+    <div class="container-fluid" style="margin-top:20px; margin-bottom:20px;">
+        @if (Model.Count() > 0)
+        {
+            <table class="table table-bordered table-responsive table-hover" style="width: 100%">
+                <tr>
+                    <th>Mã giao dịch </th>
+                    <th>Tiêu đề </th>
+                    <th>Người đăng tin</th>
+                    <th>Nhân viên quản lý</th>
+                    <th>Ngày giao dịch</th>
+                    <th>Trạng thái</th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="width:200px">@item.OrderID</td>
+                        <td style="width:500px">@item.Title</td>
+                        <td style="width:200px">@item.UserName</td>
+                        <td style="width:200px">@item.AdminName</td>
+                        <td style="width:300px">@item.OrderDate</td>
+                        <td style="width:200px">@item.Status</td>
+                    </tr>
+                }
+            </table>
+        }
+        @if (Model.Count() == 0)
+        {
+            <h3 style="text-align: center">Không có giao dịch trong giỏ hàng!</h3>
+        }
+    </div>
+    }
+</div>

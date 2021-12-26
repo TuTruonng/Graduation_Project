@@ -75,6 +75,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
                     {
                         new Claim(ClaimTypes.Name, request.Username),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+
                     };
                     foreach (var userRole in userRoles)
                     {

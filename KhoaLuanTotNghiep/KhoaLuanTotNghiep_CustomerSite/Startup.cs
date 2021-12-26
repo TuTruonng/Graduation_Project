@@ -60,6 +60,13 @@ namespace KhoaLuanTotNghiep_CustomerSite
                     };
                 });
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Authen/Login";
+                options.LogoutPath = $"/Authen/Logout";
+                options.AccessDeniedPath = $"/Account/AccessDenied";
+            });
+
             var cloudName = Configuration.GetValue<string>("AccountSettings:CloudName");
             var apiKey = Configuration.GetValue<string>("AccountSettings:ApiKey");
             var apiSecret = Configuration.GetValue<string>("AccountSettings:ApiSecret");
@@ -90,6 +97,7 @@ namespace KhoaLuanTotNghiep_CustomerSite
             services.AddTransient<IReportApiClient, ReportApiClient>();
             services.AddTransient<IOrderApiClient, OrderApiClient>();
             services.AddTransient<ISearchApiClient, SearchApiClient>();
+            services.AddTransient<IAuthenApiClient, AuthenApiClient>();
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -114,13 +122,25 @@ namespace KhoaLuanTotNghiep_CustomerSite
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
 
             app.UseRouting();
 
-            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseSession();
+            app.Use(async (context, next) =>
+            {
+                var JWToken = context.Session.GetString("JWToken");
+                if (!string.IsNullOrEmpty(JWToken))
+                {
+                    context.Request.Headers.Add("Authorization", "Bearer " + JWToken);
+                }
+                await next();
+            });
+
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

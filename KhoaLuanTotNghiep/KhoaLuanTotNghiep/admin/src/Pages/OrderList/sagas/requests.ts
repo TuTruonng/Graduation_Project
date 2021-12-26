@@ -16,3 +16,16 @@ export function getOrdersRequest(
         paramsSerializer: (params) => qs.stringify(params),
     });
 }
+
+export function UpdateOrderRequest(
+    OrderForm: IOrderForm
+): Promise<AxiosResponse<IOrder>> {
+    const formData = new FormData();
+    Object.keys(OrderForm).forEach((key) => {
+            formData.append(key, OrderForm[key]);
+    });
+    console.log('OrderForm.OrderID')
+    console.log(OrderForm.orderID)
+    return RequestService.axios
+        .put(EndPoints.ordersId(OrderForm.orderID ?? -1), formData)
+}

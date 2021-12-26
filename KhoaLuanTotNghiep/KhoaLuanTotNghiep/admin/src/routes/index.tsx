@@ -19,7 +19,8 @@ import {
     CREATENEWS,
     EDIT_NEWS,
     ORDERMANAGER,
-    REPORTMANAGER
+    REPORTMANAGER,
+    EDIT_ORDERS
 } from '../constants/pages';
 import InLineLoader from '../components/InlineLoader';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
@@ -69,6 +70,9 @@ const EditNews = lazy(
     () => import('../Pages/NewsList/TableFunction/Update')
 );
 const OrdersManager = lazy(() => import('../Pages/OrderList/Manager'));
+const EditOrders = lazy(
+    () => import('../Pages/OrderList/TableFunction/Update')
+);
 const ReportsManager = lazy(() => import('../Pages/ReportList/Manager'));
 
 const SusspenseLoading = ({ children }) => (
@@ -138,6 +142,9 @@ const Routes = () => {
                 </PrivateRoute>
                 <PrivateRoute exact path={ORDERMANAGER}>
                     <OrdersManager />
+                </PrivateRoute>
+                <PrivateRoute exact path={EDIT_ORDERS}>
+                    <EditOrders />
                 </PrivateRoute>
                 <PrivateRoute exact path={REPORTMANAGER}>
                     <ReportsManager />

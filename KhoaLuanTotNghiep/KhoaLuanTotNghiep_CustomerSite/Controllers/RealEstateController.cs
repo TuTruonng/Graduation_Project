@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using KhoaLuanTotNghiep_CustomerSite.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShareModel;
 using System.Collections.Generic;
@@ -148,7 +149,7 @@ namespace KhoaLuanTotNghiep_CustomerSite.Controllers
             HttpContext.Session.Set<List<CardSessionModel>>("UserCart", cart);
 
             Task.WaitAll(Task.Delay(2000));
-            TempData["SuccessMessage"] = "Đăng tin thành công";
+            TempData["SuccessMessage"] = "Lưu tin thành công";
             return RedirectToAction("Details", "RealEstate", new { id = id });
         }
 

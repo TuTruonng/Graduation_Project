@@ -11,7 +11,7 @@ import {
 } from '../reducer';
 
 import {
-    getOrdersRequest,
+    getOrdersRequest, UpdateOrderRequest,
 } from './requests';
 import IAsset from 'src/interfaces/Asset/IAsset';
 
@@ -32,5 +32,22 @@ export function* handleGetOrder() {
                 error: errorModel,
             })
         );
+    }
+}
+
+
+export function* handleUpdateOrder(action: PayloadAction<CreateAction>) {
+    console.log('putAsset')
+    const { handleResult, formValues } = action.payload;
+    try {
+        const { data } = yield call(UpdateOrderRequest, formValues);
+        console.log(data)
+        if (data) {
+            handleResult(true, data.name);
+        }
+        yield put(setOrder(data));
+    } catch (error: any) {
+        const errorModel = error.response.data as IError;
+        handleResult(false, errorModel.message);
     }
 }

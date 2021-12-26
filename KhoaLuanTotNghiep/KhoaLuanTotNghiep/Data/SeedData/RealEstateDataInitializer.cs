@@ -1,4 +1,5 @@
-﻿using KhoaLuanTotNghiep_BackEnd.Models;
+﻿using KhoaLuanTotNghiep_BackEnd.Enum;
+using KhoaLuanTotNghiep_BackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Data.SeedData
                     Description = "Bảng giá các căn giá tốt nhất thị trường của dự án The Manor Central Park: Mua trực tiếp chủ đầu tư Bitexco Group.Bảng hàng shophouse các căn vị trí đẹp của giai đoạn 1 và giai đoạn 2 của dự án The Manor Central Park",
                     Acgreage = "95",
                     Approve = false,
-                    Status = false,
+                    Status = Convert.ToInt32(StateApprove.Available),
                     Location = "50 Lê Lợi",
                     CreateTime = DateTime.Now,
                     UpdateTime = DateTime.Now,
@@ -41,7 +42,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Data.SeedData
                     Description = "Bảng giá các căn giá tốt nhất thị trường của dự án The Manor Central Park: Mua trực tiếp chủ đầu tư Bitexco Group.Bảng hàng shophouse các căn vị trí đẹp của giai đoạn 1 và giai đoạn 2 của dự án The Manor Central Park",
                     Acgreage = "95",
                     Approve = false,
-                    Status = false,
+                    Status = Convert.ToInt32(StateApprove.Available),
                     Location = "50 Lê Lợi",
                     CreateTime = DateTime.Now,
                     UpdateTime = DateTime.Now,
@@ -58,7 +59,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Data.SeedData
                     Description = "Bảng giá các căn giá tốt nhất thị trường của dự án The Manor Central Park: Mua trực tiếp chủ đầu tư Bitexco Group.Bảng hàng shophouse các căn vị trí đẹp của giai đoạn 1 và giai đoạn 2 của dự án The Manor Central Park",
                     Acgreage = "95",
                     Approve = false,
-                    Status = false,
+                    Status = Convert.ToInt32(StateApprove.Available),
                     Location = "50 Lê Lợi",
                     CreateTime = DateTime.Now,
                     UpdateTime = DateTime.Now,

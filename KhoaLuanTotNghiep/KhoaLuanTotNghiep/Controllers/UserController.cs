@@ -1,5 +1,6 @@
 ﻿using KhoaLuanTotNghiep_BackEnd.Interface;
 using KhoaLuanTotNghiep_BackEnd.Models;
+using KhoaLuanTotNghiep_BackEnd.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -46,6 +47,22 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
         }
 
 
+        [HttpGet]
+        [Route("user={name}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<User>> GetUserInfo(string name)
+        {
+            var results = await _user.GetInfoSalaryAsync(name);
+            return Ok(results);
+        }
+
+        [HttpGet("export")]
+        public async Task<FileContentResult> ExportAsync()
+        {
+            var users = await _user.GetAdminAsync();
+            return ExportFileUser.ExportExcel(users, "User", "User");
+        }
+
         [HttpPost("Client")]
         [AllowAnonymous]
         public async Task<ActionResult<UserModel>> CreateClient(
@@ -59,7 +76,6 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
 
             return CreatedAtAction(nameof(CreateClient), dto);
         }
-
 
         [HttpPost]
         public async Task<ActionResult<UserModel>> CreateUser(

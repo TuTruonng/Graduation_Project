@@ -26,7 +26,7 @@ namespace KhoaLuanTotNghiep_BackEnd
                 await IdentityDataInitializer.SeedAsync(userManager);
                 await IdentityDataInitializer.SeedRoleAsync(roleManager);
             }
-            await host.RunAsync();
+            await host.RunAsync().ConfigureAwait(false);
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

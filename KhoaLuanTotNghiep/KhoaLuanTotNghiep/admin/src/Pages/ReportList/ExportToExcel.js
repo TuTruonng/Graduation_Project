@@ -1,8 +1,8 @@
 import React from "react";
+import {Button} from 'react-bootstrap';
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
 import axios from "axios";
-import"../BaoCao/BaoCao.css"
 
 export const ExportToExcel = ({ apiData, fileName }) => {
     const [data, setData] = React.useState([]) 
@@ -28,6 +28,6 @@ export const ExportToExcel = ({ apiData, fileName }) => {
  
 
   return (
-    <button className="button-excel elevation-2" onClick={(e) => exportToCSV(apiData, fileName)}><b>Export Report File</b></button>
+    <Button variant="success"  style={{width: '20%', textAlign: 'center', lineHeight: '30px'}}  onClick={(e) => exportToCSV(apiData, fileName)}>Export Report File</Button>
   );
 };

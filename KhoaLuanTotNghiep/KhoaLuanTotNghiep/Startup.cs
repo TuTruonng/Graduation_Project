@@ -17,6 +17,9 @@ using KhoaLuanTotNghiep_BackEnd.Extensions.ServiceCollection;
 using FluentValidation;
 using KhoaLuanTotNghiep_BackEnd.Request;
 using KhoaLuanTotNghiep_BackEnd.Validators;
+using KhoaLuanTotNghiep.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 
 namespace KhoaLuanTotNghiep_BackEnd
 {
@@ -115,6 +118,8 @@ namespace KhoaLuanTotNghiep_BackEnd
             //    options.AddPolicy(SecurityConstants.ADMIN_ROLE_POLICY, policy =>
             //        policy.Requirements.Add(new AdminRoleRequirement()));
             //});
+            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            // .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddAuthenticationRegister();
 

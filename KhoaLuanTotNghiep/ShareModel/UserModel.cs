@@ -17,8 +17,9 @@ namespace ShareModel
         public DateTime DateOfBirth { get; set; }
         public string Type { get; set; }
         public string Status { get; set; }
-        //public int quantityRealEstateSelled { get; set; }
-        //public int quantityRealEstate { get; set; }
+        public int quantityRealEstateSelled { get; set; }
+        public int quantityRealEstateWaitingAccept { get; set; }
+        public int quantityRealEstate { get; set; }
         public string SalaryBasic { get; set; }
         public string Salary { get; set; }
         public DateTime CreateDate { get; set; }

@@ -100,7 +100,6 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             return true;
         }
 
-
         public async Task<ICollection<NewsModel>> GetListNewsAsync()
         {
             var news = await _dbContext.news.Include(x => x.user).Select(x =>

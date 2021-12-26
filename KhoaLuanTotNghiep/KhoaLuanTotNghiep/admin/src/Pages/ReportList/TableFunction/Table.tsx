@@ -12,7 +12,7 @@ import IPagedModel from 'src/interfaces/IPagedModel';
 import { useAppDispatch } from 'src/hooks/redux';
 import IReport from 'src/interfaces/Report/IReport';
 import { object } from 'yup/lib/locale';
-import { ExportToExcel } from '../ExportToExcel';
+
 import Info from 'src/Pages/ReportList/TableFunction/Info';
 
 type Props = {
@@ -25,7 +25,7 @@ const ReportTable = ({
   fetchData,
 }) => {
   const dispatch = useAppDispatch();
-  const fileName = "Report file"; // here enter filename for your excel file
+
   const [report, setreports] = useState([]);
   const [showDetail, setShowDetail] = useState(false);
   const [ReportDetail, setReportDetail] = useState(null as IReport | null);
@@ -104,9 +104,7 @@ const ReportTable = ({
           ))}
         </tbody>
       </Table>
-      <div style={{width: '100px', height: '100px', marginLeft: '400px'}}>
-        <ExportToExcel apiData={reports} fileName={fileName}/>
-        </div>
+   
       {ReportDetail && showDetail && (
         <Info reports={ReportDetail} handleClose={handleCloseDetail} />
       )}

@@ -1,0 +1,102 @@
+﻿@model ShareModel.RegisterRequest;
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/dropzone.css" />
+    <link rel="stylesheet" href="~/css/project.css" />
+}
+
+<div class="row">
+    <div class="container">
+        <form asp-action="Register" asp-controller="Authen" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <br />
+            <div id="divPostNews" style="margin-left:200px">
+                <div class="rowHeader  elevation-2 " style="border: 1px solid #999;width:500px;margin-left:100px">
+                    <div class="title-info">
+                        <h4 style="color: white; text-align:center">Đăng Ký</h4>
+                    </div>
+                    <br />
+
+                    <div class="mb-3">
+                        <label style="width: 150px;float: left;" asp-for="@Model.FullName">Họ tên:</label>
+                        <input style="width:300px; " asp-for="@Model.FullName" required class="form-control" data-val="true" data-val-length="Vượt quá 50 ký tự." data-val-length-max="50" data-val-required="Họ tên không được trống." id="FullName" maxlength="50" name="FullName" />
+                        <span asp-validation-for="@Model.FullName" class="text-danger"></span>
+                        <span class="text-danger field-validation-valid" data-valmsg-for="FullName" data-valmsg-replace="true"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label style="width: 150px;float: left;" asp-for="@Model.Email">Email:</label>
+                        <input style="width:300px; " asp-for="@Model.Email" required class="form-control" data-val="true" data-val-length="Vượt quá 50 ký tự." data-val-length-max="50" data-val-required="Email không được trống." id="Email" maxlength="50" name="Email" />
+                        <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label style="width: 150px; float: left;" asp-for="@Model.PhoneNumber">Số điện thoại:</label>
+                        <input style="width:300px; " asp-for="@Model.PhoneNumber" required class="form-control" data-val="true" data-val-length="Vượt quá 50 ký tự." data-val-length-max="50" data-val-required="Số điện thoại không được trống." id="PhoneNumber" maxlength="50" name="PhoneNumber" />
+                        <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+                        <span class="text-danger field-validation-valid" data-valmsg-for="PhoneNumber" data-valmsg-replace="true"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label style="width: 150px;float: left;" asp-for="@Model.UserName">Tên đăng nhập:</label>
+                        <input style="width:300px; " asp-for="@Model.UserName" required class="form-control" data-val="true" data-val-length="Vượt quá 50 ký tự." data-val-length-max="50" data-val-required="Tên đăng nhập không được trống." id="UserName" maxlength="50" name="UserName" />
+                        <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+                        <span class="text-danger field-validation-valid" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label style=" width: 150px;  float: left;" asp-for="@Model.Password">Mật khẩu:</label>
+                        <input style="width:300px;" asp-for="@Model.Password" required class="form-control" data-val="true" data-val-length="Vượt quá 50 ký tự." data-val-length-max="50" data-val-required="Mật khẩu không được trống." id="Password" maxlength="50" name="Password" />
+                        <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3" style="margin-left: 500px">
+                <input type="submit" value="Đăng ký" class="btn btn-success" onclick="javascript: return edit_confirm();" />
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+                function openSuccessModal(strMessage) {
+                    var myDiv = document.getElementById("MyModalSuccessAlertBody");
+                    myDiv.innerHTML = strMessage;
+                    $('#myModalSuccess').modal('show');
+                }
+                $(document).ready(function () {
+                    var msg = "@TempData["SuccessMessage"]";
+                    if (msg)
+                        openSuccessModal(msg);
+                });
+    </script>
+    <script type="text/javascript">
+                function openFailModal(strMessage) {
+                    var myDiv = document.getElementById("MyModalFailAlertBody");
+                    myDiv.innerHTML = strMessage;
+                    $('#myModalFail').modal('show');
+                }
+                $(document).ready(function () {
+                    var msg = "@TempData["FailMessage"]";
+                    if (msg)
+                        openFailModal(msg);
+                });
+    </script>
+    <script language="javascript">
+        function edit_confirm() {
+            var result = confirm("Bạn muốn đăng ký?");
+            if (result) {
+                return true;
+            }
+            return false;
+        }
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

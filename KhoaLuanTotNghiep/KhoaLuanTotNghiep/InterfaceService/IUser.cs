@@ -7,13 +7,14 @@ namespace KhoaLuanTotNghiep_BackEnd.Interface
 {
     public interface IUser
     {
-        Task<IEnumerable<User>> GetAllUserAsync();
+        Task<ICollection<User>> GetAllUserAsync();
         Task<UserModel> CreateAsync(CreateClientModel createUser);
-        Task<IEnumerable<UserModel>> GetAdminAsync();
-        Task<IEnumerable<UserModel>> GetUserAsync();
+        Task<ICollection<UserModel>> GetAdminAsync();
+        Task<ICollection<UserModel>> GetUserAsync();
         Task<UserModel> AddAsync(CreateUserModel createUser);
         Task<UserModel> UpdateAsync(string id, EditUserModel editUserDto);
         Task<bool> DisableAsync(string id);
         Task<bool> ChangeUserPasswordAsync(ChangeUserPasswordDto changeUserPasswordDto);
+        Task<UserModel> GetInfoSalaryAsync(string userName);
     }
 }

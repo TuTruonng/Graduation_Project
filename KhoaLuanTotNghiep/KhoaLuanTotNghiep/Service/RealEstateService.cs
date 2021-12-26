@@ -3,6 +3,7 @@ using KhoaLuanTotNghiep.Data;
 using KhoaLuanTotNghiep_BackEnd.Enum;
 using KhoaLuanTotNghiep_BackEnd.InterfaceService;
 using KhoaLuanTotNghiep_BackEnd.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +32,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
         public async Task<ICollection<RealEstateModel>> GetAllAsync()
         {
             var queryable = _dbContext.realEstates.Include(p => p.category).Include(p => p.user).AsQueryable();
-            queryable = queryable.Where(p => p.Approve == true && p.Status == false);
+            queryable = queryable.Where(p => p.Approve == true && p.Status == Convert.ToInt32(StateApprove.Available));
             var product = await queryable.Select(p => new RealEstateModel
             {
                 RealEstateID = p.RealEstateID,
@@ -141,53 +142,37 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
 
         public async Task<RealEstateCreateRequest> CreateRealEstatesAsync(RealEstateCreateRequest realEstateModel)
         {
-            //var realEstate = await _dbContext.categories.FirstOrDefaultAsync(p => p.CategoryID == realEstateModel.CategoryID);
-            //if (realEstate == null)
+            //var userCreate = new User
             //{
-            //    throw new Exception("Have not Category");
+            //    Id = Guid.NewGuid().ToString(),
+            //    UserName = realEstateModel.Username,
+            //    FullName = realEstateModel.Fullname,
+            //    PhoneNumber = realEstateModel.PhoneNumber,
+            //    Email = realEstateModel.Email,
+            //    CreateDate = realEstateModel.CreateDate,
+            //};
+
+            //var result1 = await _userManager.CreateAsync(userCreate);
+            //if (result1.Succeeded)
+            //{
+            //    userCreate = await _userManager.FindByNameAsync(userCreate.UserName);
+            //    var result2 = await _userManager.AddToRoleAsync(userCreate,
+            //       Roles.User);
             //}
-            var userCreate = new User
-            {
-                Id = Guid.NewGuid().ToString(),
-                UserName = realEstateModel.Username,
-                FullName = realEstateModel.Fullname,
-                PhoneNumber = realEstateModel.PhoneNumber,
-                Email = realEstateModel.Email,
-                CreateDate = realEstateModel.CreateDate,
-            };
 
-            var result1 = await _userManager.CreateAsync(userCreate);
-            if (result1.Succeeded)
-            {
-                userCreate = await _userManager.FindByNameAsync(userCreate.UserName);
-                var result2 = await _userManager.AddToRoleAsync(userCreate,
-                   Roles.User);
-
-                //UserModel userDto = new UserModel();
-                //if (result2.Succeeded)
-                //{
-                //    userDto.UserId = userCreate.Id;
-                //    userDto.Username = userCreate.UserName;
-                //    userDto.PhoneNumber = userCreate.PhoneNumber;
-                //    userDto.Email = userCreate.Email;
-                //    userDto.CreateDate = userCreate.CreateDate;
-                //    userDto.Type = Roles.User;
-                //    return userDto; 
-                //}
-            }
-
+            var user = await _userManager.FindByNameAsync(realEstateModel.Username);
             var Model = new RealEstate
             {
                 RealEstateID = Guid.NewGuid().ToString(),
                 CategoryID = realEstateModel.CategoryID,
-                UserID = userCreate.Id,
+                UserID = user.Id,
                 Title = realEstateModel.Title,
                 Price = realEstateModel.Price,
                 Image = realEstateModel.Image,
                 Description = realEstateModel.Description,
                 Acgreage = realEstateModel.Acgreage,
                 Approve = realEstateModel.Approve,
-                Status = realEstateModel.Status,
+                Status = Convert.ToInt32(realEstateModel.Status),
                 CreateTime = realEstateModel.CreateTime,
                 UpdateTime = realEstateModel.UpdateTime,
                 Location = realEstateModel.Location,
@@ -231,7 +216,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
         public async Task<IEnumerable<RealEstatefromCategory>> GetByCategoryAsync(string categoryname)
         {
             var queryable = _dbContext.realEstates.Include(p => p.category).Include(p => p.user).AsQueryable();
-            queryable = queryable.Where(p => p.Approve == true && p.Status == false && p.category.CategoryName == categoryname);
+            queryable = queryable.Where(p => p.Approve == true && p.Status == Convert.ToInt32(StateApprove.Available) && p.category.CategoryName == categoryname);
             var product = await queryable.Select(p => new RealEstatefromCategory
             {
                 RealEstateID = p.RealEstateID,
@@ -294,9 +279,10 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             throw new Exception("Delete fail");
         }
 
-        public async Task<OrderModel> OrderAsync(string id)
+        public async Task<OrderModel> OrderAsync(OrderModel order)
         {
-            var realEstate = await _dbContext.realEstates.FirstOrDefaultAsync(x => x.RealEstateID == id);
+            var userCreate = await _userManager.FindByNameAsync(order.UserName);
+            var realEstate = await _dbContext.realEstates.FirstOrDefaultAsync(x => x.RealEstateID == order.RealEstateID);
             if (realEstate == null)
             {
                 throw new Exception("Have not RealEstateID");
@@ -305,14 +291,108 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             {
                 OrderId = Guid.NewGuid().ToString(),
                 OrderDate = DateTime.Now,
-                RealestateId = id,
+                RealestateId = order.RealEstateID,
+                CustomerId = userCreate.Id,
                 UserId = realEstate.UserID,
                 AdminId = realEstate.AdminID
             };
             var create = _dbContext.Add(orderCreate);
 
-            realEstate.Status = true;
+            realEstate.Status = Convert.ToInt32(StateApprove.WaitingAcceptance);
+            var result = await _dbContext.SaveChangesAsync();
+            User staff = await _userManager.FindByIdAsync(realEstate.AdminID);
+            User user = await _userManager.FindByIdAsync(realEstate.UserID);
 
+            var userIdList = (await _userManager.GetUsersInRoleAsync(Roles.User)).Select(u => u.Id);
+            var staffIdList = (await _userManager.GetUsersInRoleAsync(Roles.Staff)).Select(u => u.Id);
+
+            //User category = await _dbContext.realEstates.Where(c => c.Name == createAssetDto.Category).SingleOrDefaultAsync();
+            //Rea state = await _dbContext.realEstates.Where(s => s.Name == createAssetDto.State).SingleOrDefaultAsync();
+            OrderModel orderDto = new OrderModel();
+            orderDto.OrderID = orderCreate.OrderId;
+            orderDto.OrderDate = orderCreate.OrderDate;
+            orderDto.Title = orderCreate.RealestateId;
+            orderDto.UserName = (userIdList.Contains(user.Id)) ? user.FullName : null;
+            orderDto.AdminName = (staffIdList.Contains(staff.Id)) ? staff.UserName : null;
+
+            return orderDto;
+        }
+
+        public async Task<IEnumerable<OrderModel>> GetOrderAsync()
+        {
+            var queryable = _dbContext.orders.Include(p => p.realEstate).Include(p => p.user).Include(p => p.admin).AsQueryable();
+            var order = await queryable.Select(p => new OrderModel
+            {
+                OrderID = p.OrderId,
+                UserName = p.user.UserName,
+                AdminName = p.admin.UserName,
+                RealEstateID = p.realEstate.RealEstateID,
+                OrderDate = p.OrderDate,
+                Title = p.realEstate.Title,
+                Status = (p.Status == true) ? "Order Accepted" : "Have Not Accepted",
+            }).ToListAsync();
+            return order;
+        }
+
+        public async Task<IEnumerable<OrderModel>> GetOrderWaitingAcceptAsync(string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            var queryable = _dbContext.orders.Include(p => p.realEstate).Include(p => p.user).Include(p => p.admin).AsQueryable();
+            queryable = queryable.Where(p => p.CustomerId == user.Id);
+            var order = await queryable.Select(p => new OrderModel
+            {
+                OrderID = p.OrderId,
+                UserName = p.user.UserName,
+                AdminName = p.admin.UserName,
+                RealEstateID = p.realEstate.RealEstateID,
+                OrderDate = p.OrderDate,
+                Title = p.realEstate.Title,
+                Status = (p.Status == true) ? "Order Accepted" : "Have Not Accepted",
+            }).ToListAsync();
+            return order;
+        }
+        public async Task<ICollection<OrderExcel>> ExportOrderAcceptedAsync()
+        {
+            var queryable = _dbContext.orders.Include(p => p.realEstate).Include(p => p.user).Include(p => p.admin).AsQueryable();
+            queryable = queryable.Where(p => p.Status == true);
+            var orderModel = await queryable.Select(p => new OrderExcel
+            {
+                OrderID = p.OrderId,
+                UserName = p.user.UserName,
+                AdminName = p.admin.UserName,
+                RealEstateID = p.realEstate.RealEstateID,
+                OrderDate = p.OrderDate,
+                Title = p.realEstate.Title,
+                Status = "Accepted",
+
+            }).ToListAsync();
+            return orderModel;
+        }
+        public async Task<ICollection<OrderExcel>> ExportOrderNotAcceptedAsync()
+        {
+            var queryable = _dbContext.orders.Include(p => p.realEstate).Include(p => p.user).Include(p => p.admin).AsQueryable();
+            queryable = queryable.Where(p => p.Status == false);
+            var orderModel = await queryable.Select(p => new OrderExcel
+            {
+                OrderID = p.OrderId,
+                UserName = p.user.UserName,
+                AdminName = p.admin.UserName,
+                RealEstateID = p.realEstate.RealEstateID,
+                OrderDate = p.OrderDate,
+                Title = p.realEstate.Title,
+                Status = "Have Not Accepted",
+
+            }).ToListAsync();
+            return orderModel;
+        }
+        public async Task<AcceptOrder> UpdateOrderAsync(string id, AcceptOrder orderModel)
+        {
+            var order = await _dbContext.orders.FirstOrDefaultAsync(x => x.OrderId == id);
+            if (order == null)
+            {
+                throw new Exception("Have not Order");
+            }
+            var realEstate = await _dbContext.realEstates.FirstOrDefaultAsync(x => x.RealEstateID == orderModel.RealEstateID);
             User staff = await _userManager.FindByIdAsync(realEstate.AdminID);
             User user = await _userManager.FindByIdAsync(realEstate.UserID);
             if (staff.Salary == 0)
@@ -323,22 +403,15 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             {
                 staff.Salary = staff.Salary + ((staff.SalaryBasic) / 10);
             }
-            //var create = _dbContext.Add(model);
-
-
-            var userIdList = (await _userManager.GetUsersInRoleAsync(Roles.User)).Select(u => u.Id);
-            var staffIdList = (await _userManager.GetUsersInRoleAsync(Roles.Staff)).Select(u => u.Id);
-
-            //User category = await _dbContext.realEstates.Where(c => c.Name == createAssetDto.Category).SingleOrDefaultAsync();
-            //Rea state = await _dbContext.realEstates.Where(s => s.Name == createAssetDto.State).SingleOrDefaultAsync();
-            OrderModel orderDto = new OrderModel();
-            orderDto.OrderId = orderCreate.OrderId;
-            orderDto.OrderDate = orderCreate.OrderDate;
-            orderDto.Title = orderCreate.RealestateId;
-            orderDto.UserName = (userIdList.Contains(user.Id)) ? user.FullName : null;
-            orderDto.AdminName = (staffIdList.Contains(staff.Id)) ? staff.UserName : null;
+            realEstate.Status = Convert.ToInt32(StateApprove.Ordered);
+            //realEstateModel.RealEstateID = Guid.NewGuid().ToString();
+            order.Status = bool.Parse(orderModel.Status);
             var result = await _dbContext.SaveChangesAsync();
-            return orderDto;
+            if (result > 0)
+            {
+                return orderModel;
+            }
+            throw new Exception("Update  fail");
         }
     }
 }

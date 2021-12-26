@@ -17,7 +17,8 @@ namespace KhoaLuanTotNghiep_BackEnd.Extensions.ServiceCollection
     {
         public static void AddAuthenticationRegister(this IServiceCollection services)
         {
-            services.AddIdentity<User, IdentityRole>(options =>
+            services.AddIdentity<User, IdentityRole>(
+                options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequireDigit = false;
@@ -25,7 +26,8 @@ namespace KhoaLuanTotNghiep_BackEnd.Extensions.ServiceCollection
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
-            })
+            }
+            )
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 

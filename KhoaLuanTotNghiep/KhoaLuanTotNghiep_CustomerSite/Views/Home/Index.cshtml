@@ -87,8 +87,8 @@
                                             <p class="card-title">
                                                 @(Model[i + j].Title.Length > 70 ? Model[i + j].Title.Substring(0, 70) + "..." : Model[i + j].Title)
                                             </p>
-                                            <p class="card-text">Gía: @Model[i + j].Price
-                                            <p class="card-text">Diện Tích: @Model[i + j].Acgreage</p>
+                                            <p class="card-text">Gía: @Model[i + j].Price VND
+                                            <p class="card-text">Diện Tích: @Model[i + j].Acgreage m2</p>
                                             <p class="card-text">Vị Trí: @Model[i + j].Location</p>
                                         </div>
 
@@ -202,26 +202,47 @@
     </div>
 
 </div>
-<script>
-    $("#btnNext").click(function () {
-        $.ajax({
-            url: 'RealEstate/Next',
-            data: { RealEstateId: cureentid },
-            success: function (response) {
-                $("body").html(response);
-            }
+@section Scripts {
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript">
+                function openSuccessModal(strMessage) {
+                    var myDiv = document.getElementById("MyModalSuccessAlertBody");
+                    myDiv.innerHTML = strMessage;
+                    $('#myModalSuccess').modal('show');
+                }
+                $(document).ready(function () {
+                    var msg = "@TempData["SuccessMessage"]";
+                    if (msg)
+                        openSuccessModal(msg);
+                });
+    </script>
+    <script>
+        $("#btnNext").click(function () {
+            $.ajax({
+                url: 'RealEstate/Next',
+                data: { RealEstateId: cureentid },
+                success: function (response) {
+                    $("body").html(response);
+                }
+            });
         });
-    });
 
 
-    $("#btnPrevious").click(function () {
-        $.ajax({
-            url: 'Category/Previous',
-            data: { personId: cureentid },
-            success: function (response) {
-                $("body").html(response);
-            }
+        $("#btnPrevious").click(function () {
+            $.ajax({
+                url: 'Category/Previous',
+                data: { personId: cureentid },
+                success: function (response) {
+                    $("body").html(response);
+                }
+            });
         });
-    });
-</script>
+    </script>
+    <script>
+        $(window).unload(function () {
+            localStorage.clear();
+        });
+    </script>
+}
+
 

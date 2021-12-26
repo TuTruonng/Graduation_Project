@@ -33,6 +33,9 @@ export const REPORTMANAGER = '/Manager Reports';
 
     // Orders
 export const ORDERMANAGER = '/Manager Orders';
+export const EDIT_ORDERS = '/Manager Orders/Edit Orders/:orderId';
+export const EDIT_ORDER_ID = (orderId: string | number) =>
+    `/Manager Orders/Edit Orders/${orderId}`;
 
 // Not ready to use
 export const MANAGEASSIGNMENT = '/Manage AssignMent';

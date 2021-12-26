@@ -22,12 +22,12 @@ const Info: React.FC<Props> = ({ orders, handleClose }) => {
                     <div>
                         <div className="row -intro-y">
                             <div className="col-4">Order Code:</div>
-                            <div>{orders.orderId}</div>
+                            <div>{orders.orderID}</div>
                         </div>
 
                         <div className="row -intro-y">
                             <div className="col-4">RealEstate Code:</div>
-                            <div>{orders.realEstateId}</div>
+                            <div>{orders.realEstateID}</div>
                         </div>
 
                         <div className="row -intro-y">

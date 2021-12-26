@@ -13,6 +13,10 @@ import { useAppDispatch } from 'src/hooks/redux';
 import IOrder from 'src/interfaces/Order/IOrder';
 import { object } from 'yup/lib/locale';
 import Info from './Info';
+import { EDIT_ORDER_ID } from 'src/constants/pages';
+
+import { auto } from '@popperjs/core';
+
 
 type Props = {
   orders: IOrder | null;
@@ -24,8 +28,7 @@ const OrderTable = ({
   fetchData,
 }) => {
   const dispatch = useAppDispatch();
-
-
+  const fileName = "Report Orders"; // here enter filename for your excel file
   const [showDetail, setShowDetail] = useState(false);
   const [OrderDetail, setOrderDetail] = useState(null as IOrder | null);
   const [disableState, setDisableState] = useState({
@@ -36,10 +39,10 @@ const OrderTable = ({
     isDisable: true,
   });
 
-  const handleShowInfo = (orderId: string) => {
+  const handleShowInfo = (orderID: string) => {
     {
       orders.map((item) => {
-        if (item.orderId === orderId) {
+        if (item.orderID === orderID) {
           const order = item;
           if (order) {
             setOrderDetail(order);
@@ -54,6 +57,20 @@ const OrderTable = ({
     setShowDetail(false);
   };
 
+  const history = useHistory();
+  const handleEdit = (orderID: string) => {
+    {
+      orders.map((item) => {
+        if (item.orderID === orderID) {
+          history.push(EDIT_ORDER_ID(orderID), {
+            existOrder: item,
+          });
+        }
+      })
+    }
+  };
+
+
   return (
     <>
       <Table responsive>
@@ -65,26 +82,27 @@ const OrderTable = ({
             <th style={{ width: "2%" }}>STT</th>
             <th style={{ width: "14%" }}>Order Code</th>
             <th style={{ width: "14%" }}>RealEstate Code</th>
-            <th style={{ width: "40%" }}>RealEstate Title</th>
+            <th style={{ width: "30%" }}>RealEstate Title</th>
             <th style={{ width: "10%" }}>Customer Name</th>
             <th style={{ width: "10%" }}>Admin Name</th>
             <th style={{ width: "10%" }}>Order Date</th>
+            <th style={{ width: "10%" }}>Action</th>
           </tr>
         </thead>
         <tbody className='body'>
           {orders && orders.map((data, i) => (
             <tr
               style={{ fontWeight: 'normal', fontSize: '14px' }}
-              key={data.orderId}
-              onClick={() => handleShowInfo(data.orderId)}
+              key={data.orderID}
+              onClick={() => handleShowInfo(data.orderID)}
             >
               <th scope="row">{i + 1}</th>
-              <td>{data.orderId}</td>
-              <td>{data.realEstateId}</td>
+              <td>{data.orderID}</td>
+              <td>{data.realEstateID}</td>
               <td>{data.title}</td>
               <td>{data.userName}</td>
               <td>{data.adminName}</td>
-        
+
               <td>
                 {new Date(data.orderDate).toLocaleString(
                   'en-GB',
@@ -95,22 +113,23 @@ const OrderTable = ({
                   }
                 )}
               </td>
-              {/* {data.approve == 'False' && (
+              {data.status == 'Have Not Accepted' && (
                 <td className="d-flex">
                   <ButtonIcon
-                    onClick={() => handleEdit(data.OrderID)}
+                    onClick={() => handleEdit(data.orderID)}
                   >
                     <PencilFill className="text-black" />
                   </ButtonIcon>
                 </td>
               )}
-              {data.approve == 'True' && (
-                <td><p>Approved</p></td>
-              )} */}
+              {data.status == 'Order Accepted' && (
+                <td><p>Order Accepted</p></td>
+              )}
             </tr>
           ))}
         </tbody>
       </Table>
+    
       {OrderDetail && showDetail && (
         <Info orders={OrderDetail} handleClose={handleCloseDetail} />
       )}

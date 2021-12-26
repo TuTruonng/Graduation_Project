@@ -5,6 +5,7 @@ using ShareModel.Constant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,15 +24,19 @@ namespace KhoaLuanTotNghiep_CustomerSite.Service
             _httpContextAccessor = httpContextAccessor;
             //_configuration = configuration;
         }
-        public async Task<CreateReport> CreateReport(CreateReport reportModel)
+        public async Task<bool> CreateReport(CreateReport reportModel)
         {
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(reportModel), Encoding.UTF8, "application/json");
             var client = _httpClientFactory.CreateClient(ServiceConstants.BACK_END_NAMED_CLIENT);
             var response = await client.PostAsync(EndpointConstants.GET_REPORT, httpContent);
 
+            if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                return await Task.FromResult(false);
+            }
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadAsAsync<CreateReport>();
+            return await Task.FromResult(true);
         }
     }
 }

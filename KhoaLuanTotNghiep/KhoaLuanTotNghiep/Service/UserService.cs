@@ -1,4 +1,5 @@
 ﻿using KhoaLuanTotNghiep.Data;
+using KhoaLuanTotNghiep_BackEnd.Enum;
 using KhoaLuanTotNghiep_BackEnd.Interface;
 using KhoaLuanTotNghiep_BackEnd.Models;
 using Microsoft.AspNetCore.Identity;
@@ -23,7 +24,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             _userManager = userManager;
         }
 
-        public async Task<IEnumerable<User>> GetAllUserAsync()
+        public async Task<ICollection<User>> GetAllUserAsync()
         {
             var user = await _dbContext.Users.ToListAsync();
             return user;
@@ -62,7 +63,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             return null;
         }
 
-        public async Task<IEnumerable<UserModel>> GetAdminAsync()
+        public async Task<ICollection<UserModel>> GetAdminAsync()
         {
             var adminIdList = (await _userManager.GetUsersInRoleAsync(Roles.Admin)).Select(u => u.Id);
             var staffIdList = (await _userManager.GetUsersInRoleAsync(Roles.Staff)).Select(u => u.Id);
@@ -109,7 +110,7 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
             return users;
         }
 
-        public async Task<IEnumerable<UserModel>> GetUserAsync()
+        public async Task<ICollection<UserModel>> GetUserAsync()
         {
             var userIdList = (await _userManager.GetUsersInRoleAsync(Roles.User)).Select(u => u.Id);
 
@@ -249,6 +250,42 @@ namespace KhoaLuanTotNghiep_BackEnd.Service
 
             var result = await _userManager.ChangePasswordAsync(user, changeUserPasswordDto.CurrentPassword, changeUserPasswordDto.NewPassword);
             return result.Succeeded;
+        }
+
+        public async Task<UserModel> GetInfoSalaryAsync(string userName)
+        {
+            //var adminIdList = (await _userManager.GetUsersInRoleAsync(Roles.Admin)).Select(u => u.Id);
+            // var staffIdList = (await _userManager.GetUsersInRoleAsync(Roles.Staff)).Select(u => u.Id);
+            var userCreate = await _userManager.FindByNameAsync(userName);
+
+            //var queryable = _dbContext.Users.AsQueryable();
+            //queryable = queryable.Where(u => u.Id == userCreate.Id && u.Status == true);
+
+            var querySelled = _dbContext.realEstates
+                .Include(p => p.category)
+                .Include(p => p.user)
+                .Count(p => p.AdminID == userCreate.Id && p.Status == Convert.ToInt32(StateApprove.Ordered));
+            var queryWaitingAccept = _dbContext.realEstates
+               .Include(p => p.category)
+               .Include(p => p.user)
+               .Count(p => p.AdminID == userCreate.Id && p.Status == Convert.ToInt32(StateApprove.WaitingAcceptance));
+            var query = _dbContext.realEstates
+                .Include(p => p.category)
+                .Include(p => p.user)
+                .Count(p => p.AdminID == userCreate.Id && p.Status == Convert.ToInt32(StateApprove.Available));
+
+            var users = new UserModel
+            {
+                UserId = userCreate.Id,
+                FullName = userCreate.FullName,
+                Username = userCreate.UserName,
+                SalaryBasic = userCreate.SalaryBasic.ToString(),
+                Salary = userCreate.Salary.ToString(),
+                quantityRealEstate = query,
+                quantityRealEstateWaitingAccept = queryWaitingAccept,
+                quantityRealEstateSelled = querySelled,
+            };
+            return users;
         }
     }
 }

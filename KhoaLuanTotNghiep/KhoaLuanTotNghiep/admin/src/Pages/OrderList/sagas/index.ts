@@ -1,10 +1,11 @@
 import { takeLatest } from 'redux-saga/effects';
 
-import { getOrders } from '../reducer';
+import { getOrders, updateOrder } from '../reducer';
 import {
-    handleGetOrder,
+    handleGetOrder, handleUpdateOrder,
 } from './handles';
 
 export default function* OrderSagas() {
     yield takeLatest(getOrders.type, handleGetOrder);
+    yield takeLatest(updateOrder.type, handleUpdateOrder);
 }

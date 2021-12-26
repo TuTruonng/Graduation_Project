@@ -53,30 +53,6 @@
                         </div>
                     </div>
 
-                    @*<div class="field-info">
-                            <div class="title-info">
-                                <h4 style="color: white">Hình Ảnh</h4>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input name="image" type="file" class="form-control" accept="image/*" />
-                                    </div>
-                                    <input type="submit" value="Upload" class="btn btn-default" />0
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <h3>Recent Upload</h3>
-
-                                <div>
-                                    <img id="recentImage" class="img-responsive img-thumbnail" style="width: 500px; height: 500px" />
-                                </div>
-                            </div>w
-                        </div>*@
-
                     <div class="rowPost">
                         <div class="mb-3">
                             <label style="width:80px; float:left;" asp-for="realEstate.Description">Mô tả:</label>
@@ -125,53 +101,9 @@
                 </div>
             </div>
             <br />
-
-            <div id="divPostNews">
-                <div class="rowHeader  elevation-2 " style="border: 1px solid #999;width:900px;margin-left:100px">
-                    <div class="title-info">
-                        <h4 style="color: white; text-align:center">Thông tin liên hệ</h4>
-                    </div>
-                    <br />
-                    <div class="rowPost">
-                        <div class="mb-3">
-                            <label style="width:80px; float:left;" asp-for="user.Username">Tên liên hệ:</label>
-                            <input style="width:700px; " asp-for="user.Username" class="form-control" data-val="true" data-val-length="Vượt quá 500 ký tự." data-val-length-max="500" data-val-required="Vị trí không được trống." id="Username" maxlength="100" name="Username" />
-                            <span asp-validation-for="user.Username" class="text-danger"></span>
-                            <span class="text-danger field-validation-valid" data-valmsg-for="Username" data-valmsg-replace="true"></span>
-
-                        </div>
-                    </div>
-
-                    <div class="rowPost">
-                        <div class="mb-3">
-                            <label style="width:80px; float:left;" asp-for="user.FullName">Tên liên hệ:</label>
-                            <input style="width:700px; " asp-for="user.FullName" class="form-control" data-val="true" data-val-length="Vượt quá 500 ký tự." data-val-length-max="500" data-val-required="Vị trí không được trống." id="FullName" maxlength="100" name="FullName" />
-                            <span asp-validation-for="user.FullName" class="text-danger"></span>
-                            <span class="text-danger field-validation-valid" data-valmsg-for="FullName" data-valmsg-replace="true"></span>
-
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label style="width:80px; float:left;" asp-for="user.PhoneNumber">Điện thoại:</label>
-                        <input style="width:700px; " asp-for="user.PhoneNumber" class="form-control" data-val="true" data-val-length="Vượt quá 500 ký tự." data-val-length-max="500" data-val-required="Vị trí không được trống." id="PhoneNumber" maxlength="100" name="PhoneNumber" />
-                        <span asp-validation-for="user.PhoneNumber" class="text-danger"></span>
-                        <span class="text-danger field-validation-valid" data-valmsg-for="PhoneNumber" data-valmsg-replace="true"></span>
-
-                    </div>
-
-                    <div class="mb-3">
-                        <label style="width:80px; float:left;" asp-for="user.Email">Email:</label>
-                        <input style="width:700px; " asp-for="user.Email" class="form-control" data-val="true" data-val-length="Vượt quá 500 ký tự." data-val-length-max="500" data-val-required="Vị trí không được trống." id="Email" maxlength="100" name="Email" />
-                        <span asp-validation-for="user.Email" class="text-danger"></span>
-                        <span class="text-danger field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
-
-                    </div>
-                </div>
-            </div>
+            <input type="hidden" name="StorageItem" value="" />
             <div class="mb-3" style="margin-left: 500px">
-                <input type="submit" value="Thêm" class="btn btn-primary" onclick="javascript: return edit_confirm();" />
-
+                <input type="submit" value="Thêm" class="btn btn-primary" onclick="javascript: return add_confirm();" />
             </div>
         </form>
     </div>
@@ -182,7 +114,12 @@
 </div>
 
 @section Scripts {
-    @*<script type="text/javascript">
+    <script src="~/lib/dropzone.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.3.0/ZeroClipboard.js'></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/gh/vietblogdao/js/districts.min.js'></script>
+    <script type="text/javascript">
                 function openSuccessModal(strMessage) {
                     var myDiv = document.getElementById("MyModalSuccessAlertBody");
                     myDiv.innerHTML = strMessage;
@@ -193,10 +130,19 @@
                     if (msg)
                         openSuccessModal(msg);
                 });
-        </script>*@
-    <script src="~/lib/dropzone.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/gh/vietblogdao/js/districts.min.js'></script>
+    </script>
+    <script type="text/javascript">
+                function openFailModal(strMessage) {
+                    var myDiv = document.getElementById("MyModalFailAlertBody");
+                    myDiv.innerHTML = strMessage;
+                    $('#myModalFail').modal('show');
+                }
+                $(document).ready(function () {
+                    var msg = "@TempData["FailMessage"]";
+                    if (msg)
+                        openFailModal(msg);
+                });
+    </script>
     <script>
         //<![CDATA[
         if (address_2 = localStorage.getItem('address_2_saved')) {
@@ -279,20 +225,15 @@
         });
     </script>
     <script language="javascript">
-        function edit_confirm() {
-            var result = confirm(" Bạn muốn thực hiện giao dịch này ? !");
+        function add_confirm() {
+            var result = confirm(" Bạn muốn thực hiện đăng tin này ? !");
             if (result) {
                 return true;
             }
             return false;
         }
-        function success_confirm() {
-            var success = openSuccessModal("Thành công");
-            if (success) {
-                return success;
-            }
-            return false;
-
     </script>
-    <partial name="_ValidationScriptsPartial" />
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+

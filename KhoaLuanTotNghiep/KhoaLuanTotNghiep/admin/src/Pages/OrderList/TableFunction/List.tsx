@@ -6,6 +6,7 @@ import BatDongSanService from "src/Services/BatDongSanService";
 import IOrder from "src/interfaces/Order/IOrder";
 import { getOrders } from "../reducer";
 import OrderTable from "./Table";
+import { ExportOrderAccepted } from "../ExportOrderAccepted";
 
 type Props = {
   orders: IOrder | null;
@@ -14,6 +15,8 @@ type Props = {
 
 const ListBDS = () => {
   const dispatch = useAppDispatch();
+  const fileNameOrderAccepted = "Report Orders Accepted"; // here enter filename for your excel file
+  const fileNameOrderNotAccepted = "Report Orders Not Accepted"; // here enter filename for your excel file
   const { orders, loading } = useAppSelector((state) => state.orderReducer);
   const [Order, setOrder] = useState([]);
   const [itemSelected, setSelected] = React.useState(null);
@@ -42,6 +45,9 @@ const ListBDS = () => {
           orders={orders}
           fetchData={fetchData}
         />
+      </div>
+      <div style={{alignItems: 'center'}}>
+        <ExportOrderAccepted apiData={orders} fileName={fileNameOrderAccepted} />
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using KhoaLuanTotNghiep.Data;
 using KhoaLuanTotNghiep_BackEnd.InterfaceService;
+using KhoaLuanTotNghiep_BackEnd.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShareModel;
@@ -66,6 +67,36 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
             }
 
             var result = await _realStateService.GetByUserNameAsync(userName);
+            if (result == null)
+                return NotFound();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("Order")]
+        public async Task<ActionResult<OrderModel>> GetOrder()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var result = await _realStateService.GetOrderAsync();
+            if (result == null)
+                return NotFound();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("Order/={name}")]
+        public async Task<ActionResult<OrderModel>> GetOrderWaitingAccept(string name)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var result = await _realStateService.GetOrderWaitingAcceptAsync(name);
             if (result == null)
                 return NotFound();
             return Ok(result);
@@ -148,22 +179,54 @@ namespace KhoaLuanTotNghiep_BackEnd.Controllers
                 return NotFound();
             return Ok(result);
         }
+
         [HttpPost]
         [Route("RealEstateId={id}")]
         [AllowAnonymous]
         //[Authorize(Policy = SecurityConstants.ADMIN_ROLE_POLICY)]
-        public async Task<ActionResult> OrderAsync(string id)
+        public async Task<ActionResult> OrderAsync(OrderModel order)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(id);
+                return BadRequest();
             }
 
-            var result = await _realStateService.OrderAsync(id);
+            var result = await _realStateService.OrderAsync(order);
             if (result == null)
                 return NotFound();
             return Ok(result);
         }
+
+        [HttpPut("id={id}")]
+        [AllowAnonymous]
+        //[Authorize(Policy = SecurityConstants.ADMIN_ROLE_POLICY)]
+        public async Task<ActionResult<AcceptOrder>> UpdateOrderAsync(string id, [FromForm] AcceptOrder model)
+        {
+            //if (!ModelState.IsValid && string.IsNullOrEmpty(id))
+            //{
+            //    return BadRequest(id);
+            //}
+
+            var result = await _realStateService.UpdateOrderAsync(id, model);
+            if (result == null)
+                return NotFound();
+            return Ok(result);
+        }
+
+        [HttpGet("exportOrderAccepted")]
+        public async Task<FileContentResult> ExportOrderAcceptedAsync()
+        {
+            var orderAccepted = await _realStateService.ExportOrderAcceptedAsync();
+            return ExportOrderAccepted.ExportExcel(orderAccepted, "Report Order", "ReportOrderAccepted");
+        }
+
+        [HttpGet("exportOrderNotAccepted")]
+        public async Task<FileContentResult> ExportAsync()
+        {
+            var orderNotAccepted = await _realStateService.ExportOrderNotAcceptedAsync();
+            return ExportOrderNotAccepted.ExportExcel(orderNotAccepted, "Report Order", "ReportOrderNotAccepted");
+        }
+
 
     }
 }

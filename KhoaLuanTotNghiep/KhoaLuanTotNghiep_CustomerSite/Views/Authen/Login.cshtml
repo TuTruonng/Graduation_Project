@@ -1,0 +1,98 @@
+﻿@model ShareModel.LoginModel;
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/dropzone.css" />
+    <link rel="stylesheet" href="~/css/project.css" />
+}
+
+<div class="row">
+    <div class="container">
+        <form asp-action="Login" asp-controller="Authen" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <br />
+            <div id="divPostNews" style="margin-left:200px">
+                <div class="rowHeader  elevation-2 " style="border: 1px solid #999;width:500px;margin-left:100px">
+                    <div class="title-info">
+                        <h4 style="color: white; text-align:center">Đăng nhập</h4>
+                    </div>
+                    <br />
+                    <div class="rowPost">
+                        <div class="mb-3">
+                            <label style="width:150px; float:left;" asp-for="@Model.Username">Tên đăng nhập:</label>
+                            <input style="width:300px; " asp-for="@Model.Username" required class="form-control" data-val="true" data-val-length="Vượt quá 50 ký tự." data-val-length-max="50" data-val-required="Tên đăng nhập không được trống." id="Username" maxlength="50" name="Username" />
+                            <span asp-validation-for="@Model.Username" class="text-danger"></span>
+                            <span class="text-danger field-validation-valid" data-valmsg-for="Username" data-valmsg-replace="true"></span>
+
+                        </div>
+                        <div class="rowPost">
+                            <div id="backend_upload">
+                                <div class="mb-3">
+                                    <label style="width:150px; float:left;" asp-for="@Model.Password">Mật khẩu:</label>
+                                    <input style="width:300px; " asp-for="@Model.Password" required class="form-control" data-val="true" data-val-length="Vượt quá 20 ký tự." data-val-length-max="20" data-val-required="Mật khẩu không được trống." id="Password" maxlength="100" name="Password" />
+                                    <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                                    <span class="text-danger field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3" style="margin-left: 500px">
+                <input type="submit" value="Đăng nhập" class="btn btn-success" onclick="javascript: return edit_confirm();" />
+            </div>
+            <div class=" btn-submit" style="margin-left: 400px">
+                <a asp-action="Register" asp-controller="Authen" style="text-align:center;color:green;margin-top:10px">Bạn chưa có tài khoản? Chọn đăng ký tại đây </a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+                function openSuccessModal(strMessage) {
+                    var myDiv = document.getElementById("MyModalSuccessAlertBody");
+                    myDiv.innerHTML = strMessage;
+                    $('#myModalSuccess').modal('show');
+                }
+                $(document).ready(function () {
+                    var msg = "@TempData["SuccessMessage"]";
+                    if (msg)
+                        openSuccessModal(msg);
+                });
+    </script>
+    <script type="text/javascript">
+                function openFailModal(strMessage) {
+                    var myDiv = document.getElementById("MyModalFailAlertBody");
+                    myDiv.innerHTML = strMessage;
+                    $('#myModalFail').modal('show');
+                }
+                $(document).ready(function () {
+                    var msg = "@TempData["FailMessage"]";
+                    if (msg)
+                        openFailModal(msg);
+                });
+    </script>
+    <script language="javascript">
+        function edit_confirm() {
+            var result = confirm("Xác nhận đăng nhập!");
+            if (result) {
+                return true;
+
+            }
+            return false;
+        }
+    </script>
+    <script type="text/javascript">
+        function SetUserName() {
+            var Username = "Shekhar Shete";
+            '<%Session["Username"] = "' + Username + '"; %>';
+            alert('<%=Session["Username"] %>');
+        }
+    </script>
+
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

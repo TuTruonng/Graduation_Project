@@ -1,8 +1,13 @@
 import ISelectOption from "src/interfaces/ISelectOption";
 
 export const stateApprove: ISelectOption[] = [
-    { id: 1, label: 'True', value: 'True' },
-    { id: 2, label: 'False', value: 'False' },
+    { id: 1, label: 'Approve', value: 'True' },
+    { id: 2, label: 'Not Approve', value: 'False' },
+];
+
+export const acceptOrder: ISelectOption[] = [
+    { id: 1, label: 'Accept', value: 'True' },
+    { id: 2, label: 'Not Accept', value: 'False' },
 ];
 
 export const UserOptions: ISelectOption[] = [

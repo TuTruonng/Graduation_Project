@@ -1,52 +1,14 @@
 ﻿
-@using ShareModel
-@model RealEstateModel
-@*@{
-        var rate = (ShareModel.RateResponse)ViewBag.rating;
-    }*@
+@model ShareModel.RealEstateModel
 
-@*@{
-        var comment_client = ViewData as IList<ReportModel>;
-    }*@
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 @section Styles {
+    <link rel="stylesheet" href="~/css/dropzone.css" />
     <link rel="stylesheet" href="~/css/project.css" />
-    <style type="text/css">
-        .txtStyle {
-            resize: none;
-            width: 97.1%;
-            overflow: auto;
-            padding: 5px;
-            border: 1px dotted #B6B7BC;
-            height: 100px;
-        }
-
-        .copybtn {
-            display: inline-block;
-            outline: none;
-            padding: 5px;
-            text-decoration: none;
-            text-align: center;
-            width: 85%;
-            vertical-align: middle;
-            line-height: 30px;
-            color: #000;
-            background-color: #e2e2e2;
-            border: 1px solid #A9A9A9;
-        }
-
-            .copybtn.zeroclipboard-is-hover {
-                color: #000;
-                background-color: #B6B7BC;
-                border-color: #000;
-            }
-
-            .copybtn.zeroclipboard-is-active {
-                color: #000;
-                background-color: #B6B7BC;
-                border-color: #000;
-            }
-    </style>
 }
 
 <div class="p-5 border rounded">
@@ -73,33 +35,34 @@
             </div>
 
             <br />
-            <span>
-                <form asp-controller="Order" asp-action="Ordering" method="post" class="aa-review-form">
-                    <input name="id" value="@Model.RealEstateID" hidden />
+            <form asp-controller="Order" asp-action="Ordering" method="post" class="aa-review-form" onsubmit="theButton.disabled = true; return true;">
+                <input name="id" value="@Model.RealEstateID" hidden />
 
-                    <button style="width:100px" type="submit" onclick="javascript : return confirm();" class="btn btn-secondary aa-review-submit">Giao dịch</button>
-                </form>
-            </span>
+                @*<button style="width:100px" name="theButton" type="submit" onclick="javascript : return confirm();" class="btn btn-secondary aa-review-submit">Giao dịch</button>*@
+                <div class="mb-3">
+                    <input style="width:100px" type="submit" value="Giao dịch" class="btn btn-secondary aa-review-submit" onclick="javascript: return order_confirm();" />
+                </div>
+            </form>
 
-            <span>
-                <form style="margin-top:20px" asp-controller="RealEstate" asp-action="addProductToCart" method="post" class="aa-review-form">
-                    <input name="id" value="@Model.RealEstateID" hidden />
-                    <button style="width:100px" type="submit" onclick="javascript : return confirm_save();" class="btn btn-danger aa-review-submit">Lưu Tin</button>
-                </form>
-            </span>
-
+            <form style="margin-top:20px" asp-controller="RealEstate" asp-action="addProductToCart" method="post" class="aa-review-form">
+                <input name="id" value="@Model.RealEstateID" hidden />
+                @*<button style="width:100px" type="submit" onclick="javascript : return confirm_save();" class="btn btn-danger aa-review-submit">Lưu Tin</button>*@
+                <div class="mb-3">
+                    <input style="width:100px" type="submit" value="Lưu Tin" class="btn btn-danger aa-review-submit" onclick="javascript: return save_confirm();" />
+                </div>
+            </form>
         </div>
         <div class="col-2">
             <div class="container-contact" style="border: none; border-radius: 5px; height: auto; width: 100%">
                 <p style="text-align: center">Thông tin liên hệ</p>
-                <button style="width:100px; border-radius: 5px; margin-left: 20px" class="btn btn-dark">@Model.PhoneNumber</button>
+                <button style="width:100px; border-radius: 5px; margin-left: 40px" class="btn btn-dark">@Model.PhoneNumber</button>
                 @*<input type="button" value="@Model.PhoneNumber" style="width: 100%; background-color: yellow; height: 30px; border: none" id="YourButtonId" data-clipboard-target="<%=YourButton.ClientID%>" />*@
             </div>
         </div>
         <hr />
 
         <div style="margin-top:100px">
-            <h4 style="margin-left:100px">Báo Cáo sản phẩm</h4>
+            <h4 style="margin-left:90px">Báo Cáo sản phẩm</h4>
         </div>
         <form asp-controller="Report" asp-action="Reporting" method="post" class="aa-review-form" style="width:1500px;margin-left:100px">
             <div class="row">
@@ -110,8 +73,10 @@
                 </div>
                 <input name="id" value="@Model.RealEstateID" hidden />
             </div>
-            <button style="margin-left:700px; width:80px" type="submit" onclick="javascript: return edit_confirm();" class="btn btn-danger aa-review-submit">Gửi</button>
-
+            @*<button style="margin-left:700px; width:80px" type="submit" onclick="javascript: return edit_confirm();" class="btn btn-danger aa-review-submit">Gửi</button>*@
+            <div class="mb-3">
+                <input style="margin-left:700px; width:80px" type="submit" value="Gửi" class="btn btn-primary" onclick="javascript: return report_confirm();" />
+            </div>
         </form>
         @if (User.Identity.IsAuthenticated)
         {
@@ -143,8 +108,11 @@
 
 
 @section Scripts {
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.3.0/ZeroClipboard.js'></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    @*<script src="~/lib/dropzone.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.3.0/ZeroClipboard.js'></script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+        <script src='https://cdn.jsdelivr.net/gh/vietblogdao/js/districts.min.js'></script>*@
     <script type="text/javascript">
                 function openSuccessModal(strMessage) {
                     var myDiv = document.getElementById("MyModalSuccessAlertBody");
@@ -157,36 +125,45 @@
                         openSuccessModal(msg);
                 });
     </script>
-    <script language="success">
-        function success_confirm() {
-            var success = openSuccessModal("Thành công");
-            return success;
+    <script type="text/javascript">
+                function openFailModal(strMessage) {
+                    var myDiv = document.getElementById("MyModalFailAlertBody");
+                    myDiv.innerHTML = strMessage;
+                    $('#myModalFail').modal('show');
+                }
+                $(document).ready(function () {
+                    var msg = "@TempData["FailMessage"]";
+                    if (msg)
+                        openFailModal(msg);
+                });
+    </script>
+    <script language="javascript">
+        function report_confirm() {
+            var result = confirm("Bạn xác nhận muốn gửi báo cáo cho chúng tôi?");
+            if (result) {
+                return true;
+            }
+            return false;
+        }</script>
+    <script language="javascript">
+        function save_confirm() {
+            var result = confirm("Bạn có đồng ý lưu tin này không?");
+            if (result) {
+                return true;
+            }
+            return false;
         }
     </script>
     <script language="javascript">
-        function edit_confirm() {
-            var result = confirm("Cảm ơn bạn đã gửi báo cáo cho chúng tôi !");
+        function order_confirm() {
+            var result = confirm("Bạn có đồng ý chấp nhận giao dịch này không?");
             if (result) {
                 return true;
             }
             return false;
-        }</script>
-    <script language="javascript">
-        function confirm() {
-            var result = confirm("Bạn có đồng ý chấp nhận giao dịch này không !");
-            if (result) {
-                return true;
-            }
-            return false;
-        }</script>
-    <script language="javascript">
-        function confirm_save() {
-            var result = confirm("Bạn có đồng ý lưu tin này không !");
-            if (result) {
-                return true;
-            }
-            return false;
-        }</script>
+        }
+    </script>
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 
